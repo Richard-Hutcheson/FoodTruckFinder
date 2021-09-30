@@ -9,7 +9,7 @@ This function used to directly load HomePage.js to the root element. Now it has 
 
 ReactDOM.render(
  <div>
-    <a href = "#">Home</a>
+    <a href = "/">Home</a>
     <RouterConfig/>
  </div>,
   
