@@ -8,7 +8,7 @@ Now the HomePage Component just acts as an entry point for other components/page
    render() {
        return (
          <div>
-           <h2>Home Page</h2>
+           <h2>Food Truck Finder Home Page</h2>
            <div>
              <nav>
                  <a href = "\guest">Guest</a>
