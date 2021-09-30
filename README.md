@@ -8,7 +8,3 @@ Team Members:
 * Ethan Robinson - Requirements Engineer and developer
 * Austin Blanchard - Design Engineer and developer
 * Noah Lambaria - Quality Assurance and developer
-
-Installation Instructions:
-  - Select client folder as current working directory
-  - $ npm install react-scripts
