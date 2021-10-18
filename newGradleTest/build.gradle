@@ -1,0 +1,164 @@
+buildscript {
+    repositories {
+        maven { url "https://maven.springframework.org/release" }
+        maven {
+            url "https://maven.restlet.com"
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.5.4"
+    }
+}
+
+
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "2.5.4"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "org.springframework.boot"
+
+apply plugin: 'project-report'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.14
+targetCompatibility = 1.14
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url "http://maven.restlet.org"
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.gitlab.bessemer:bessemer-bom:1.0.2'
+    }
+
+    dependencies {
+        dependency group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.4'
+        dependency group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.1.4'
+    }
+    applyMavenExclusions = false
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
+
+    implementation group: 'com.gitlab.bessemer', name: 'cornerstone', version: '1.0.5'
+
+    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.1.10'
+
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.0-rc2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0-rc2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.0-rc2'
+
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0-rc2'
+
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.13.0-rc2'
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.14.1'
+
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-jul', version: '2.14.1'
+
+    testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.14.1'
+
+    testImplementation group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: '2.14.1'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.5.4'
+
+//    compile group: 'org.springframework.security', name: 'spring-security-test'
+//    compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose'
+//    compile group: 'org.springframework.security', name: 'spring-security-config'
+//    compile group: 'org.springframework.security', name: 'spring-security-oauth2-resource-server'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.5.4'
+
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+
+
+    // compile group: 'org.liquibase', name: 'liquibase-core'
+
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.10'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.0-RC1'
+
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.5.4'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+
+configurations.all {
+    exclude group: "log4j", module: "log4j"
+    exclude group: "org.apache.logging.log4j", module: "log4j-to-slf4j"
+    exclude group: "org.slf4j", module: "slf4j-log4j12"
+    exclude group: "org.slf4j", module: "jcl-over-slf4j"
+    exclude group: "org.slf4j", module: "jul-to-slf4j"
+    exclude group: "org.slf4j", module: "log4j-over-slf4j"
+    exclude group: "junit", module: "junit-dep"
+    exclude group: "ch.qos.logback"
+}
+
+task buildTests(type: Jar, dependsOn: 'test') {
+    from sourceSets.test.output
+    baseName "test-${baseName}"
+}
+
+configurations {
+    tests {
+        extendsFrom testRuntimeOnly
+    }
+}
+
+artifacts {
+    tests buildTests
+}
+
+tasks.build.dependsOn buildTests
+
+task integrationTest(type: Test, dependsOn: 'testClasses') {
+    useJUnitPlatform()
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    exclude "**/test/unit/**"
+    exclude "**/test/functional/**"
+    exclude "**/test/harness/**"
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+
+    exclude '**/test/integration/**'
+    exclude '**/test/functional/**'
+    exclude '**/test/harness/**'
+}
