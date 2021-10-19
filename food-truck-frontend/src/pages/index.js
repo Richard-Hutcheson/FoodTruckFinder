@@ -5,8 +5,13 @@ require('dotenv').config();
 
 function HomePage() {
     return (
-        <div>
-            This is the home page!
+        <div class = "header">
+            <h1>Food Truck Finder</h1>
+            <h2>LOGIN</h2>
+            <Link href="/dashboard">
+                <a>login</a>
+            </Link>
+
         </div>
     )
 }
