@@ -11,6 +11,6 @@ CREATE TABLE User (
     PRIMARY KEY (userID)
 );
 
-INSERT INTO User ( Username, Password, AccountType)
+INSERT INTO User ( Username, Password, role)
 VALUES ('test1', '123', 'A'),
        ('test2', '123', 'O');
