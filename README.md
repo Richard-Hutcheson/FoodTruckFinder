@@ -49,3 +49,6 @@
 		- Finally: yarn dev
 	- Navigate to http://localhost:3000 - you should see the food truck application
 
+Old Buildpacks:
+- https://github.com/mars/create-react-app-buildpack.git
+- heroku/java
