@@ -3,13 +3,14 @@ USE foodTruckFinder;
 
 DROP TABLE IF EXISTS User;
 
-CREATE TABLE User
-(
-    Username VARCHAR(30),
-    Password VARCHAR(30),
-    AccountType VARCHAR(11)
+CREATE TABLE User (
+    userID INT(7) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255),
+    password VARCHAR(255),
+    role CHAR(1),
+    PRIMARY KEY (userID)
 );
 
 INSERT INTO User ( Username, Password, AccountType)
-VALUES ('test1', '123', 'Authorized'),
-       ('test2', '123', 'Owner');
+VALUES ('test1', '123', 'A'),
+       ('test2', '123', 'O');
