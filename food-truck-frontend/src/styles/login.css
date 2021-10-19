@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Magra:wght@400;700&family=Skranji&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@500&display=swap');
+
+
+body {
+    min-height: 100vh;
+}
+
+
+.login-body{
+    /*background: linear-gradient(180deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%);*/
+    background-color: rgb(0, 0, 0);
+    background-image: url("../../public/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* font-family: 'Noto Sans Mono', monospace; */
+    font-family: 'Epilogue', sans-serif;
+
+    color: white;
+}
+
+#ftf-header{
+     text-align: center;
+    margin-bottom: .3em;
+    font-size: 3em;
+    font-family: 'Magra', sans-serif;
+    text-decoration: underline;
+}
+.login-wrapper{
+    text-align: center;
+    font-weight: bolder;
+    margin:auto;
+    margin-top: 5em;
+    margin-bottom: 1em;
+    position: relative;
+    height: 150px;
+    width: 400px;
+
+}
+.username-field, .password-field{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display:grid;
+    grid-template-columns: 20em;
+}
+
+#username, #pass{
+    border-radius: .5em;
+    border-style: solid;
+    height: 25px;
+}
+.password-field{
+    top: 55%;
+}
+#username-label, #password-label{
+    background-color: black;
+    width: 100px;
+    height: 20px;
+    padding-top: 10px;
+    border-radius: .5em;
+    border-color: white;
+    border-style: solid;
+    border-top-width: 1px;
+    border-left-width: 7px;
+    border-right-width: 7px;
+
+}
+
+.login-btn-class{
+    width: 100px;
+    height: 30px;
+    margin: 0 auto;
+    text-align: center;
+
+}
+#login-btn-id{
+    transition: .5s;
+    color: black;
+    border-style: solid;
+    border-radius: .55em;
+    border-width: .3em;
+    background-color: white;
+    border-color: white;
+    display: block;
+    width: 120px;
+    text-decoration: none;
+    height: 20px;
+    font-weight: bolder;
+}
+#login-btn-id:hover{
+    opacity: 50%;
+    border-top-width: .6em;
+
+}
+footer{
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    font-size: small;
+    color: rgb(204, 204, 204);
+    background-color: rgba(0, 0, 0, 0.529);
+}
