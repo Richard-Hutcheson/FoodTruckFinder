@@ -22,11 +22,14 @@ body {
 }
 
 #ftf-header{
-     text-align: center;
+    color: rgb(169, 81, 81);
+    text-align: center;
     margin-bottom: .3em;
     font-size: 3em;
     font-family: 'Magra', sans-serif;
     text-decoration: underline;
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.487);
+    -webkit-text-stroke-width: 1px;
 }
 .login-wrapper{
     text-align: center;
@@ -56,10 +59,11 @@ body {
     top: 55%;
 }
 #username-label, #password-label{
-    background-color: black;
+    background-color: rgb(169, 81, 81);
     width: 100px;
-    height: 20px;
-    padding-top: 10px;
+    height: 15px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     border-radius: .5em;
     border-color: white;
     border-style: solid;
