@@ -47,7 +47,7 @@ body {
     grid-template-columns: 20em;
 }
 
-#username, #pass{
+#username, #password{
     border-radius: .5em;
     border-style: solid;
     height: 25px;
@@ -87,7 +87,7 @@ body {
     display: block;
     width: 120px;
     text-decoration: none;
-    height: 20px;
+    height: 25px;
     font-weight: bolder;
 }
 #login-btn-id:hover{

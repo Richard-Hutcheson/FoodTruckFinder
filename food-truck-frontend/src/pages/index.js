@@ -12,23 +12,26 @@ function HomePage() {
                 <h1 id = 'ftf-header'>FOOD TRUCK FINDER</h1>
             </div>
 
-
-            <div class = "login-wrapper">
-                <div class = "username-field">
-                    <label for="username" id = "username-label">username:</label>
-                    <input type="text" id="username" name="username"></input>
+            <form id = "login-form" action="/dashboard" method="POST">
+                <div class = "login-wrapper">
+                    <div class = "username-field">
+                        <label for="username" id = "username-label">username:</label>
+                        <input type="text" id="username" name="username"  required></input>
+                    </div>
+                    <div class = "password-field">
+                        <label for="pass" id = "password-label">password:</label>
+                        <input type="password" id="password" name="password"  required></input>
+                    </div>
                 </div>
-                <div class = "password-field">
-                    <label for="pass" id = "password-label">password:</label>
-                    <input type="password" id="pass" name="password" minlength="8" required></input>
+                <div class = 'login-btn-class'>
+                    <input type = "submit" value = "LOGIN" id= "login-btn-id"></input>
                 </div>
-            </div>
-
-            <div class = 'login-btn-class'>
+            </form>
+            {/* <div class = 'login-btn-class'>
                 <Link href="/dashboard">
                     <a id = 'login-btn-id'>login</a>
                 </Link>
-            </div>
+            </div> */}
             <footer>
                 <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
             </footer> 
