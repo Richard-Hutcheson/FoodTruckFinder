@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    @Autowired
+    //shouldnt autowired be here
+    //@Autowired
     private UserRepository userRepository;
 
     public Optional<User> findUser(Long userId) {
