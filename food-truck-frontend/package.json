@@ -50,5 +50,13 @@
   "main": "babel.config.js",
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "fdnj",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Richard-Hutch/FoodTruckFinder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Richard-Hutch/FoodTruckFinder/issues"
+  },
+  "homepage": "https://github.com/Richard-Hutch/FoodTruckFinder#readme"
 }
