@@ -19,7 +19,7 @@
     "final-form-material-ui": "0.3.0",
     "jss-rtl": "0.3.0",
     "msal": "^1.4.0",
-    "next": "^9.5.2",
+    "next": "^9.5.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-final-form": "6.5.1",
