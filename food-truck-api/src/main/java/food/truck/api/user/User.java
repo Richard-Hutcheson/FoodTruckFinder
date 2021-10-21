@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Table(name = User.TABLE_NAME)
 public class User {
-    public static final String TABLE_NAME = "USER";
+    public static final String TABLE_NAME = "User";
 
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
@@ -21,15 +21,15 @@ public class User {
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
     )
-    @Column(name = "USER_ID")
+    @Column(name = "userID")
     Long id;
 
-    @Column(name = "EMAIL_ADDRESS")
-    String emailAddress;
+    @Column(name = "username")
+    String username;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     String password;
 
-    @Column(name = "USER_TYPE")
+    @Column(name = "role")
     String userType;
 }
