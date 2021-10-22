@@ -4,7 +4,7 @@ import Link from '@material-ui/core/Link';
 
 require('dotenv').config();
 
-function HomePage() {
+function LoginPage() {
     return (
         <body class = 'login-body'>
             
@@ -27,6 +27,9 @@ function HomePage() {
                     <input type = "submit" value = "LOGIN" id= "login-btn-id"></input>
                 </div>
             </form>
+            <a href="/createAccount" id = "create-acnt-aTag-id">
+                <button id = "create-acnt-id" type = "button" action="/createAccount"> CREATE ACCOUNT </button>
+            </a>
             {/* <div class = 'login-btn-class'>
                 <Link href="/dashboard">
                     <a id = 'login-btn-id'>login</a>
@@ -40,4 +43,4 @@ function HomePage() {
     )
 }
 
-export default HomePage
+export default LoginPage;

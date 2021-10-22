@@ -4,6 +4,7 @@
 
 
 body {
+    margin: 0;
     min-height: 100vh;
 }
 
@@ -22,7 +23,7 @@ body {
 }
 
 #ftf-header{
-    color: rgb(169, 81, 81);
+    color: rgb(211, 131, 131);
     text-align: center;
     margin-bottom: .3em;
     font-size: 3em;
@@ -74,14 +75,17 @@ body {
 }
 
 .login-btn-class{
-    width: 100px;
+    width: 150px;
     height: 30px;
     margin: 0 auto;
     text-align: center;
 
 }
 #login-btn-id{
-    transition: .5s;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: .3s;
     color: black;
     border-style: solid;
     border-radius: .55em;
@@ -89,10 +93,11 @@ body {
     background-color: white;
     border-color: white;
     display: block;
-    width: 120px;
+    width: 130px;
     text-decoration: none;
     height: 25px;
     font-weight: bolder;
+
 }
 #login-btn-id:hover{
     opacity: 50%;
@@ -108,4 +113,30 @@ footer{
     font-size: small;
     color: rgb(204, 204, 204);
     background-color: rgba(0, 0, 0, 0.529);
+}
+
+#create-acnt-id{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: .3s;
+    color: black;
+    border-style: solid;
+    border-radius: .55em;
+    border-width: .3em;
+    background-color: white;
+    border-color: white;
+    display: block;
+    width: 130px;
+    text-decoration: none;
+    height: 25px;
+    font-weight: bolder;
+
+}
+#create-acnt-id:hover{
+    opacity: 50%;
+    border-top-width: .6em;
+}
+#create-acnt-aTag-id{
+    text-decoration: none;
 }
