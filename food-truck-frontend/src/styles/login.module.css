@@ -3,13 +3,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@500&display=swap');
 
 
-body {
+/* body {
     margin: 0;
     min-height: 100vh;
-}
+} */
 
 
-.login-body{
+.loginBody{
     /*background: linear-gradient(180deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%);*/
     background-color: rgb(0, 0, 0);
     background-image: url("../../public/background.jpg");
@@ -18,21 +18,22 @@ body {
     background-attachment: fixed;
     /* font-family: 'Noto Sans Mono', monospace; */
     font-family: 'Epilogue', sans-serif;
-
+    margin: 0;
+    min-height: 100vh;
     color: white;
 }
 
-#ftf-header{
-    color: rgb(211, 131, 131);
+#ftfHeader{
+    color: rgb(255, 90, 90);
     text-align: center;
     margin-bottom: .3em;
     font-size: 3em;
     font-family: 'Magra', sans-serif;
     text-decoration: underline;
-    -webkit-text-stroke-color: rgba(255, 255, 255, 0.487);
-    -webkit-text-stroke-width: 1px;
+    /* -webkit-text-stroke-color: rgba(255, 255, 255, 0.487);
+    -webkit-text-stroke-width: 1px; */
 }
-.login-wrapper{
+.loginWrapper{
     text-align: center;
     font-weight: bolder;
     margin:auto;
@@ -43,7 +44,7 @@ body {
     width: 400px;
 
 }
-.username-field, .password-field{
+.usernameField, .passwordField{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -56,10 +57,10 @@ body {
     border-style: solid;
     height: 25px;
 }
-.password-field{
+.passwordField{
     top: 55%;
 }
-#username-label, #password-label{
+#usernameLabel, #passwordLabel{
     background-color: rgb(169, 81, 81);
     width: 100px;
     height: 15px;
@@ -74,14 +75,14 @@ body {
 
 }
 
-.login-btn-class{
+.loginBtnClass{
     width: 150px;
     height: 30px;
     margin: 0 auto;
     text-align: center;
 
 }
-#login-btn-id{
+#loginBtnId{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -99,12 +100,12 @@ body {
     font-weight: bolder;
 
 }
-#login-btn-id:hover{
+#loginBtnId:hover{
     opacity: 50%;
     border-top-width: .6em;
 
 }
-footer{
+.footerClass{
     left: 0;
     bottom: 0;
     position: fixed;
@@ -115,7 +116,7 @@ footer{
     background-color: rgba(0, 0, 0, 0.529);
 }
 
-#create-acnt-id{
+#createAcntId{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -127,16 +128,16 @@ footer{
     background-color: white;
     border-color: white;
     display: block;
-    width: 130px;
+    width: 150px;
     text-decoration: none;
     height: 25px;
     font-weight: bolder;
 
 }
-#create-acnt-id:hover{
+#createAcntId:hover{
     opacity: 50%;
     border-top-width: .6em;
 }
-#create-acnt-aTag-id{
+#createAcntATagId{
     text-decoration: none;
 }
