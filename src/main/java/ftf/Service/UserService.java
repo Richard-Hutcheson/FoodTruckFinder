@@ -1,15 +1,22 @@
-package food.truck.api.user;
+package ftf.Service;
 
-import java.util.Optional;
-
+import ftf.user.User;
+import ftf.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
-    //shouldnt autowired be here
-    //@Autowired
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public Optional<User> findUser(Long userId) {
         return userRepository.findById(userId);
@@ -18,4 +25,6 @@ public class UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+
 }
