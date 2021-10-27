@@ -1,4 +1,12 @@
 
+**For Dev Team:**
+
+	To run Frontend for first time:
+	- delete package.lock if it exists
+	- npm install
+	- npm start
+
+
 1. **Food-truck-api: Backend Setup**
 
 	- Install Java 16(OpenJDK)
