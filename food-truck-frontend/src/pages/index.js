@@ -1,35 +1,41 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-
+import styles from '../styles/login.module.css'
 
 require('dotenv').config();
 
-function HomePage() {
+function LoginPage() {
     return (
-        <body class = 'login-body'>
+        <body className= {styles.loginBody}>
             
-            <div class = "login-header">
-                <h1 id = 'ftf-header'>FOOD TRUCK FINDER</h1>
+            <div className = {styles.loginHeader}>
+                <h1 id = {styles.ftfHeader}>FOOD TRUCK FINDER</h1>
             </div>
 
-
-            <div class = "login-wrapper">
-                <div class = "username-field">
-                    <label for="username" id = "username-label">username:</label>
-                    <input type="text" id="username" name="username"></input>
+            <form id = {styles.loginForm} action="/dashboard" method="POST">
+                <div className={styles.loginWrapper}>
+                    <div className = {styles.usernameField}>
+                        <label for="username" id = {styles.usernameLabel}>username:</label>
+                        <input type="text" id={styles.username} name="username"  required></input>
+                    </div>
+                    <div class = {styles.passwordField}>
+                        <label for="pass" id = {styles.passwordLabel}>password:</label>
+                        <input type="password" id={styles.password} name="password"  required></input>
+                    </div>
                 </div>
-                <div class = "password-field">
-                    <label for="pass" id = "password-label">password:</label>
-                    <input type="password" id="pass" name="password" minlength="8" required></input>
+                <div class = {styles.loginBtnClass}>
+                    <input type = "submit" value = "LOGIN" id= {styles.loginBtnId}></input>
                 </div>
-            </div>
-
-            <div class = 'login-btn-class'>
+            </form>
+            <a href="/createAccount" id = {styles.createAcntATagId}>
+                <button id = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
+            </a>
+            {/* <div class = 'login-btn-class'>
                 <Link href="/dashboard">
                     <a id = 'login-btn-id'>login</a>
                 </Link>
-            </div>
-            <footer>
+            </div> */}
+            <footer className={styles.footerClass}>
                 <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
             </footer> 
         </body>
@@ -37,4 +43,4 @@ function HomePage() {
     )
 }
 
-export default HomePage
+export default LoginPage;
