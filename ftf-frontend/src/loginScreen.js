@@ -10,7 +10,7 @@ class LoginScreen extends Component{
                     <h1 id = {styles.ftfHeader}>FOOD TRUCK FINDER</h1>
                 </div>
 
-                <form id = {styles.loginForm} action="/dashboard" method="POST">
+                <form id = {styles.loginForm} action="/dashboard">
                     <div className={styles.loginWrapper}>
                         <div className = {styles.usernameField}>
                             <label for="username" id = {styles.usernameLabel}>username:</label>
