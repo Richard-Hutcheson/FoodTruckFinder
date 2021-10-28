@@ -23,6 +23,11 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+
+        /*checking user information and determining whether the account information
+        provided is valid
+         */
+
         return userRepository.save(user);
     }
 

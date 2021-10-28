@@ -1,15 +1,17 @@
-import styles from "../styles/createAcnt.module.css"
-import React from "react"
-
-const CreateAccount = () =>{
-    return (
-
+import React, { Component } from 'react';
+import styles from "./css/createAcnt.module.css"
+class CreateAccount extends Component{
+    
+    
+    render(){
+        return (
+            
         <div className={styles.bodyContainer}>
 
             <h1 className={styles.header}>CREATE ACCOUNT</h1>
 
             <div className={styles.innerContainer}>
-                <form className={styles.formClass} onSubmit={()=>confirm("Account Created")} action="/" method="POST">
+                <form className={styles.formClass} onSubmit={()=>window.confirm("Account Created")} action="/">
                         <div className={styles.groupClass}>
                             <label for="username" id = {styles.username}>Username:</label>
                             <input type="text" className={styles.inputClass} id={styles.usernameInput} name="username"  required></input>
@@ -49,8 +51,7 @@ const CreateAccount = () =>{
             </div>
 
         </div>
-
-
-    )
+        );
+    }
 }
 export default CreateAccount;

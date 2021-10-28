@@ -75,6 +75,7 @@
     width: 100px;
     position: relative;
     left: 50%;
+    border-color: white;
     background-color: white;
     border-style: solid;
     border-radius: .5em;
