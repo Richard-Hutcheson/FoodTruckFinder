@@ -23,11 +23,11 @@ public class UserController {
     public Optional<User> findUserById(@PathVariable Long id) {
         var user = userServe.findUser(id);
 
-        if (user != null) {
+        if (user.isPresent()) {
             return user;
         }
         else {
-            return null;
+            return Optional.empty();
         }
     }
 
