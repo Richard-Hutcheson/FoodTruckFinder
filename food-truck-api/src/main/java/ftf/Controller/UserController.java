@@ -1,7 +1,7 @@
 package ftf.Controller;
 
 import ftf.Service.UserService;
-import ftf.user.User;
+import ftf.classes.User;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

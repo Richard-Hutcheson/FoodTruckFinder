@@ -1,4 +1,4 @@
-package ftf.user;
+package ftf.classes;
 
 import javax.persistence.*;
 import lombok.Data;

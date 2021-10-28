@@ -1,6 +1,6 @@
 package ftf.Service;
 
-import ftf.user.User;
+import ftf.classes.User;
 import ftf.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

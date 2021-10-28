@@ -1,7 +1,7 @@
 package ftf.Repository;
 
 
-import ftf.user.User;
+import ftf.classes.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
