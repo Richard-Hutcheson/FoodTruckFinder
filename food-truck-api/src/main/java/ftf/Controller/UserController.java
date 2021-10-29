@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
@@ -30,9 +31,9 @@ public class UserController {
             return null;
         }
     }
-
     @PostMapping("/user")
     public User saveUser(@RequestBody User user) {
+        System.out.println("present!");
         return userServe.saveUser(user);
     }
 }

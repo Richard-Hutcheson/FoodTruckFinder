@@ -1,7 +1,39 @@
 import React, { Component } from 'react';
-import styles from './css/login.module.css'
+import styles from './css/login.module.css';
+import {loginUser}  from './API/apiCalls.js'
 
 class LoginScreen extends Component{
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            role: 'a'    
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event){
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]:value
+        });
+    }
+    handleSubmit(event){
+        window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
+        event.preventDefault();
+
+        loginUser(this.state.username, this.state.password);
+        // this.props.history.push({
+        //     pathname: '/UserDashboard',
+        //     state: {item1: "exodus", item2: "matthew"}
+        // });
+
+    }
+    
     render(){
         return (
             <div className = {styles.loginBody}>
@@ -10,15 +42,15 @@ class LoginScreen extends Component{
                     <h1 id = {styles.ftfHeader}>FOOD TRUCK FINDER</h1>
                 </div>
 
-                <form id = {styles.loginForm} action="/dashboard">
+                <form id = {styles.loginForm} onSubmit={this.handleSubmit}>
                     <div className={styles.loginWrapper}>
                         <div className = {styles.usernameField}>
                             <label for="username" id = {styles.usernameLabel}>username:</label>
-                            <input type="text" id={styles.username} name="username"  required></input>
+                            <input type="text" id={styles.username} name="username"  value = {this.state.username} onChange={this.handleChange} required></input>
                         </div>
                         <div class = {styles.passwordField}>
                             <label for="pass" id = {styles.passwordLabel}>password:</label>
-                            <input type="password" id={styles.password} name="password"  required></input>
+                            <input type="password" id={styles.password} name="password" value = {this.state.password} onChange={this.handleChange} required></input>
                         </div>
                     </div>
                     <div class = {styles.loginBtnClass}>
