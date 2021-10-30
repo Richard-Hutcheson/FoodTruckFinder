@@ -1,10 +1,11 @@
 package ftf.Service;
 
-import ftf.user.User;
+import ftf.classes.User;
 import ftf.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,4 +34,13 @@ public class UserService {
     }
 
 
+    public List<User> getUsers() {
+        //will return all the users based on username
+        return userRepository.findAll();
+    }
+
+
+    public Optional<User> findByUserPass(String username, String password) {
+        return userRepository.findByUserPass(username,password);
+    }
 }

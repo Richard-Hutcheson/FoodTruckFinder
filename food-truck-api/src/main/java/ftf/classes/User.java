@@ -1,6 +1,8 @@
-package ftf.user;
+package ftf.classes;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 @Data
@@ -18,6 +20,7 @@ public class User {
     @Column(name = "userID")
     Long id;
 
+    @JsonView(View.UserView.class)
     @Column(name = "username")
     String username;
 
@@ -30,5 +33,12 @@ public class User {
     @Column(name = "name")
     String name;
 
-    @Column
+    @Column(name = "address")
+    String address;
+
+    @Column(name = "city")
+    String city;
+
+    @Column(name = "state")
+    String state;
 }
