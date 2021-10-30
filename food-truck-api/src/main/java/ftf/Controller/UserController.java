@@ -31,9 +31,21 @@ public class UserController {
             return null;
         }
     }
+    @GetMapping("/findUser/{username}")
+    public Optional<User> findUserByUsername(@PathVariable String username) {
+        System.out.println("username = " + username);
+
+        var user = userServe.findByUsername(username);
+//        System.out.println(user.get().getId());
+        if (user != null) {
+            return user;
+        }
+        else {
+            return null;
+        }
+    }
     @PostMapping("/user")
     public User saveUser(@RequestBody User user) {
-        System.out.println("present!");
         return userServe.saveUser(user);
     }
 }

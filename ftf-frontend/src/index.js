@@ -6,12 +6,6 @@ import UserDashboard from './userDashboard.js'
 import CreateAccount from './createAccount.js'
 import NotFound from './NotFound.js'
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
 
 ReactDOM.render(
     

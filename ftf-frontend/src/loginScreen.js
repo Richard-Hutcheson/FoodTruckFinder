@@ -22,16 +22,42 @@ class LoginScreen extends Component{
             [name]:value
         });
     }
-    handleSubmit(event){
-        window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
+    // handleSubmit(event){
+    //     window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
+    //     event.preventDefault();
+
+    //     loginUser(this.state.username, this.state.password);
+    //     this.props.history.push({
+    //         pathname: '/UserDashboard',
+    //           state: {user: this.state.username} // your data array of objects
+    //       })
+    // }
+    async handleSubmit(event){
+        // window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
         event.preventDefault();
 
-        loginUser(this.state.username, this.state.password);
-        // this.props.history.push({
-        //     pathname: '/UserDashboard',
-        //     state: {item1: "exodus", item2: "matthew"}
-        // });
-
+        let response;
+        response = await fetch('http://localhost:8080/user', {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                userID: 1,
+                username: this.state.username,
+                password: this.state.password,
+                role: "a"
+            })
+        }).catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+        let responseJSON = await response.json();
+        console.log("response = ", responseJSON);
+        this.props.history.push({
+            pathname: '/UserDashboard',
+              state: {user: this.state.username} // your data array of objects
+          })
     }
     
     render(){
@@ -45,26 +71,22 @@ class LoginScreen extends Component{
                 <form id = {styles.loginForm} onSubmit={this.handleSubmit}>
                     <div className={styles.loginWrapper}>
                         <div className = {styles.usernameField}>
-                            <label for="username" id = {styles.usernameLabel}>username:</label>
+                            <label htmlFor="username" id = {styles.usernameLabel}>username:</label>
                             <input type="text" id={styles.username} name="username"  value = {this.state.username} onChange={this.handleChange} required></input>
                         </div>
-                        <div class = {styles.passwordField}>
-                            <label for="pass" id = {styles.passwordLabel}>password:</label>
+                        <div className = {styles.passwordField}>
+                            <label htmlFor="pass" id = {styles.passwordLabel}>password:</label>
                             <input type="password" id={styles.password} name="password" value = {this.state.password} onChange={this.handleChange} required></input>
                         </div>
                     </div>
-                    <div class = {styles.loginBtnClass}>
+                    <div className = {styles.loginBtnClass}>
                         <input type = "submit" value = "LOGIN" id= {styles.loginBtnId}></input>
                     </div>
                 </form>
                 <a href="/createAccount" id = {styles.createAcntATagId}>
                     <button id = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
                 </a>
-                {/* <div class = 'login-btn-class'>
-                    <Link href="/dashboard">
-                        <a id = 'login-btn-id'>login</a>
-                    </Link>
-                </div> */}
+
                 <footer className={styles.footerClass}>
                     <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
                 </footer> 

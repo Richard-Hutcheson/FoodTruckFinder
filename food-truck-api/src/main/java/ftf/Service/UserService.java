@@ -21,6 +21,7 @@ public class UserService {
     public Optional<User> findUser(Long userId) {
         return userRepository.findById(userId);
     }
+    public Optional<User> findByUsername(String username) {return userRepository.findByUsername(username);}
 
     public User saveUser(User user) {
 
