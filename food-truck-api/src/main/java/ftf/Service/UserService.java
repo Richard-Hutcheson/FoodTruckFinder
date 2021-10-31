@@ -38,6 +38,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Optional<User> findById(Long Id) { return userRepository.findById(Id); }
+
     public User updateUser(User user) {
 
         Optional<User> update = userRepository.findById(user.getId());

@@ -78,12 +78,12 @@ public class UserController {
 
     @PatchMapping("/editAccount")
     public User editAccount(@RequestBody User user) {
-        User updated = userServe.updateUser(user);
+        Optional<User> updated = userServe.findById(user.getId());
 
-        if (updated == null)
-            throw new UserNotFoundException("User Not Found");
+        if (updated.isPresent())
+            return userServe.updateUser(user);
 
-        return updated;
+        throw new UserNotFoundException("User ID not Found");
     }
 
     //This is for testing purposes, it will retrieve all the usernames
