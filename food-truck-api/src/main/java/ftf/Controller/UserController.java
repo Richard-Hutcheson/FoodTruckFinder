@@ -5,11 +5,11 @@ import ftf.Service.UserService;
 import ftf.classes.User;
 import ftf.classes.View;
 import ftf.exceptions.InvalidLoginException;
+import ftf.exceptions.UsernameTakenException;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,8 +55,14 @@ public class UserController {
     public User saveUser(@RequestBody User user) {
         //ONLY THING BACKEND NEEDS TO DO HERE IS VALIDATE THAT
         //THE USERNAME IS UNIQUE. IF SUCCESS, RETURN THIS:
-        return userServe.findByUsername(user.getUsername()).orElse(new UsernameTakenException("Username is already taken"));
-        //IF FAILURE, RETURN AN EXCEPTION
+        Optional<User> foundUser = userServe.findByUsername(user.getUsername());
+
+        if (foundUser.isPresent())
+            throw new UsernameTakenException("Username Already Exist");
+
+
+        return userServe.saveUser(user);
+
     }
 
     //TODO: CHANGE THIS TO A PRINCIPLE AND USE THE SPRING SECURITY TO get a valid JSON Web Token
