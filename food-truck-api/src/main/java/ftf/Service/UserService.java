@@ -6,6 +6,7 @@ import ftf.exceptions.InvalidLoginException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,10 @@ public class UserService {
          */
 
         return userRepository.save(user);
+    }
+
+    public User updateUser(String userId, User user) {
+        return userRepository.updateUser(user);
     }
 
     public List<User> getUsers() {
