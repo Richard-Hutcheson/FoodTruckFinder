@@ -27,7 +27,6 @@ public class FoodTruck {
     @ManyToOne
     User owner;
     //(this is the truck owner AKA user_id)
-    //might need to
 
     @Column(name = "description")
     String description;

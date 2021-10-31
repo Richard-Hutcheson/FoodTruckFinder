@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = FoodItems.TABLE_NAME)
 public class FoodItems {
-    public static final String TABLE_NAME = "FoodTruck";
+    public static final String TABLE_NAME = "FoodItems";
 
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
