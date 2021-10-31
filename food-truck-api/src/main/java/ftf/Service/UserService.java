@@ -3,6 +3,7 @@ package ftf.Service;
 import ftf.classes.User;
 import ftf.Repository.UserRepository;
 import ftf.exceptions.InvalidLoginException;
+import ftf.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,9 +37,25 @@ public class UserService {
         return userRepository.save(user);
     }
 
-//    public User updateUser(String userId, User user) {
-//        return userRepository.updateUser(user);
-//    }
+    public User updateUser(User user) {
+        Optional<User> update = userRepository.findByUserId(user.getId());
+
+        if (!update.isPresent())
+            throw new UserNotFoundException("User Not Found");
+
+        User up = update.get();
+
+        up.setAddress(user.getAddress());
+        up.setUsername(user.getUsername());
+        up.setPassword(user.getPassword());
+        up.setCity(user.getCity());
+        up.setName(user.getName());
+        up.setState(user.getState());
+
+        userRepository.save(up);
+
+        return up;
+    }
 
     public List<User> getUsers() {
         //will return all the users based on username

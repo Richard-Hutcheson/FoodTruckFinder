@@ -74,10 +74,11 @@ public class UserController {
                 .findAny().orElseThrow(() -> new InvalidLoginException("User not found!"));
     }
 
-//    @PatchMapping("/editAccount")
-//    public User editAccount(@PathVariable String userId, @RequestBody User user) {
-//        return userServe.updateUser(userId, user);
-//    }
+
+    @PatchMapping("/editAccount")
+    public User editAccount(@RequestBody User user) {
+        return userServe.updateUser(user);
+    }
 
     //This is for testing purposes, it will retrieve all the usernames
     //within the database
