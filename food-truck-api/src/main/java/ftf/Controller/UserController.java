@@ -55,7 +55,7 @@ public class UserController {
     public User saveUser(@RequestBody User user) {
         //ONLY THING BACKEND NEEDS TO DO HERE IS VALIDATE THAT
         //THE USERNAME IS UNIQUE. IF SUCCESS, RETURN THIS:
-        return userServe.saveUser(user);
+        return userServe.findByUsername(user.getUsername()).orElse(new UsernameTakenException("Username is already taken"));
         //IF FAILURE, RETURN AN EXCEPTION
     }
 
