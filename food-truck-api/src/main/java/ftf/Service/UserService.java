@@ -4,6 +4,7 @@ import ftf.classes.User;
 import ftf.Repository.UserRepository;
 import ftf.exceptions.InvalidLoginException;
 import ftf.exceptions.UserNotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,13 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        Optional<User> update = userRepository.findByUserId(user.getId());
 
-        if (!update.isPresent())
-            throw new UserNotFoundException("User Not Found");
+        Optional<User> update = userRepository.findById(user.getId());
+
+        if (!update.isPresent()) {
+            return null;
+        }
+
 
         User up = update.get();
 
@@ -51,6 +55,7 @@ public class UserService {
         up.setCity(user.getCity());
         up.setName(user.getName());
         up.setState(user.getState());
+        up.setEmail(user.getEmail());
 
         userRepository.save(up);
 

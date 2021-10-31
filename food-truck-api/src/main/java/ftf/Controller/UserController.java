@@ -5,6 +5,7 @@ import ftf.Service.UserService;
 import ftf.classes.User;
 import ftf.classes.View;
 import ftf.exceptions.InvalidLoginException;
+import ftf.exceptions.UserNotFoundException;
 import ftf.exceptions.UsernameTakenException;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,12 @@ public class UserController {
 
     @PatchMapping("/editAccount")
     public User editAccount(@RequestBody User user) {
-        return userServe.updateUser(user);
+        User updated = userServe.updateUser(user);
+
+        if (updated == null)
+            throw new UserNotFoundException("User Not Found");
+
+        return updated;
     }
 
     //This is for testing purposes, it will retrieve all the usernames
