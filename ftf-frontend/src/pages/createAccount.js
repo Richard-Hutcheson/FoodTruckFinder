@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from "./css/createAcnt.module.css"
+import styles from "../css/createAcnt.module.css"
 class CreateAccount extends Component{
     
     

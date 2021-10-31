@@ -28,23 +28,47 @@ export async function noahCall(){
         console.log("text = " + text);
     });
 }
+// export async function getUserID(username){
+//     const response = await fetch(`http://localhost:8080/findUser/${username}`, {
+//         method: "GET",
+//         headers:{
+//             "Content-Type": "application/json",
+//             "Accept": "application/json",
+//             "Access-Control-Allow-Origin": "*"
+//         }
+//     }).catch(error =>{
+//         window.confirm("Problem encountered with fetch operation: " + error.message);
+//     });
+//     if(response != null){
+//         console.log("response = ", response);
+//         let responseJSON = await response.json();
+//         console.log("RJ: " + responseJSON);
+//         return responseJSON;
+//     }else{
+//         console.log("promise undefined");
+//     }
+// }
 export async function getUserID(username){
-    const response = await fetch(`http://localhost:8080/findUser/${username}`, {
+    
+    const requestOptions = {
         method: "GET",
         headers:{
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         }
-    }).catch(error =>{
-        window.confirm("Problem encountered with fetch operation: " + error.message);
-    });
-    if(response != null){
-        console.log("response = ", response);
-        let responseJSON = await response.json();
-        console.log("RJ: " + responseJSON);
-        return responseJSON;
-    }else{
-        console.log("promise undefined");
+    };
+    const response = await fetch(`http://localhost:8080/findUser/${username}`, requestOptions)
+        .catch(error =>{
+            console.log("hello");
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
+        const data = await response.json();
+        if (data != null){
+            return data.id;
+        }else{
+            return "...unknown...";  
+        }
     }
 }
