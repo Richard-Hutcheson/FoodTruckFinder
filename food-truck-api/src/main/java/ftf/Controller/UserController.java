@@ -62,7 +62,7 @@ public class UserController {
 
     @GetMapping("/login/{username}/{password}")
     @JsonView(View.UserView.class)
-    public User login(@PathVariable String username, String password) {
+    public User login(@PathVariable String username, @PathVariable String password) {
         List<User> user = userServe.findByUsernameAndPassword(username,password);
 
         return user.stream().filter(users -> username.equals(users.getUsername()) && password.equals(users.getPassword()))
