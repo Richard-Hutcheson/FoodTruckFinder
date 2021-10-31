@@ -41,4 +41,7 @@ public class User {
 
     @Column(name = "state")
     String state;
+
+    @Column(name = "email")
+    String email;
 }

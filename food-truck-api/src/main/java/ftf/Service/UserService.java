@@ -36,9 +36,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(String userId, User user) {
-        return userRepository.updateUser(user);
-    }
+//    public User updateUser(String userId, User user) {
+//        return userRepository.updateUser(user);
+//    }
 
     public List<User> getUsers() {
         //will return all the users based on username

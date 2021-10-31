@@ -1,8 +1,54 @@
 import React, { Component } from 'react';
 import styles from "../css/createAcnt.module.css"
+import {saveUser} from "../API/apiCalls.js"
+
 class CreateAccount extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            name: '',
+            email: '',
+            address: '',
+            city: '',
+            state: ''    
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event){
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]:value
+        });
+        console.log("name = " + name + " value = " + value);
     
-    
+    }
+    async handleSubmit(event){
+        event.preventDefault();
+        let userData = new Map();
+        userData.set('username', this.state.username);
+        userData.set('password', this.state.password);
+        userData.set('name', this.state.name);
+        userData.set('email', this.state.email);
+        userData.set('address', this.state.address);
+        userData.set('state', this.state.state);
+        userData.set('city', this.state.username);
+        const response = await saveUser(userData);
+        if (response != null){
+            console.log("response in create account = ", response);
+            
+            this.props.history.push({
+                pathname: '/UserDashboard',
+                state: {user: this.state.username, name: this.state.name}
+            })
+        }else{
+            console.log("response is undefined");
+        }
+    }
     render(){
         return (
             
@@ -11,35 +57,35 @@ class CreateAccount extends Component{
             <h1 className={styles.header}>CREATE ACCOUNT</h1>
 
             <div className={styles.innerContainer}>
-                <form className={styles.formClass} onSubmit={()=>window.confirm("Account Created")} action="/">
+                <form className={styles.formClass} onSubmit={this.handleSubmit} action="/">
                         <div className={styles.groupClass}>
-                            <label for="username" id = {styles.username}>Username:</label>
-                            <input type="text" className={styles.inputClass} id={styles.usernameInput} name="username"  required></input>
+                            <label htmlFor="username" id = {styles.username}>Username:</label>
+                            <input type="text" className={styles.inputClass} id={styles.usernameInput} name="username" onChange={this.handleChange} required></input>
                         </div>
                         <div className={styles.groupClass}>
-                            <label for="password" id = {styles.password}>Password:</label>
-                            <input type="text" className={styles.inputClass} id={styles.passwordInput} name="password"  required></input>
+                            <label htmlFor="password" id = {styles.password}>Password:</label>
+                            <input type="text" className={styles.inputClass} id={styles.passwordInput} name="password"  onChange={this.handleChange} required></input>
                             
                         </div>
                         <div className={styles.groupClass}>
-                            <label for="name" id = {styles.name}>Name:</label>
-                            <input type="text" className={styles.inputClass} id={styles.nameInput} name="name"  required></input>
+                            <label htmlFor="name" id = {styles.name}>Name:</label>
+                            <input type="text" className={styles.inputClass} id={styles.nameInput} name="name" onChange={this.handleChange} required></input>
                         </div>
                         
                         <div className={styles.groupClass}>
-                            <label for="email" id = {styles.email}>Email:</label>
-                            <input type="text" className={styles.inputClass} id={styles.emailInput} name="email"  required></input>
+                            <label htmlFor="email" id = {styles.email}>Email:</label>
+                            <input type="text" className={styles.inputClass} id={styles.emailInput} name="email"  onChange={this.handleChange} required></input>
                         </div>
                         
                         <div className={styles.addressClass}>
-                            <label for="address" id = {styles.address}>Address:</label>
-                            <input type="text" className={styles.inputClass} id={styles.addressInput} name="address"  required></input>
+                            <label htmlFor="address" id = {styles.address}>Address:</label>
+                            <input type="text" className={styles.inputClass} id={styles.addressInput} name="address" onChange={this.handleChange} required></input>
                 
-                            <label for="city" id = {styles.city}>   City:</label>
-                            <input type="text" className={styles.inputClass} id={styles.cityInput} name="city"  required></input>
+                            <label htmlFor="city" id = {styles.city}>   City:</label>
+                            <input type="text" className={styles.inputClass} id={styles.cityInput} name="city" onChange={this.handleChange} required></input>
 
-                            <label for="state" id = {styles.state}>  State:</label>
-                            <input type="text"  className={styles.inputClass} id={styles.stateInput} name="state"  required></input>
+                            <label htmlFor="state" id = {styles.state}>  State:</label>
+                            <input type="text"  className={styles.inputClass} id={styles.stateInput} name="state" onChange={this.handleChange} required></input>
 
                         </div>
                         

@@ -12,33 +12,20 @@ class UserDashboard extends Component{
         this.state = {
             user: '<unknown>',
             userID: 'fetching...',
-            searchQuery: ''
+            searchQuery: '',
+            name: '<unknown>'
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
+        }
+        if (this.props.location.name != null){
+            this.state.name = this.props.location.state.name;
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount(){
-        // const requestOptions = {
-        //     method: "GET",
-        //     headers:{
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json",
-        //         "Access-Control-Allow-Origin": "*"
-        //     }
-        // };
-        // const response = await fetch(`http://localhost:8080/findUser/${this.state.user}`, requestOptions).catch(error =>{
-        //     window.confirm("Problem encountered with fetch operation: " + error.message);
-        // });
-        // const data = await response.json();
-        // if (data != null){
-        //     this.setState({userID: data.id})
-        // }else{
-        //     this.setState({userID: "could not be found"})    
-        // }
         let response = await getUserID(this.state.user);
         if (response == null){
             response = "unable to retrieve";
@@ -62,7 +49,6 @@ class UserDashboard extends Component{
         }
     }
     render(){ 
-        const GMapsURL ="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ5YKm6ECCT4YR7IMpn-n9jgg&key=AIzaSyB7-J8lGIrdLSgHvf05LJBA_Y6uAzLe57Q";
         return (
             <div>
                 <div className = {styles.navbar}>
