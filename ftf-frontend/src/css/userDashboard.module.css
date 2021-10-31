@@ -71,4 +71,21 @@
   .dropdownDiv:hover .dropdownContent {display: block;}
   
   .dropdownDiv:hover .dropbtn {background-color: #3e8e41;}
-/* Style the arrow inside the select element: */
+
+  .searchForm{
+      text-align: center;
+      
+  }
+  .searchField{
+      width: 300px;
+  }
+  .searchBtn{
+        border-style: solid;
+        border-radius: .5em;
+        border-color: white;
+        width: 100px;
+        height: 30px;
+  }
+  .searchBtn:hover{
+      background-color: rgb(232, 232, 232);
+  }

@@ -11,12 +11,14 @@ class UserDashboard extends Component{
         super(props);
         this.state = {
             user: '<unknown>',
-            userID: 'fetching...'
+            userID: 'fetching...',
+            searchQuery: ''
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
         }
-        // this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount(){
@@ -43,8 +45,24 @@ class UserDashboard extends Component{
         }
         this.setState({userID: response});
     }
-
-    render(){  
+    handleChange(event){
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        console.log("value = " + value);
+        this.setState({
+            searchQuery: value
+        });
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        if (this.state.searchQuery != ""){
+            console.log("search query = " + this.state.searchQuery);
+        }else{
+            alert("search field is empty");
+        }
+    }
+    render(){ 
+        const GMapsURL ="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ5YKm6ECCT4YR7IMpn-n9jgg&key=AIzaSyB7-J8lGIrdLSgHvf05LJBA_Y6uAzLe57Q";
         return (
             <div>
                 <div className = {styles.navbar}>
@@ -57,6 +75,10 @@ class UserDashboard extends Component{
                     <a href="/" className = {styles.logout}>logout</a>
                 </div>
                 <p>your user id = {this.state.userID}</p>
+                <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+                    <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                    <button  className={styles.searchBtn} type="submit">Submit</button>
+                </form>
             </div>
         );
 
