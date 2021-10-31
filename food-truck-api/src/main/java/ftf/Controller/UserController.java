@@ -60,9 +60,7 @@ public class UserController {
         if (foundUser.isPresent())
             throw new UsernameTakenException("Username Already Exist");
 
-
         return userServe.saveUser(user);
-
     }
 
     //TODO: CHANGE THIS TO A PRINCIPLE AND USE THE SPRING SECURITY TO get a valid JSON Web Token
