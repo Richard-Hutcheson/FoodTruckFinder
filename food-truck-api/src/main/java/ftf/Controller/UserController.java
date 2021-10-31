@@ -9,6 +9,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class UserController {
     public Optional<User> findUserById(@PathVariable Long id) {
         var user = userServe.findUser(id);
 
-        if (user != null) {
+        if (user.isPresent()) {
             return user;
         }
         else {
@@ -42,7 +43,7 @@ public class UserController {
 
         var user = userServe.findByUsername(username);
 //        System.out.println(user.get().getId());
-        if (user != null) {
+        if (user.isPresent()) {
             return user;
         }
         else {
@@ -59,20 +60,15 @@ public class UserController {
     }
 
 
-    /*
-    @GetMapping("/login")
+    @GetMapping("/login/{username}/{password}")
     @JsonView(View.UserView.class)
     public User login(@PathVariable String username, String password) {
-        var user = userServe.findByUserPass(username,password);
-        if (user != null) {
-            return user;
-        }
-        else {
-            return null;
-        }
-    }
+        List<User> user = userServe.findByUsernameAndPassword(username,password);
 
-     */
+        return user.stream().filter(users -> username.equals(users.getUsername()) && password.equals(users.getPassword()))
+                .findAny().orElseThrow(() -> new InvalidLoginException("User not found!"));
+
+    }
 
 
 
@@ -83,6 +79,5 @@ public class UserController {
     public List<User> getUsers(){
         return userServe.getUsers();
     }
-
 
 }
