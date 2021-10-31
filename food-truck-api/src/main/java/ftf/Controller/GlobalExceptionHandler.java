@@ -2,6 +2,7 @@ package ftf.Controller;
 
 import ftf.exceptions.ApiError;
 import ftf.exceptions.InvalidLoginException;
+import ftf.exceptions.UsernameTakenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,4 +20,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                         WebRequest request){
         return new ResponseEntity<>(new ApiError(ex.getMessage(), HttpStatus.NOT_FOUND, LocalDateTime.now()), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(UsernameTakenException.class)
+    public ResponseEntity<Object>handleUsernameTakenException(UsernameTakenException ex,
+                                                              WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.CONFLICT,LocalDateTime.now()),HttpStatus.CONFLICT);
+
+    }
+
 }

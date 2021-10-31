@@ -55,11 +55,13 @@ public class UserController {
     public User saveUser(@RequestBody User user) {
         //ONLY THING BACKEND NEEDS TO DO HERE IS VALIDATE THAT
         //THE USERNAME IS UNIQUE. IF SUCCESS, RETURN THIS:
+
+
         return userServe.saveUser(user);
         //IF FAILURE, RETURN AN EXCEPTION
     }
 
-
+    //TODO: CHANGE THIS TO A PRINCIPLE AND USE THE SPRING SECURITY TO get a valid JSON Web Token
     @GetMapping("/login/{username}/{password}")
     @JsonView(View.UserView.class)
     public User login(@PathVariable String username, @PathVariable String password) {
