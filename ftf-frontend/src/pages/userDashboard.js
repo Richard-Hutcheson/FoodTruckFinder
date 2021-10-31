@@ -62,7 +62,6 @@ class UserDashboard extends Component{
         }
     }
     render(){ 
-        const GMapsURL ="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ5YKm6ECCT4YR7IMpn-n9jgg&key=AIzaSyB7-J8lGIrdLSgHvf05LJBA_Y6uAzLe57Q";
         return (
             <div>
                 <div className = {styles.navbar}>
