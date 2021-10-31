@@ -11,40 +11,44 @@ class UserDashboard extends Component{
         super(props);
         this.state = {
             user: '<unknown>',
-            userID: 'fetching...'
+            userID: 'fetching...',
+            searchQuery: '',
+            name: '<unknown>'
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
         }
-        // this.handleClick = this.handleClick.bind(this);
+        if (this.props.location.name != null){
+            this.state.name = this.props.location.state.name;
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount(){
-        // const requestOptions = {
-        //     method: "GET",
-        //     headers:{
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json",
-        //         "Access-Control-Allow-Origin": "*"
-        //     }
-        // };
-        // const response = await fetch(`http://localhost:8080/findUser/${this.state.user}`, requestOptions).catch(error =>{
-        //     window.confirm("Problem encountered with fetch operation: " + error.message);
-        // });
-        // const data = await response.json();
-        // if (data != null){
-        //     this.setState({userID: data.id})
-        // }else{
-        //     this.setState({userID: "could not be found"})    
-        // }
         let response = await getUserID(this.state.user);
         if (response == null){
             response = "unable to retrieve";
         }
         this.setState({userID: response});
     }
-
-    render(){  
+    handleChange(event){
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        console.log("value = " + value);
+        this.setState({
+            searchQuery: value
+        });
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        if (this.state.searchQuery != ""){
+            console.log("search query = " + this.state.searchQuery);
+        }else{
+            alert("search field is empty");
+        }
+    }
+    render(){ 
         return (
             <div>
                 <div className = {styles.navbar}>
@@ -57,6 +61,10 @@ class UserDashboard extends Component{
                     <a href="/" className = {styles.logout}>logout</a>
                 </div>
                 <p>your user id = {this.state.userID}</p>
+                <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+                    <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                    <button  className={styles.searchBtn} type="submit">Submit</button>
+                </form>
             </div>
         );
 

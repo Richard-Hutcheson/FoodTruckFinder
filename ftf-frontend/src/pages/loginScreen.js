@@ -21,6 +21,15 @@ class LoginScreen extends Component{
         this.setState({
             [name]:value
         });
+    
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        if (this.state.searchQuery != ""){
+            console.log("search query = " + this.state.searchQuery);
+        }else{
+            alert("search field is empty");
+        }
     }
     // handleSubmit(event){
     //     window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
@@ -53,13 +62,21 @@ class LoginScreen extends Component{
         //     window.confirm("Problem encountered with fetch operation: " + error.message);
         // });
         // let responseJSON = await response.json();
-        let response = await loginUser(this.state.username, this.state.password);
-        console.log("response in logScreen = ", response);
-        
-        // this.props.history.push({
-        //     pathname: '/UserDashboard',
-        //       state: {user: this.state.username} // your data array of objects
-        //   })
+        const response = await loginUser(this.state.username, this.state.password);
+        if (response != null){
+            console.log("response in logScreen = ", response);
+            if (response.status == "NOT_FOUND"){
+                window.confirm("Not a valid login. Please try again.");
+            }
+            
+            this.props.history.push({
+                pathname: '/UserDashboard',
+                state: {user: this.state.username} // your data array of objects
+            })
+        }else{
+            console.log("response is undefined");
+        }
+
     }
     
     render(){

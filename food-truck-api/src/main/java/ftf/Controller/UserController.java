@@ -57,8 +57,9 @@ public class UserController {
         //THE USERNAME IS UNIQUE. IF SUCCESS, RETURN THIS:
         Optional<User> foundUser = userServe.findByUsername(user.getUsername());
 
-        if (foundUser.isPresent())
+        if (foundUser.isPresent()){
             throw new UsernameTakenException("Username Already Exist");
+        }
 
         return userServe.saveUser(user);
     }
@@ -73,7 +74,10 @@ public class UserController {
                 .findAny().orElseThrow(() -> new InvalidLoginException("User not found!"));
     }
 
-
+//    @PatchMapping("/editAccount")
+//    public User editAccount(@PathVariable String userId, @RequestBody User user) {
+//        return userServe.updateUser(userId, user);
+//    }
 
     //This is for testing purposes, it will retrieve all the usernames
     //within the database
