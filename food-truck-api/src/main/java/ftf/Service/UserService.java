@@ -2,6 +2,7 @@ package ftf.Service;
 
 import ftf.classes.User;
 import ftf.Repository.UserRepository;
+import ftf.exceptions.InvalidLoginException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,12 @@ public class UserService {
     }
 
 
-    public Optional<User> findByUserPass(String username, String password) {
-        return userRepository.findByUserPass(username,password);
+
+    /*
+    public User findByUserPass(String username, String password) {
+        return userRepository.findByUserPass(username,password).orElseThrow(() -> new InvalidLoginException("No user found with" + username));
+
     }
+
+     */
 }

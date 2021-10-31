@@ -58,13 +58,23 @@ public class UserController {
         //IF FAILURE, RETURN AN EXCEPTION
     }
 
-    @GetMapping("/login/{username}")
-    @JsonView(View.UserView.class)
-    public User login(@PathVariable String username, String password) throws InvalidLoginException {
-        var user = userServe.findByUserPass(username,password);
-        return user.orElseThrow(() -> new InvalidLoginException("No user found with" + username));
 
+    /*
+    @GetMapping("/login")
+    @JsonView(View.UserView.class)
+    public User login(@PathVariable String username, String password) {
+        var user = userServe.findByUserPass(username,password);
+        if (user != null) {
+            return user;
+        }
+        else {
+            return null;
+        }
     }
+
+     */
+
+
 
     //This is for testing purposes, it will retrieve all the usernames
     //within the database
