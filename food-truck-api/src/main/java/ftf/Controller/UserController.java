@@ -67,7 +67,6 @@ public class UserController {
 
         return user.stream().filter(users -> username.equals(users.getUsername()) && password.equals(users.getPassword()))
                 .findAny().orElseThrow(() -> new InvalidLoginException("User not found!"));
-
     }
 
 

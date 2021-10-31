@@ -10,15 +10,13 @@ class UserDashboard extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user: '',
-            userID: 'fetching...',
-            isListOpen: false,
-            selectedItem: null
+            user: '<unknown>',
+            userID: 'fetching...'
         }
-        if (this.props.location.state != ''){
+        if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
         }
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
     }
 
     async componentDidMount(){
@@ -45,12 +43,8 @@ class UserDashboard extends Component{
         }
         this.setState({userID: response});
     }
-    handleClick(event){
-        console.log("print boy!");
-    }
 
-    render(){
-        
+    render(){  
         return (
             <div>
                 <div className = {styles.navbar}>

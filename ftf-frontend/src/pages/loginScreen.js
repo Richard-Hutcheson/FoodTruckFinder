@@ -53,11 +53,13 @@ class LoginScreen extends Component{
         //     window.confirm("Problem encountered with fetch operation: " + error.message);
         // });
         // let responseJSON = await response.json();
-        await loginUser(this.state.username, this.state.password);
-        this.props.history.push({
-            pathname: '/UserDashboard',
-              state: {user: this.state.username} // your data array of objects
-          })
+        let response = await loginUser(this.state.username, this.state.password);
+        console.log("response in logScreen = ", response);
+        
+        // this.props.history.push({
+        //     pathname: '/UserDashboard',
+        //       state: {user: this.state.username} // your data array of objects
+        //   })
     }
     
     render(){
