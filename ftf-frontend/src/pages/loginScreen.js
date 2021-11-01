@@ -9,7 +9,8 @@ class LoginScreen extends Component{
         this.state = {
             username: '',
             password: '',
-            role: 'a'    
+            role: 'a', 
+            guest: 'true'
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -23,60 +24,34 @@ class LoginScreen extends Component{
         });
     
     }
-    handleSubmit(event){
-        event.preventDefault();
-        if (this.state.searchQuery != ""){
-            console.log("search query = " + this.state.searchQuery);
-        }else{
-            alert("search field is empty");
-        }
-    }
-    // handleSubmit(event){
-    //     window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
-    //     event.preventDefault();
 
-    //     loginUser(this.state.username, this.state.password);
-    //     this.props.history.push({
-    //         pathname: '/UserDashboard',
-    //           state: {user: this.state.username} // your data array of objects
-    //       })
-    // }
     async handleSubmit(event){
         // window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
         event.preventDefault();
 
-        // let response;
-        // response = await fetch('http://localhost:8080/user', {
-        //     method: "POST",
-        //     headers:{
-        //         "Content-Type": "application/json",
-        //         "Accept": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         userID: 1,
-        //         username: this.state.username,
-        //         password: this.state.password,
-        //         role: "a"
-        //     })
-        // }).catch(error =>{
-        //     window.confirm("Problem encountered with fetch operation: " + error.message);
-        // });
-        // let responseJSON = await response.json();
-        const response = await loginUser(this.state.username, this.state.password);
-        if (response != null){
-            console.log("response in logScreen = ", response);
-            if (response.status == "NOT_FOUND"){
-                window.confirm("Not a valid login. Please try again.");
-            }
-            
+        if (event.target.id == "enterGuest"){
+
             this.props.history.push({
                 pathname: '/UserDashboard',
-                state: {user: this.state.username} // your data array of objects
+                state: {user: "guest", guest: "true"} // your data array of objects
             })
-        }else{
-            console.log("response is undefined");
-        }
 
+        }else{
+            const response = await loginUser(this.state.username, this.state.password);
+            if (response != null){
+                console.log("response in logScreen = ", response);
+                if (response.status == "NOT_FOUND"){
+                    window.confirm("Not a valid login. Please try again.");
+                }else{
+                    this.props.history.push({
+                        pathname: '/UserDashboard',
+                        state: {user: this.state.username, guest: 'false'} // your data array of objects
+                    })
+                }
+            }else{
+                console.log("response is undefined");
+            }
+        }
     }
     
     render(){
@@ -105,7 +80,7 @@ class LoginScreen extends Component{
                 <a href="/createAccount" className = {styles.createAcntATagId}>
                     <button className = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
                 </a>
-
+                <button className = {styles.enterAsGuestBtn} id = "enterGuest" type = "button" onClick = {this.handleSubmit}> ENTER AS GUEST </button>
                 <footer className={styles.footerClass}>
                     <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
                 </footer> 

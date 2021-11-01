@@ -42,12 +42,14 @@
     cursor: pointer;
     height: inherit;
     min-width: 90px;
+    padding: 0;
   }
   
   .dropdownDiv {
     position: relative;
     display: inline-block;
     height: inherit;
+    
   }
   
   .dropdownContent {
@@ -89,3 +91,14 @@
   .searchBtn:hover{
       background-color: rgb(232, 232, 232);
   }
+
+  .mapWrapper{
+        background-color: gray;
+        width: 500px;
+        height: 350px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        text-align: center;
+        bottom: 100px;
+}

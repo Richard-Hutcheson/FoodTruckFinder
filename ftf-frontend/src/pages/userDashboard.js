@@ -13,14 +13,18 @@ class UserDashboard extends Component{
             user: '<unknown>',
             userID: 'fetching...',
             searchQuery: '',
-            name: '<unknown>'
+            name: '<unknown>',
+            guest: 'true'
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
-        }
-        if (this.props.location.name != null){
+            this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
+
+
         }
+
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -49,25 +53,71 @@ class UserDashboard extends Component{
         }
     }
     render(){ 
-        return (
-            <div>
-                <div className = {styles.navbar}>
-                    <div className={styles.dropdownDiv}>
-                        <button className={styles.dropbtn}>{this.state.user}</button>
-                        <div className={styles.dropdownContent}>
-                            <a href="#">Manage Account</a>
+        
+        if (this.state.guest == 'true'){
+            return (
+                <div>
+    
+    
+    
+                    <div className = {styles.navbar}>
+                        <div className={styles.dropdownDiv}>
+                            <button className={styles.dropbtn}>{this.state.user}</button>
+                            <div className={styles.dropdownContent}>
+                                {/* <a href="#">Manage Account</a> */}
+                            </div>
                         </div>
+                        <a href="/" className = {styles.logout}>logout</a>
                     </div>
-                    <a href="/" className = {styles.logout}>logout</a>
+                    <p>your user id = guest</p>
+                    <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                        <button  className={styles.searchBtn} type="submit">Submit</button>
+                    </form>
+                    
+                    <div className = {styles.mapWrapper}>
+                        <p>~map goes here~</p>
+                    </div>
+    
+    
+    
+    
+    
                 </div>
-                <p>your user id = {this.state.userID}</p>
-                <form className={styles.searchForm} onSubmit={this.handleSubmit}>
-                    <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
-                    <button  className={styles.searchBtn} type="submit">Submit</button>
-                </form>
-            </div>
-        );
-
+            );
+        }else{
+            return (
+                <div>
+    
+    
+    
+                    <div className = {styles.navbar}>
+                        <div className={styles.dropdownDiv}>
+                            <button className={styles.dropbtn}>{this.state.user}</button>
+                            <div className={styles.dropdownContent}>
+                                <a href="#">Manage Account</a>
+                            </div>
+                        </div>
+                        <a href="/" className = {styles.logout}>logout</a>
+                    </div>
+                    <p>your user id = {this.state.userID}</p>
+                    <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                        <button  className={styles.searchBtn} type="submit">Submit</button>
+                    </form>
+                    <div className = {styles.mapWrapper}>
+                        
+                        <p>~map goes here~</p>
+                    </div>
+    
+    
+    
+    
+    
+                </div>
+        
+            );
+        }
     }
 }
 export default UserDashboard;

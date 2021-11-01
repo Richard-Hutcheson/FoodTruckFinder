@@ -91,7 +91,7 @@
     background-color: white;
     border-color: white;
     display: block;
-    width: 130px;
+    width: 150px;
     text-decoration: none;
     height: 25px;
     font-weight: bolder;
@@ -129,6 +129,7 @@
     text-decoration: none;
     height: 25px;
     font-weight: bolder;
+    margin: .5em 0 .9em 0;
 
 }
 .createAcntId:hover{
@@ -137,4 +138,26 @@
 }
 .createAcntATagId{
     text-decoration: none;
+}
+
+.enterAsGuestBtn{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: .3s;
+    color: black;
+    border-style: solid;
+    border-radius: .55em;
+    border-width: .3em;
+    background-color: white;
+    border-color: white;
+    display: block;
+    width: 150px;
+    text-decoration: none;
+    height: 25px;
+    font-weight: bolder;
+}
+.enterAsGuestBtn:hover{
+    opacity: 50%;
+    border-top-width: .6em;
 }
