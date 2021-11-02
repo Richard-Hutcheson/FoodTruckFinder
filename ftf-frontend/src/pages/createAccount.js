@@ -37,7 +37,7 @@ class CreateAccount extends Component{
         userData.set('email', this.state.email);
         userData.set('address', this.state.address);
         userData.set('state', this.state.state);
-        userData.set('city', this.state.username);
+        userData.set('city', this.state.city);
         const response = await saveUser(userData);
         if (response != null){
             console.log("response in create account = ", response);

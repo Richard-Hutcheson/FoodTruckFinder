@@ -105,7 +105,7 @@ class UserManageAccount extends Component{
         udm.set('email', this.state.email);
         udm.set('address', this.state.address);
         udm.set('state', this.state.state);
-        udm.set('city', this.state.username);
+        udm.set('city', this.state.city);
         await editUser(udm);
     }
     render(){ 
