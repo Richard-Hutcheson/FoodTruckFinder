@@ -30,6 +30,7 @@ class CreateAccount extends Component{
     async handleSubmit(event){
         event.preventDefault();
         let userData = new Map();
+        userData.set('userID', '-1');
         userData.set('username', this.state.username);
         userData.set('password', this.state.password);
         userData.set('name', this.state.name);

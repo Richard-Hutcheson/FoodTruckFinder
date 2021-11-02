@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {getUser} from '../API/apiCalls';
+import {getUserID} from '../API/apiCalls';
 import {Link} from "react-router-dom";
-import styles from '../css/userDashboard.module.css';
+import styles from '../css/manageAccnt.module.css';
 
-class UserDashboard extends Component{
+
+class OwnerManageAccount extends Component{
 
     constructor(props){
         super(props);
@@ -18,6 +19,8 @@ class UserDashboard extends Component{
             this.state.user = this.props.location.state.user;
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
+
+
         }
 
 
@@ -26,11 +29,11 @@ class UserDashboard extends Component{
     }
 
     async componentDidMount(){
-        let response = await getUser(this.state.user);
+        let response = await getUserID(this.state.user);
         if (response == null){
             response = "unable to retrieve";
         }
-        this.setState({userID: response.id});
+        this.setState({userID: response});
     }
     handleChange(event){
         const target = event.target;
@@ -48,7 +51,6 @@ class UserDashboard extends Component{
             alert("search field is empty");
         }
     }
-
     render(){ 
         
         if (this.state.guest == 'true'){
@@ -74,6 +76,11 @@ class UserDashboard extends Component{
                     <div className = {styles.mapWrapper}>
                         <p>~map goes here~</p>
                     </div>
+    
+    
+    
+    
+    
                 </div>
             );
         }else{
@@ -86,7 +93,7 @@ class UserDashboard extends Component{
                         <div className={styles.dropdownDiv}>
                             <button className={styles.dropbtn}>{this.state.user}</button>
                             <div className={styles.dropdownContent}>
-                                <a href=""><Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link></a>
+                                <a href="#">Manage Account</a>
                             </div>
                         </div>
                         <a href="/" className = {styles.logout}>logout</a>
@@ -97,6 +104,7 @@ class UserDashboard extends Component{
                         <button  className={styles.searchBtn} type="submit">Submit</button>
                     </form>
                     <div className = {styles.mapWrapper}>
+                        
                         <p>~map goes here~</p>
                     </div>
     
@@ -110,4 +118,4 @@ class UserDashboard extends Component{
         }
     }
 }
-export default UserDashboard;
+export default OwnerManageAccount;

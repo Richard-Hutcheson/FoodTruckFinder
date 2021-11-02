@@ -11,7 +11,7 @@
 export function returnUserDataJSON(userDataMap){
     try{
         let userData = {            
-            userid: 1,
+            id: userDataMap.get('userID'),
             name: userDataMap.get('name'),
             username: userDataMap.get('username'),
             password: userDataMap.get('password'),
@@ -115,7 +115,7 @@ export async function createAccount(params){
         }
     }
 }
-export async function getUserID(username){
+export async function getUser(username){
     
     const requestOptions = {
         method: "GET",
@@ -135,9 +135,38 @@ export async function getUserID(username){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
-            return data.id;
+            return data;
         }else{
             return "...unknown...";  
         }
+    }
+}
+
+export async function editUser(userDataMap){
+    console.log(userDataMap);
+    const requestOptions = {
+        method: "PATCH",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: returnUserDataJSON(userDataMap)
+    }
+    const response = await fetch(`http://localhost:8080/editAccount`, requestOptions)
+    .catch(error =>{
+        console.log("hello");
+        window.confirm("Problem encountered with fetch operation: " + error.message);
+    });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        // if (data != null){
+        //     return data;
+        // }else{
+        //     return "...unknown...";  
+        // }
+    }else{
     }
 }

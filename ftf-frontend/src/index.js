@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import UserDashboard from './pages/userDashboard.js'
 import CreateAccount from './pages/createAccount.js'
 import PageNotFound from './pages/pageNotFound.js'
-
+import UserManageAccount from './pages/userManageAccnt'
 
 ReactDOM.render(
     
@@ -14,6 +14,7 @@ ReactDOM.render(
             <Route path="/" exact component={LoginScreen}/>
             <Route path="/UserDashboard" exact component={UserDashboard}/>
             <Route path = "/CreateAccount" exact component = {CreateAccount}/>
+            <Route path = "/ManageAccount" exact component = {UserManageAccount}/>
             <Route component={PageNotFound}/>
         </Switch>
     </Router>,
