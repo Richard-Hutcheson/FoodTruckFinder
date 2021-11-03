@@ -6,6 +6,7 @@ import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,18 +19,23 @@ public class FoodTruckService {
     @Autowired
     public FoodTruckService(FoodTruckRepository foodTruckRepository) { this.foodTruckRepository = foodTruckRepository; }
 
-    public FoodTruck getTruckDetails(FoodTruck ft) {
+    public Optional<FoodTruck> getTruckDetails(FoodTruck ft) {
 
         Optional<FoodTruck> foodTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
 
         if (!foodTruck.isPresent())
             throw new FoodTruckNotFoundException("Food Truck Not Found");
 
-        return foodTruck.get();
+        return foodTruck;
     }
 
-    public FoodTruck getTruckDetailsByName(String name) {
-        return new FoodTruck();
+    public Optional<FoodTruck> getTruckDetailsByName(String name) {
+        Optional<FoodTruck> foodTruck = foodTruckRepository.findFoodTruckByTruckName(name);
+
+        if (!foodTruck.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        return foodTruck;
     }
 
     public List<FoodTruck> getTrucksPriceRange(double min, double max) {
@@ -38,12 +44,12 @@ public class FoodTruckService {
         return foodTrucks;
     }
 
-    public FoodTruck getTruckDetailsById(Long id) {
+    public Optional<FoodTruck> getTruckDetailsById(Long id) {
         Optional<FoodTruck> foodTruck = foodTruckRepository.findFoodTruckByTruckID(id);
 
         if (!foodTruck.isPresent())
             throw new FoodTruckNotFoundException("Food Truck Not Found");
 
-        return foodTruck.get();
+        return foodTruck;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -17,25 +18,21 @@ public class FoodTruckController {
     private FoodTruckService foodTruckService;
 
     @GetMapping("/truckDetails")
-    @JsonView(View.FoodTruckView.class)
-    public FoodTruck getTruckDetails(@RequestBody FoodTruck ft) {
+    public Optional<FoodTruck> getTruckDetails(@RequestBody FoodTruck ft) {
         return foodTruckService.getTruckDetails(ft);
     }
 
-    @GetMapping("/truckDetails/{name}")
-    @JsonView(View.FoodTruckView.class)
-    public FoodTruck getTruckDetailsByName(@PathVariable String name) {
+    @GetMapping("/truckDetails/name/{name}")
+    public Optional<FoodTruck> getTruckDetailsByName(@PathVariable String name) {
         return foodTruckService.getTruckDetailsByName(name);
     }
 
-    @GetMapping("/truckDetails/{id}")
-    @JsonView(View.FoodTruckView.class)
-    public FoodTruck getTruckDetailsById(@PathVariable Long id) {
+    @GetMapping("/truckDetails/id/{id}")
+    public Optional<FoodTruck> getTruckDetailsById(@PathVariable Long id) {
         return foodTruckService.getTruckDetailsById(id);
     }
 
     @GetMapping("/truckDetails/{min}/{max}")
-    @JsonView(View.FoodTruckView.class)
     public List<FoodTruck> getTrucksByPriceRange(@PathVariable double min, @PathVariable double max) {
         return foodTruckService.getTrucksPriceRange(min, max);
     }
