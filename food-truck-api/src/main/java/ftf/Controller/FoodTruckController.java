@@ -32,7 +32,7 @@ public class FoodTruckController {
         return foodTruckService.getTruckDetailsById(id);
     }
 
-    @GetMapping("/truckDetails/{min}/{max}")
+    @GetMapping("/truckDetails/priceRange/{min}/{max}")
     public List<FoodTruck> getTrucksByPriceRange(@PathVariable double min, @PathVariable double max) {
         return foodTruckService.getTrucksPriceRange(min, max);
     }

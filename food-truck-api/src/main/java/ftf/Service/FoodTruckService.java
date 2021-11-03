@@ -41,6 +41,9 @@ public class FoodTruckService {
     public List<FoodTruck> getTrucksPriceRange(double min, double max) {
         List<FoodTruck> foodTrucks = foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min, max);
 
+        if (foodTrucks.isEmpty())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
         return foodTrucks;
     }
 
