@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
-
+    Optional<FoodTruck> getFoodTruckByTruckID(Long id);
+    Optional<FoodTruck> getFoodTruckByName(String name);
 }
