@@ -21,9 +21,9 @@ public class FoodTruckService {
 
         Optional<FoodTruck> foodTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
 
-        if (foodTruck.isPresent())
-            return foodTruck.get();
-        else
+        if (!foodTruck.isPresent())
             throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        return foodTruck.get();
     }
 }
