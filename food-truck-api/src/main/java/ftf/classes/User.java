@@ -20,7 +20,7 @@ public class User {
     @Column(name = "userID")
     Long id;
 
-    @JsonView(View.UserView.class)
+    @JsonView(View.FoodTruckView.class)
     @Column(name = "username")
     String username;
 
