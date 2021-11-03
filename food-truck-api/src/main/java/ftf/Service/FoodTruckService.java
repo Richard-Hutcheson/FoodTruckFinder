@@ -2,7 +2,7 @@ package ftf.Service;
 
 import ftf.Repository.FoodTruckRepository;
 import ftf.classes.FoodTruck;
-import ftf.exceptions.FoodTruckNotFound;
+import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,6 @@ public class FoodTruckService {
         if (foodTruck.isPresent())
             return foodTruck.get();
         else
-            throw new FoodTruckNotFound("Food Truck Not Found");
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
     }
 }
