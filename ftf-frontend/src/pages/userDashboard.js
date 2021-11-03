@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {getUser} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
+import {callMaps} from "../API/googleMaps.js"
 
 class UserDashboard extends Component{
 
@@ -20,9 +21,9 @@ class UserDashboard extends Component{
             this.state.name = this.props.location.state.name;
         }
 
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     async componentDidMount(){
@@ -31,7 +32,15 @@ class UserDashboard extends Component{
             response = "unable to retrieve";
         }
         this.setState({userID: response.id});
+
+        let map;
+        try{
+            callMaps(map);
+        }catch(error){
+            console.log("error in calling gMaps = ", error);
+        }
     }
+
     handleChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -50,62 +59,67 @@ class UserDashboard extends Component{
     }
 
     render(){ 
-        
+        //GUEST USER
         if (this.state.guest == 'true'){
             return (
                 <div>
-    
-
                     <div className = {styles.navbar}>
                         <div className={styles.dropdownDiv}>
                             <button className={styles.dropbtn}>{this.state.user}</button>
                             <div className={styles.dropdownContent}>
-                                {/* <a href="#">Manage Account</a> */}
                             </div>
                         </div>
-                        <a href="/" className = {styles.logout}>logout</a>
+                        <a href="/" className = {styles.logout}>EXIT</a>
                     </div>
                     <p>your user id = guest</p>
                     <form className={styles.searchForm} onSubmit={this.handleSubmit}>
-                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
-                        <button  className={styles.searchBtn} type="submit">Submit</button>
+                        <div className={styles.searchFieldDiv}>
+                            <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                        </div>
+                        <div className={styles.searchBtnDiv}>
+                            <button  className={styles.searchBtn} type="submit">Submit</button>
+                        </div>
                     </form>
                     
                     <div className = {styles.mapWrapper}>
-                        <p>~map goes here~</p>
+                        <div className = {styles.map} id = "map"></div>
                     </div>
                 </div>
             );
         }else{
             return (
                 <div>
-    
-    
-    
                     <div className = {styles.navbar}>
                         <div className={styles.dropdownDiv}>
                             <button className={styles.dropbtn}>{this.state.user}</button>
                             <div className={styles.dropdownContent}>
-                                <a href=""><Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link></a>
+                                <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
                             </div>
                         </div>
                         <a href="/" className = {styles.logout}>logout</a>
                     </div>
                     <p>your user id = {this.state.userID}</p>
                     <form className={styles.searchForm} onSubmit={this.handleSubmit}>
-                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
-                        <button  className={styles.searchBtn} type="submit">Submit</button>
+
+                        <div className={styles.searchSubDiv}>
+
+                            <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                            <button  className={styles.searchBtn} type="submit">Submit</button>                            
+                        </div>
+
+                        <select name="searchOptions" className={styles.searchOptions}>
+                            <option value="name">Food Truck By Name</option>
+                            <option value="price">Food Truck By Price</option>
+                            <option value="location">Food Truck By Location</option>
+                            <option value="type">Food Truck By Food Type</option>
+                            <option value="user">User</option>
+                        </select>
                     </form>
                     <div className = {styles.mapWrapper}>
-                        <p>~map goes here~</p>
+                        <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>
+                        <div className={styles.map} id="map"></div>
                     </div>
-    
-    
-    
-    
-    
                 </div>
-        
             );
         }
     }

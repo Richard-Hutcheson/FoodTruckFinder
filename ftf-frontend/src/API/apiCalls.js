@@ -49,7 +49,6 @@ export async function loginUser(un, pw){
         console.log("response = ", responseJSON);
         return responseJSON;
     }
-
 }
 export async function saveUser(userDataMap){
     if (returnUserDataJSON(userDataMap) == "err"){
@@ -127,7 +126,6 @@ export async function getUser(username){
     };
     const response = await fetch(`http://localhost:8080/findUser/${username}`, requestOptions)
         .catch(error =>{
-            console.log("hello");
             window.confirm("Problem encountered with fetch operation: " + error.message);
         });
     if (response != null){

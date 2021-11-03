@@ -1,104 +1,137 @@
-* {
+    * {
     font-family: 'Noto Sans Mono', monospace;
-}
-.navbar{
-    background-color: rgb(85, 85, 85);
-    height: 3em;
-    
-}
-.userHeader{
-    position: absolute;
-    display: inline;
-    margin: 0;
-    left: 1em;
-    top: .5em;
-    border-style: solid;
-    padding-left: .5em;
-    padding-right: .5em;
-    width: auto;
-    height: 1.8em;
-}
-.userHeaderText{
-    display: inline;
-    margin: 0;
-}
-.logout{
-    position: absolute;
-    display: inline;
-    right: 3em;
-    top: 1em;
-    text-decoration: none;
-    color: #4CAF50;
-}
-.logout:hover{color: #ffffff;}
+    }
+    .navbar{
+        background-color: rgb(85, 85, 85);
+        height: 3em;
 
-.dropbtn {
-    position: relative;
-    background-color: #4CAF50;
-    color: white;
-    /* padding: 16px; */
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    height: inherit;
-    min-width: 90px;
-    padding: 0;
-  }
-  
-  .dropdownDiv {
-    position: relative;
-    display: inline-block;
-    height: inherit;
-    
-  }
-  
-  .dropdownContent {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdownContent a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdownContent a:hover {background-color: #92c4eb}
-  
-  .dropdownDiv:hover .dropdownContent {display: block;}
-  
-  .dropdownDiv:hover .dropbtn {background-color: #3e8e41;}
+    }
+    .userHeader{
+        position: absolute;
+        display: inline;
+        margin: 0;
+        left: 1em;
+        top: .5em;
+        border-style: solid;
+        padding-left: .5em;
+        padding-right: .5em;
+        width: auto;
+        height: 1.8em;
+    }
+    .userHeaderText{
+        display: inline;
+        margin: 0;
+        }
+        .logout{
+        position: absolute;
+        display: inline;
+        right: 3em;
+        top: 1em;
+        text-decoration: none;
+        color: #4CAF50;
+    }
+    .logout:hover{color: #ffffff;}
 
-  .searchForm{
-      text-align: center;
-      
-  }
-  .searchField{
-      width: 300px;
-  }
-  .searchBtn{
+    .dropbtn {
+        position: relative;
+        background-color: #4CAF50;
+        color: white;
+        /* padding: 16px; */
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        height: inherit;
+        min-width: 90px;
+        padding: 0;
+    }
+
+    .dropdownDiv {
+        position: relative;
+        display: inline-block;
+        height: inherit;
+    }
+
+    .dropdownContent {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdownContent a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdownContent a:hover {background-color: #92c4eb}
+
+    .dropdownDiv:hover .dropdownContent {display: block;}
+
+    .dropdownDiv:hover .dropbtn {background-color: #3e8e41;}
+
+    .searchForm{
+
+
+    }
+    .searchSubDiv{
+        position: relative;
+        width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+
+    .searchField{
+        position: relative;
+        width: 380px;
+        height: 23px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: .5em;
+    }
+    .searchBtn{
+        position: relative;
         border-style: solid;
         border-radius: .5em;
-        border-color: white;
+        border-color: rgb(228, 228, 228);
         width: 100px;
         height: 30px;
-  }
-  .searchBtn:hover{
-      background-color: rgb(232, 232, 232);
-  }
+        float: right;  
+        
+    }
+    .searchBtn:hover{
+        background-color: rgb(204, 203, 203);
+    }
+    .searchOptions{
+        position:relative;
+        display: block;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    #map {
+        height: 100%;
+    }
 
-  .mapWrapper{
+    .map{
         background-color: gray;
-        width: 500px;
-        height: 350px;
+        width: 700px;
+        height: 400px;
         position: absolute;
         left: 50%;
         transform: translate(-50%);
         text-align: center;
-        bottom: 100px;
-}
+        bottom: 20px;
+        border-style: solid;
+        border-color:#4CAF50;
+        border-width: .5em;
+        border-radius: .5em;
+    }
+    .mapInputBar{
+        width: 350px;
+    }
+
+
