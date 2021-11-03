@@ -31,9 +31,11 @@ public class FoodTruck {
     @Column(name = "description")
     String description;
 
+    // make more descriptive: minPrice
     @Column(name = "min")
     double minRange;
 
+    // make more descriptive: maxPrice
     @Column(name = "max")
     double maxRange;
 
