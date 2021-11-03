@@ -1,9 +1,6 @@
 package ftf.Controller;
 
-import ftf.exceptions.ApiError;
-import ftf.exceptions.InvalidLoginException;
-import ftf.exceptions.UserNotFoundException;
-import ftf.exceptions.UsernameTakenException;
+import ftf.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +27,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object>handleUserNotFoundException(UserNotFoundException ex,
+                                                             WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FoodTruckNotFound.class)
+    public ResponseEntity<Object>handleUserNotFoundException(FoodTruckNotFound ex,
                                                              WebRequest request){
         return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
     }

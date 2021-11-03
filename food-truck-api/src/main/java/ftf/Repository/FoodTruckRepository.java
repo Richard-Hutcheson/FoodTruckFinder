@@ -4,9 +4,11 @@ import ftf.classes.FoodTruck;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import java.util.List
 
 @Repository
 public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
-    Optional<FoodTruck> getFoodTruckByTruckID(Long id);
-    Optional<FoodTruck> getFoodTruckByName(String name);
+    List<FoodTruck> findFoodTrucksByTruckName(String name);
+    Optional<FoodTruck> findFoodTruckByTruckID(Long ID);
+    List<FoodTruck> findFoodTrucksByMinRangeIsGreaterThanAndMaxRangeIsLessThan(double min, double max);
 }

@@ -9,7 +9,7 @@ import org.hibernate.annotations.Formula;
 @Entity
 @Table(name = FoodTruck.TABLE_NAME)
 public class FoodTruck {
-    public static final String TABLE_NAME = "FoodTruck";
+    public static final String TABLE_NAME = "food_truck";
 
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
