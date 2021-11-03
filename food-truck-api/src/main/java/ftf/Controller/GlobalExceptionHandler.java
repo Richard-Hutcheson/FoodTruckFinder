@@ -2,6 +2,7 @@ package ftf.Controller;
 
 import ftf.exceptions.ApiError;
 import ftf.exceptions.InvalidLoginException;
+import ftf.exceptions.UserNotFoundException;
 import ftf.exceptions.UsernameTakenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                               WebRequest request){
         return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.CONFLICT,LocalDateTime.now()),HttpStatus.CONFLICT);
 
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object>handleUserNotFoundException(UserNotFoundException ex,
+                                                             WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
     }
 
 }
