@@ -10,5 +10,6 @@ public class FoodTruckController {
     @Autowired
     private FoodTruckService foodTruckService;
 
-
+    @Autowired
+    public FoodTruckController(FoodTruckService foodTruckService) { this.foodTruckService = foodTruckService; }
 }
