@@ -112,19 +112,82 @@
         left: 50%;
         transform: translateX(-50%);
     }
+    .truckRecsContainer{
+        position: relative;
+        display: block;
+        width: 720px;
+        height: 300px;
+        background-color: gray;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 25px;
+        border-style: solid;
+        border-color:#4CAF50;
+        border-width: .5em;
+        border-radius: .5em;
+        overflow-y: scroll;
+    }
+    .truckRecTitle{
+        text-align: center;
+        border-bottom-style: solid;
+        border-top-style: solid;
+        border-color: #4CAF50;
+        height: 3em;
+    }
+    .textBar{
+        border-bottom-style: solid;
+        border-bottom-color: #4CAF50;
+        display:grid;
+        grid-template-columns: auto auto auto 100px;
+
+    }
+    .textBarText{
+        /* display: inline-block; */
+
+    }
+    .recItem{
+        height: 50px;
+        border-bottom-style: solid;
+        border-color: black;
+        display: grid;
+        grid-template-columns: 218px 175px 200px 100px;
+    }
+    .truckName, .truckPrice, .truckFoodType, .truckBtn{
+        display: inline-block;
+        position: relative;
+        height: 25px;
+        top:50%;
+        transform: translateY(-50%);
+    }
+    .truckName{
+
+    }
+    .truckPrice{
+
+    }
+    .truckFoodType{
+
+    }
+    .truckBtn{
+        height: 30px;
+        width: 100px;
+    }
     #map {
         height: 100%;
     }
 
     .map{
+        margin-top: 2em;
         background-color: gray;
-        width: 700px;
+        width: 720px;
         height: 400px;
-        position: absolute;
+        position:relative;
+        /* position: absolute; */
         left: 50%;
         transform: translate(-50%);
         text-align: center;
-        bottom: 20px;
+        /* bottom: 20px; */
+        
         border-style: solid;
         border-color:#4CAF50;
         border-width: .5em;
@@ -134,4 +197,14 @@
         width: 350px;
     }
 
-
+.dynamic{
+    position: relative;
+    width: 205px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+.s{
+    width: 100px;
+}

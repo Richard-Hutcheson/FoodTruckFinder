@@ -9,7 +9,7 @@ export function callMaps(map){
       
     // loader.load().then(() => {
     //     map = new window.google.maps.Map(document.getElementById("map"), {
-    //         center: { lat: 31.54626, lng: -97.1184},
+    //         center: { lat: 31.54626, lng: -97.118},
     //         zoom: 18,
     //         mapTypeId: "roadmap",
     //     });
