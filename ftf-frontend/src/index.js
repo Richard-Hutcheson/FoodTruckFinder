@@ -6,6 +6,7 @@ import UserDashboard from './pages/userDashboard.js'
 import CreateAccount from './pages/createAccount.js'
 import PageNotFound from './pages/pageNotFound.js'
 import UserManageAccount from './pages/userManageAccnt'
+import TruckOwnerDashboard from './pages/truckOwnerDashboard.js';
 
 ReactDOM.render(
     
@@ -15,6 +16,7 @@ ReactDOM.render(
             <Route path="/UserDashboard" exact component={UserDashboard}/>
             <Route path = "/CreateAccount" exact component = {CreateAccount}/>
             <Route path = "/ManageAccount" exact component = {UserManageAccount}/>
+            <Route path = "/TruckOwnerDashboard" exact component={TruckOwnerDashboard}/>
             <Route component={PageNotFound}/>
         </Switch>
     </Router>,
