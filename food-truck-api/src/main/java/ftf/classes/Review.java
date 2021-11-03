@@ -16,11 +16,13 @@ public class Review {
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
     )
+    @Column(name = "reviewID")
+    Long reviewID;
 
     @Column(name = "rating")
     double rating;
 
-    @Column(name = "TruckID")
+    @Column(name = "truckID")
     Long truckID;
 
     @Column(name = "description")
