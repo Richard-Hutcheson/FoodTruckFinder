@@ -1,5 +1,4 @@
 package ftf.Service;
 
-public interface FoodTruckService {
-
+public class FoodTruckService {
 }
