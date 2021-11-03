@@ -37,4 +37,7 @@ public class FoodTruckController {
         return foodTruckService.getTrucksPriceRange(min, max);
     }
 
+    @GetMapping("/truckDetails/all")
+    public List<FoodTruck> getTrucks() { return foodTruckService.getTrucks(); }
+
 }

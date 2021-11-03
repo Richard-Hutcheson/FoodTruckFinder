@@ -55,4 +55,6 @@ public class FoodTruckService {
 
         return foodTruck;
     }
+
+    public List<FoodTruck> getTrucks() { return foodTruckRepository.findAll(); }
 }
