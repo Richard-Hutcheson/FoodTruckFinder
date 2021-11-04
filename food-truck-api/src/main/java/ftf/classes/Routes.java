@@ -21,13 +21,4 @@ public class Routes {
     @JoinColumn(name = "truckID")
     @ManyToOne
     FoodTruck truck;
-
-    //-decimal degrees format-
-    //reference: -90 to 90 for latitude
-    //           -180 to 180 for longitude
-    @Column(name = "latitude")
-    double latitude;
-
-    @Column(name = "longitude")
-    double longitude;
 }

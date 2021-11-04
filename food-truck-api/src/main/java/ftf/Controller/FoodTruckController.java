@@ -2,6 +2,7 @@ package ftf.Controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import ftf.Service.FoodTruckService;
+import ftf.Service.ReviewService;
 import ftf.classes.FoodTruck;
 import ftf.classes.View;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class FoodTruckController {
 
     @Autowired
     private FoodTruckService foodTruckService;
+
+    @Autowired
+    private ReviewService reviewService;
+
 
     @GetMapping("/truckDetails")
     public Optional<FoodTruck> getTruckDetails(@RequestBody FoodTruck ft) {
@@ -44,7 +49,10 @@ public class FoodTruckController {
     public FoodTruck createNewTruck(@RequestBody FoodTruck ft) { return foodTruckService.createNewTruck(ft); }
 
     @DeleteMapping("/deleteTruck")
-    public void deleteTruck(@RequestBody FoodTruck ft) { foodTruckService.deleteTruck(ft); }
+    public void deleteTruck(@RequestBody FoodTruck ft) {
+        foodTruckService.deleteTruck(ft);
+
+    }
 
     @PatchMapping("/editTruck")
     public FoodTruck editTruckDetails(@RequestBody FoodTruck ft) {
