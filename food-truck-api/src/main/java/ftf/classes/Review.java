@@ -27,7 +27,7 @@ public class Review {
     FoodTruck truck;
 
     @Column(name = "description")
-    String reviewDescription;
+    String description;
 
     @JoinColumn(name = "userID")
     @ManyToOne

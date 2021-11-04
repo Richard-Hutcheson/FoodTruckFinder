@@ -32,4 +32,7 @@ public class ReviewService {
         return reviewRepository.findByUserId(id);
     }
 
+    public Review saveReview(Review review) {
+        return reviewRepository.save(review);
+    }
 }
