@@ -37,4 +37,18 @@ public class FoodTruckController {
         return foodTruckService.getTrucksPriceRange(min, max);
     }
 
+    @GetMapping("/truckDetails/all")
+    public List<FoodTruck> getTrucks() { return foodTruckService.getTrucks(); }
+
+    @PostMapping("/createTruck")
+    public FoodTruck createNewTruck(@RequestBody FoodTruck ft) { return foodTruckService.createNewTruck(ft); }
+
+    @DeleteMapping("/deleteTruck")
+    public void deleteTruck(@RequestBody FoodTruck ft) { foodTruckService.deleteTruck(ft); }
+
+    @PatchMapping("/editTruck")
+    public FoodTruck editTruckDetails(@RequestBody FoodTruck ft) {
+        return foodTruckService.editTruckDetails(ft);
+    }
+
 }
