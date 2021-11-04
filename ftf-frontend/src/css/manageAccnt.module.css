@@ -59,13 +59,6 @@
 
 }
 
-
-
-
-
-
-
-
 .backBtn, .cancelBtn{
     display: block;
     position: relative;
@@ -74,4 +67,14 @@
     left: 50%;
     transform: translate(-50%);
     margin: 10px 0;
+    text-align: center;
+    text-decoration: none;
+}
+.backBtn a{
+    position: relative;
+    width: 100px;
+    display: block;
+    height: 30px;
+    color: black
+
 }

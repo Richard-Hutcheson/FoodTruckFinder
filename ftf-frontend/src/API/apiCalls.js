@@ -76,7 +76,6 @@ export async function saveUser(userDataMap){
     }).catch(error =>{
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
-    console.log("response = " + response);
     if (response != null){
         const data = await response.json().catch(error =>{
             window.confirm("Problem encountered with JSON operation: " + error.message);
@@ -127,7 +126,6 @@ export async function getUser(username){
             window.confirm("Problem encountered with fetch operation: " + error.message);
         });
     if (response != null){
-        console.log(response);
         const data = await response.json().catch(error =>{
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
@@ -184,7 +182,33 @@ export async function getTruckByName(name){
             window.confirm("Problem encountered with fetch operation: " + error.message);
         });
     if (response != null){
-        console.log(response);
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        if (data != null){
+            console.log("data = ", data);
+            return data;
+        }else{
+            return "...unknown...";  
+        }
+    }
+}
+
+export async function getAllTrucks(){
+
+    const requestOptions = {
+        method: "GET",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        }
+    };
+    const response = await fetch(`http://localhost:8080/truckDetails/all`, requestOptions)
+        .catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
         const data = await response.json().catch(error =>{
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {editUser, getUser} from '../API/apiCalls';
 import styles from '../css/manageAccnt.module.css';
 import { getFoodTypes } from '../API/helperFunctions';
+import {Link} from "react-router-dom";
+
 
 class UserManageAccount extends Component{
 
@@ -40,12 +42,17 @@ class UserManageAccount extends Component{
     }
 
     async componentDidMount(){
-        let response = await getUser(this.state.username);
+        let response = await getUser(this.state.username).catch(
+            error=>{
+                console.log(error.message);
+            }
+        );
         if (response == null){
             response = "unable to retrieve";
             console.log("response = ", response);
         }
         else{
+
             this.setState({userid: response.id});
             this.setState({username: response.username});
             this.setState({password: response.password});
@@ -54,11 +61,11 @@ class UserManageAccount extends Component{
             this.setState({city: response.city});
             this.setState({state: response.state});
             this.setState({email: response.email});
-            console.log("response = ", response);
+            this.setState({role: response.role});
+
         }
 
         let foodTypeList = getFoodTypes();
-        console.log(foodTypeList);
         let container = document.getElementById("foodTypeID");
         for (let i = 0; i < foodTypeList.length; i++){
             let item = document.createElement('option');
@@ -68,7 +75,7 @@ class UserManageAccount extends Component{
         }
     }
     handleChange(event){
-        
+        event.preventDefault();
         if (event.target.id === "distSlider"){
             let slider = document.getElementById("distSlider");
             let output = document.getElementById("milesID");
@@ -123,6 +130,7 @@ class UserManageAccount extends Component{
             x.value = '';
         });
     }
+    
     callFunction = ()=>{
         this.saveUser();        
     }
@@ -143,70 +151,71 @@ class UserManageAccount extends Component{
     }
     
     render(){ 
-        console.log("ROLE: ", this.state.role);
-            return (
-                <div>
-                    <h1 className={styles.header}>MANAGE ACCOUNT</h1>
-                    <div className={styles.formContainer}>
-                        <div className = {styles.userForm}>
-                            <label htmlFor="name" className = {styles.nameLabel, styles.label}>name:</label>
-                            <input className={styles.nameField, "field"} type="text" name="name" onChange={this.handleChange} placeholder={this.state.name} disabled = {this.state.viewOnly}/>
-                            <label htmlFor="username" className = {styles.usernameLabel, styles.label}>username:</label>
-                            <input className={styles.usernameField, "field"} type="text" name="username" onChange={this.handleChange} placeholder={this.state.username} disabled= {this.state.viewOnly}/>
-                            <label htmlFor="password" className = {styles.passwordLabel, styles.label}>password:</label>
-                            <input className={styles.passwordField, "field"} type="text" name="password" onChange={this.handleChange} placeholder={this.state.password} disabled= {this.state.viewOnly}/>
-                            <label htmlFor="email" className = {styles.emailLabel, styles.label}>email:</label>
-                            <input className={styles.emailField, "field"} type="text" name="email" onChange={this.handleChange} placeholder={this.state.email} disabled = {this.state.viewOnly}/>
-                            <label htmlFor="address" className = {styles.addressLabel, styles.label}>address:</label>
-                            <input className={styles.addressField, "field"} type="text" name="address" onChange={this.handleChange} placeholder={this.state.address} disabled = {this.state.viewOnly}/>
-                            <label htmlFor="state" className = {styles.stateLabel, styles.label}>state:</label>
-                            <input className={styles.stateField, "field"} type="text" name="state" onChange={this.handleChange} placeholder={this.state.state} disabled = {this.state.viewOnly}/>
-                            <label htmlFor="city" className = {styles.cityLabel, styles.label}>city:</label>
-                            <input className={styles.cityField, "field"} type="text" name="city" onChange={this.handleChange} placeholder={this.state.city} disabled = {this.state.viewOnly}/>
-                        </div>
-                        <button type ="button" id = "submitID" value = {this.state.submitState} className= {styles.editSaveBtn}  onClick={this.handleSubmit}>{this.state.submitState}</button> 
-                        {this.state.submitState === 'SAVE' &&  
-                            <button type ="button" id = "cancelID" className= {styles.cancelBtn}  onClick={this.handleSubmit}>CANCEL</button> 
-                        }
+        return (
+            <div>
+                <h1 className={styles.header}>MANAGE ACCOUNT</h1>
+                <div className={styles.formContainer}>
+                    <div className = {styles.userForm}>
+                        <label htmlFor="name" className = {styles.nameLabel, styles.label}>name:</label>
+                        <input className={styles.nameField, "field"} type="text" name="name" onChange={this.handleChange} placeholder={this.state.name} disabled = {this.state.viewOnly}/>
+                        <label htmlFor="username" className = {styles.usernameLabel, styles.label}>username:</label>
+                        <input className={styles.usernameField, "field"} type="text" name="username" onChange={this.handleChange} placeholder={this.state.username} disabled= {this.state.viewOnly}/>
+                        <label htmlFor="password" className = {styles.passwordLabel, styles.label}>password:</label>
+                        <input className={styles.passwordField, "field"} type="text" name="password" onChange={this.handleChange} placeholder={this.state.password} disabled= {this.state.viewOnly}/>
+                        <label htmlFor="email" className = {styles.emailLabel, styles.label}>email:</label>
+                        <input className={styles.emailField, "field"} type="text" name="email" onChange={this.handleChange} placeholder={this.state.email} disabled = {this.state.viewOnly}/>
+                        <label htmlFor="address" className = {styles.addressLabel, styles.label}>address:</label>
+                        <input className={styles.addressField, "field"} type="text" name="address" onChange={this.handleChange} placeholder={this.state.address} disabled = {this.state.viewOnly}/>
+                        <label htmlFor="state" className = {styles.stateLabel, styles.label}>state:</label>
+                        <input className={styles.stateField, "field"} type="text" name="state" onChange={this.handleChange} placeholder={this.state.state} disabled = {this.state.viewOnly}/>
+                        <label htmlFor="city" className = {styles.cityLabel, styles.label}>city:</label>
+                        <input className={styles.cityField, "field"} type="text" name="city" onChange={this.handleChange} placeholder={this.state.city} disabled = {this.state.viewOnly}/>
                     </div>
-                    <h1 id = "preferenceFormID" className={styles.preferencesHeader}>FOOD TRUCK PREFERENCES</h1>
-                        <form className = {styles.prefFormClass} id = "prefFormID" onSubmit={this.handleSubmit}>
-                            <div className={styles.innerFormClass}>
-                                <div className={styles.priceDiv}>
-                                    <p>Price Range</p>
-                                    <input type="radio" id="price1" name="price" value="$" checked={this.state.priceSelected === '$'} onChange={this.onValueChange}/>
-                                    <label for="price1">$1-$15</label><br/>
-                                    <input type="radio" id="price2" name="price" value="$$" checked={this.state.priceSelected === '$$'} onChange={this.onValueChange}/>
-                                    <label for="price2">$15-$30</label><br/>
-                                    <input type="radio" id="price3" name="price" value="$$$" checked={this.state.priceSelected === '$$$'} onChange={this.onValueChange}/>
-                                    <label for="price3">$30+</label><br/>
-                                    <input type="radio" id="priceNone" name="price" value="No Preference" checked={this.state.priceSelected === 'No Preference'} onChange={this.onValueChange}/>
-                                    <label for="priceNone">No Preference</label><br/>
-                                </div>
-                                <div className={styles.distRangeClass}>
-                                    <p>Truck Distance Range</p>
-                                    <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
-                                    <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
-                                </div>
-                                <div className = {styles.foodTypeDiv}>
-                                    <p>Food Type Preference:</p>
-                                    <select id="foodTypeID" name="carlist" form="prefFormID">
-                                        <option value="no-pref">No Preference</option>
-                                    </select>
-                                </div>                       
-                            </div>
-                            <button className={styles.formSaveBtn} type="submit">SAVE</button>
-                        </form>
-
-                    <div className = {styles.button}>
-                        BackButton
-                        
-                        { this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>Back</Link>}
-                        { this.state.role === 'a' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>Back</Link>}
-                    </div>
-                    
-                                    
+                    <button type ="button" id = "submitID" value = {this.state.submitState} className= {styles.editSaveBtn}  onClick={this.handleSubmit}>{this.state.submitState}</button> 
+                    {this.state.submitState === 'SAVE' &&  
+                        <button type ="button" id = "cancelID" className= {styles.cancelBtn}  onClick={this.handleSubmit}>CANCEL</button> 
+                    }
                 </div>
+                <h1 id = "preferenceFormID" className={styles.preferencesHeader}>FOOD TRUCK PREFERENCES</h1>
+                    <form className = {styles.prefFormClass} id = "prefFormID" onSubmit={this.handleSubmit}>
+                        <div className={styles.innerFormClass}>
+                            <div className={styles.priceDiv}>
+                                <p>Price Range</p>
+                                <input type="radio" id="price1" name="price" value="$" checked={this.state.priceSelected === '$'} onChange={this.onValueChange}/>
+                                <label htmlFor="price1">$1-$15</label><br/>
+                                <input type="radio" id="price2" name="price" value="$$" checked={this.state.priceSelected === '$$'} onChange={this.onValueChange}/>
+                                <label htmlFor="price2">$15-$30</label><br/>
+                                <input type="radio" id="price3" name="price" value="$$$" checked={this.state.priceSelected === '$$$'} onChange={this.onValueChange}/>
+                                <label htmlFor="price3">$30+</label><br/>
+                                <input type="radio" id="priceNone" name="price" value="No Preference" checked={this.state.priceSelected === 'No Preference'} onChange={this.onValueChange}/>
+                                <label htmlFor="priceNone">No Preference</label><br/>
+                            </div>
+                            <div className={styles.distRangeClass}>
+                                <p>Truck Distance Range</p>
+                                <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
+                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
+                            </div>
+                            <div className = {styles.foodTypeDiv}>
+                                <p>Food Type Preference:</p>
+                                <select id="foodTypeID" name="carlist" form="prefFormID">
+                                    <option value="no-pref">No Preference</option>
+                                </select>
+                            </div>                       
+                        </div>
+                        <button className={styles.formSaveBtn} type="submit">SAVE</button>
+                    </form>
+                    <div className = {styles.backBtn}>
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
+                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
+
+                    </div>
+
+
+                {/* <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>Back</Link> */}
+                {/* <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>Back</Link> */}
+                
+                                
+            </div>
         );
     }
 }
