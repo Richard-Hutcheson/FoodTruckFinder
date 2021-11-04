@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import styles from '../css/userDashboard.module.css';
+import styles from '../css/manageFoodTrucks.module.css';
+
 
 class ManageFoodTrucks extends Component{
 
@@ -12,13 +13,15 @@ class ManageFoodTrucks extends Component{
             searchQuery: '',
             name: '<unknown>',
             guest: 'true',
-            showMap: 'false'
+            showMap: 'false',
+            role: '',
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
             this.state.userID = this.props.location.state.userID;
+            this.state.role = this.props.location.state.role;
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -72,6 +75,10 @@ class ManageFoodTrucks extends Component{
                             <Link to= {{ pathname: "/EditFoodTruck", state: {user: this.state.username, userID: this.state.userID}}}></Link>
                         }}>EDIT</button>
                     </div>
+                </div>
+                <div className = {styles.backBtn}>
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
+                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
                 </div>
             </div>
         ); 

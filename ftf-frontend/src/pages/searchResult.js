@@ -26,14 +26,22 @@ class SearchResult extends Component{
             queryType: 'invalid',
             searchQuery: '',
             noResults: 'false'
-
         }
         if (this.props.location.state != null){
             this.state.searchQuery = this.props.location.state.searchQuery;
             this.state.queryType = this.props.location.state.queryType;
-            if (this.state.queryType === 'truck name'){
+            if (this.state.queryType === 'truck_name'){
                 this.state.truckName = this.props.location.state.searchQuery;
             }
+        }
+        
+        //PARSE by URL rather than PROPS
+        else{
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            
+            this.state.truckName = urlParams.get("query")
+            this.state.queryType = urlParams.get("queryType");
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -45,6 +53,7 @@ class SearchResult extends Component{
         console.log("-< ", this.state.queryType);
 
         if (this.state.queryType === 'user\'s username'){
+            console.log(this.state.searchQuery)
             response = await getUser(this.state.searchQuery).catch(error =>{
                 console.log(error.message);
                 return;
@@ -65,7 +74,7 @@ class SearchResult extends Component{
                     name: response.name,
                 })
             }
-        }else if ( this.state.queryType === 'truck name'){
+        }else if ( this.state.queryType === 'truck_name'){
             response = await getTruckByName(this.state.truckName).catch(error =>{
                 console.log(error.message);
             })

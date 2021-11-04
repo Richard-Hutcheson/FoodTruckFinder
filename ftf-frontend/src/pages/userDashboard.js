@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser} from '../API/apiCalls';
+import {getAllTrucks, getUser} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -15,7 +15,8 @@ class UserDashboard extends Component{
             searchQuery: '',
             name: '<unknown>',
             guest: 'true',
-            showMap: 'false'
+            showMap: 'false',
+            role: '',
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
@@ -27,13 +28,17 @@ class UserDashboard extends Component{
         this.special = this.special.bind(this);
     }
 
-    async componentDidMount(){
-        let response = await getUser(this.state.user);
+    async componentDidMount(props){
+        //GET USER
+        let response = await getUser(this.state.user).catch(error=>{
+            console.log(error.message);
+        });
         if (response == null){
             response = "unable to retrieve";
         }
         this.setState({userID: response.id});
-
+        this.setState({role: response.role});
+        console.log("ROLE = ", this.state.role);
         if (this.state.showMap === 'true'){
             try{
                 callMaps(map);
@@ -41,7 +46,39 @@ class UserDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
+        //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
+        response = await getAllTrucks().catch(error=>{
+            console.log(error.message);
+        })
+        if (response == null){
+            response = "unable to retrieve";
+        }
+        //response should be an array
+        for (let i =0; i < response.length;++i){
+            let container = document.getElementById('recTrucksID');
+            let truck = document.createElement('div');
+            let recItem = document.createElement('div');
+            recItem.setAttribute("class", styles.recItem);
+            let btn = document.createElement('button');
+            btn.setAttribute('type', 'submit');
+            btn.setAttribute('class', styles.truckBtn);
+            btn.setAttribute('id', response[i].truckName);
+            btn.innerText = "VIEW";
+            recItem.innerHTML = `
+                <div class=${styles.truckName}>${response[i].truckName}</div>
+                <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
+                <div class=${styles.truckFoodType}>${response[i].foodType}</div>
+            `
+            btn.onclick = function() {
+                document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+            }
+
+            recItem.appendChild(btn);
+            truck.appendChild(recItem);
+            container.appendChild(truck);
+        }
     }
+
 
     handleChange(event){
         const target = event.target;
@@ -81,7 +118,7 @@ class UserDashboard extends Component{
                     <div class=${styles.truckFoodType}>food_type</div>
                 `
                 btn.addEventListener("click", function(){
-                    console.log("bink");
+                    console.log("hey!");
                 });
 
                 recItem.appendChild(btn);
@@ -120,7 +157,7 @@ class UserDashboard extends Component{
                     </div>
 
                     <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID'>
-                        <option value="truck name">Food Truck By Name</option>
+                        <option value="truck_name">Food Truck By Name</option>
                         <option value="truck price">Food Truck By Price</option>
                         <option value="food type">Food Truck By Food Type</option>
                         <option value="user's username">User</option>
@@ -136,12 +173,7 @@ class UserDashboard extends Component{
                         <div className={styles.textBarText}>FOOD TYPE</div>
                         <div className={styles.textBarText}></div>
                     </div>
-                    <div className={styles.recItem}>
-                        <div className={styles.truckName}>truck0</div>
-                        <div className={styles.truckPrice}>$x.xx</div>
-                        <div className={styles.truckFoodType}>food_type</div>
-                        <button className={styles.truckBtn} type="submit" onClick={()=>{console.log("view truck");}}>VIEW</button>
-                    </div>
+
                 </div>
                 <div className = {styles.mapWrapper}>
                     { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
