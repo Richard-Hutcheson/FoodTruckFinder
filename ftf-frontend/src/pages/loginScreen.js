@@ -22,6 +22,7 @@ class LoginScreen extends Component{
         this.setState({
             [name]:value
         });
+    
     }
 
     async handleSubmit(event){

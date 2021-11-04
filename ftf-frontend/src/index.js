@@ -7,6 +7,7 @@ import CreateAccount from './pages/createAccount.js'
 import PageNotFound from './pages/pageNotFound.js'
 import UserManageAccount from './pages/userManageAccnt'
 import TruckOwnerDashboard from './pages/truckOwnerDashboard.js';
+import ManageFoodTrucks from './pages/manageFoodTrucks.js';
 
 ReactDOM.render(
     
@@ -17,6 +18,7 @@ ReactDOM.render(
             <Route path = "/CreateAccount" exact component = {CreateAccount}/>
             <Route path = "/ManageAccount" exact component = {UserManageAccount}/>
             <Route path = "/TruckOwnerDashboard" exact component={TruckOwnerDashboard}/>
+            <Route path = "/ManageFoodTrucks" exact component={ManageFoodTrucks}/>
             <Route component={PageNotFound}/>
         </Switch>
     </Router>,
