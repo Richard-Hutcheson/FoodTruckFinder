@@ -47,7 +47,7 @@ export async function loginUser(un, pw){
     if (response != null){
         let responseJSON = await response.json().catch(error=> {console.log(error.message)});
         console.log("response = ", responseJSON);
-        return JSON.stringify(responseJSON);
+        return responseJSON;
     }
 }
 export async function saveUser(userDataMap){
