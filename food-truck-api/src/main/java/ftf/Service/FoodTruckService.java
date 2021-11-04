@@ -2,6 +2,7 @@ package ftf.Service;
 
 import ftf.Repository.FoodTruckRepository;
 import ftf.classes.FoodTruck;
+import ftf.classes.FoodType;
 import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,5 +88,14 @@ public class FoodTruckService {
 
         return foodTruckRepository.save(up);
 
+    }
+
+    public List<FoodTruck> getTrucksByFoodType(String st) {
+        List<FoodTruck> list = foodTruckRepository.findFoodTrucksByFoodType(st);
+
+        if (list.isEmpty())
+            throw new FoodTruckNotFoundException("Food Truck by type " + st + " could not be found");
+
+        return list;
     }
 }
