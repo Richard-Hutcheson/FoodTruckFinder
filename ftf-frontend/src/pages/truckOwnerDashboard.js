@@ -120,7 +120,7 @@ class TruckOwnerDashboard extends Component{
                     </div>
 
                     <select name="searchOptions" className={styles.searchOptions}>
-                        <option value="name">Food Truck By Name</option>
+                        <option value="truck_name">Food Truck By Name</option>
                         <option value="price">Food Truck By Price</option>
                         <option value="location">Food Truck By Location</option>
                         <option value="type">Food Truck By Food Type</option>

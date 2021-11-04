@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {editUser, getUser} from '../API/apiCalls';
 import styles from '../css/manageAccnt.module.css';
 import { getFoodTypes } from '../API/helperFunctions';
+import {Link} from "react-router-dom";
 
 class UserManageAccount extends Component{
 
