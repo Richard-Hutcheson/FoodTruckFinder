@@ -60,6 +60,11 @@ public class FoodTruckController {
 
     }
 
+    @DeleteMapping("/deleteTruck/{name}")
+    public void deleteTruckByName(@PathVariable String name) {
+        foodTruckService.deleteTruck(name);
+    }
+
     @PatchMapping("/editTruck")
     public FoodTruck editTruckDetails(@RequestBody FoodTruck ft) {
         return foodTruckService.editTruckDetails(ft);
