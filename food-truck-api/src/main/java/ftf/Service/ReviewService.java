@@ -19,12 +19,14 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    Optional<Review> findById(Long reviewId){
-        return reviewRepository.findById(reviewId);
+    public Optional<Review> findById(Long reviewId){
+        return reviewRepository.findByReviewID(reviewId);
     }
 
-    public List<Review> findByTruck(FoodTruck truck){return reviewRepository.findByTruck(truck);}
-    //public List<Review> getReviews(Long truckId){
-        //return reviewRepository.findByTruckID(truckId);
-    //}
+    public List<Review> findByTruck(FoodTruck truck) {
+        List<Review> reviews = reviewRepository.findByTruck(truck);
+        return reviews;
+    }
+
+
 }

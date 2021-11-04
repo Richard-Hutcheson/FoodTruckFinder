@@ -67,12 +67,9 @@ public class UserController {
 
     //TODO: CHANGE THIS TO A PRINCIPLE AND USE THE SPRING SECURITY TO get a valid JSON Web Token
     @GetMapping("/login/{username}/{password}")
-    @JsonView(View.UserView.class)
-    public User login(@PathVariable String username, @PathVariable String password) {
-        List<User> user = userServe.findByUsernameAndPassword(username,password);
-
-        return user.stream().filter(users -> username.equals(users.getUsername()) && password.equals(users.getPassword()))
-                .findAny().orElseThrow(() -> new InvalidLoginException("User not found!"));
+    public Optional<User> login(@PathVariable String username, @PathVariable String password) {
+        return Optional.of(userServe.findByUsernameAndPassword(username,password).stream().filter(users -> username.equals(users.getUsername()) && password.equals(users.getPassword()))
+                .findAny().orElseThrow(() -> new InvalidLoginException("User not found!")));
     }
 
 

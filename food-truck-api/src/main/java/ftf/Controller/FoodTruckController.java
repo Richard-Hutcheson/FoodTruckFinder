@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import ftf.Service.FoodTruckService;
 import ftf.Service.ReviewService;
 import ftf.classes.FoodTruck;
+import ftf.classes.FoodType;
 import ftf.classes.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,15 +33,20 @@ public class FoodTruckController {
         return foodTruckService.getTruckDetailsByName(name);
     }
 
+    // WORK IN PROGRESS: WILL RETURN A LIST OF TRUCKS SIMILAR TO SEARCH NAME
+//    @GetMapping("/truckDetails/names/{name}")
+//    public List<FoodTruck> getTrucksByLikeNames(@PathVariable String name) {
+//
+//    }
+
     @GetMapping("/truckDetails/id/{id}")
-    public Optional<FoodTruck> getTruckDetailsById(@PathVariable Long id) {
-        return foodTruckService.getTruckDetailsById(id);
-    }
+    public Optional<FoodTruck> getTruckDetailsById(@PathVariable Long id) { return foodTruckService.getTruckDetailsById(id); }
 
     @GetMapping("/truckDetails/priceRange/{min}/{max}")
-    public List<FoodTruck> getTrucksByPriceRange(@PathVariable double min, @PathVariable double max) {
-        return foodTruckService.getTrucksPriceRange(min, max);
-    }
+    public List<FoodTruck> getTrucksByPriceRange(@PathVariable double min, @PathVariable double max) { return foodTruckService.getTrucksPriceRange(min, max); }
+
+    @GetMapping("/truckDetails/foodType/{foodType}")
+    public List<FoodTruck> getTrucksByFoodType(@PathVariable String foodType) { return foodTruckService.getTrucksByFoodType(foodType); }
 
     @GetMapping("/truckDetails/all")
     public List<FoodTruck> getTrucks() { return foodTruckService.getTrucks(); }
@@ -58,5 +64,4 @@ public class FoodTruckController {
     public FoodTruck editTruckDetails(@RequestBody FoodTruck ft) {
         return foodTruckService.editTruckDetails(ft);
     }
-
 }
