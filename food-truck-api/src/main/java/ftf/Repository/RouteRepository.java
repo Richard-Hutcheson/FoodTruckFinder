@@ -1,10 +1,10 @@
 package ftf.Repository;
 
 
-import ftf.classes.Routes;
+import ftf.classes.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RouteRepository extends JpaRepository<Routes, Long> {
+public interface RouteRepository extends JpaRepository<Route, Long> {
 
 
 }
