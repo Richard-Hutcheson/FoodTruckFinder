@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {editUser, getUser} from '../API/apiCalls';
-import {Link} from "react-router-dom";
 import styles from '../css/manageAccnt.module.css';
 import { getFoodTypes } from '../API/helperFunctions';
 
@@ -69,7 +68,7 @@ class UserManageAccount extends Component{
     }
     handleChange(event){
         
-        if (event.target.id == "distSlider"){
+        if (event.target.id === "distSlider"){
             let slider = document.getElementById("distSlider");
             let output = document.getElementById("milesID");
             output.innerHTML = slider.value;
@@ -90,13 +89,13 @@ class UserManageAccount extends Component{
     }
     handleSubmit(event){
         event.preventDefault();
-        if (event.target.id == "submitID"){
-            if (this.state.submitState == "EDIT"){
+        if (event.target.id === "submitID"){
+            if (this.state.submitState === "EDIT"){
                 this.setState({submitState: 'SAVE'});
                 this.setState({viewOnly: false});
             }else{
                 document.querySelectorAll('.field').forEach(x=>{
-                    if (x.value != ''){
+                    if (x.value !== ''){
                         this.setState({[x.name]: String(x.value)}, this.callFunction);
                         console.log(this.state.state);
                     }else{
@@ -105,10 +104,10 @@ class UserManageAccount extends Component{
                 this.resetFields();
             }
         }
-        else if (event.target.id == 'cancelID'){
+        else if (event.target.id === 'cancelID'){
             this.resetFields();
         }
-        else if (event.target.id == 'prefFormID'){
+        else if (event.target.id === 'prefFormID'){
             console.log("form submitted");
         }
         else{
@@ -163,7 +162,7 @@ class UserManageAccount extends Component{
                             <input className={styles.cityField, "field"} type="text" name="city" onChange={this.handleChange} placeholder={this.state.city} disabled = {this.state.viewOnly}/>
                         </div>
                         <button type ="button" id = "submitID" value = {this.state.submitState} className= {styles.editSaveBtn}  onClick={this.handleSubmit}>{this.state.submitState}</button> 
-                        {this.state.submitState == 'SAVE' &&  
+                        {this.state.submitState === 'SAVE' &&  
                             <button type ="button" id = "cancelID" className= {styles.cancelBtn}  onClick={this.handleSubmit}>CANCEL</button> 
                         }
                     </div>

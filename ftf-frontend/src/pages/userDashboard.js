@@ -22,12 +22,9 @@ class UserDashboard extends Component{
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
         }
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.special = this.special.bind(this);
-
-
     }
 
     async componentDidMount(){
@@ -37,7 +34,7 @@ class UserDashboard extends Component{
         }
         this.setState({userID: response.id});
 
-        if (this.state.showMap == 'true'){
+        if (this.state.showMap === 'true'){
             try{
                 callMaps(map);
             }catch(error){
@@ -56,15 +53,19 @@ class UserDashboard extends Component{
     }
     handleSubmit(event){
         event.preventDefault();
-        if (this.state.searchQuery != ""){
+        if (this.state.searchQuery !== ""){
             console.log("search query = " + this.state.searchQuery);
+            this.props.history.push({
+                pathname: '/SearchResult',
+                state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value} // your data array of objects
+            })
         }else{
             alert("search field is empty");
         }
     }
     special(event){
         let val = event.target.innerHTML;
-        if (val == 'ADD TRUCKS'){
+        if (val === 'ADD TRUCKS'){
             for (let i = 4; i < 10; ++i){
                 let container = document.getElementById('recTrucksID');
                 let truck = document.createElement('div');
@@ -118,12 +119,11 @@ class UserDashboard extends Component{
                         <button  className={styles.searchBtn} type="submit">Submit</button>                            
                     </div>
 
-                    <select name="searchOptions" className={styles.searchOptions}>
-                        <option value="name">Food Truck By Name</option>
-                        <option value="price">Food Truck By Price</option>
-                        <option value="location">Food Truck By Location</option>
-                        <option value="type">Food Truck By Food Type</option>
-                        <option value="user">User</option>
+                    <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID'>
+                        <option value="truck name">Food Truck By Name</option>
+                        <option value="truck price">Food Truck By Price</option>
+                        <option value="food type">Food Truck By Food Type</option>
+                        <option value="user's username">User</option>
                     </select>
                 </form>
                 <div className={styles.truckRecsContainer} id = "recTrucksID">
@@ -140,11 +140,11 @@ class UserDashboard extends Component{
                         <div className={styles.truckName}>truck0</div>
                         <div className={styles.truckPrice}>$x.xx</div>
                         <div className={styles.truckFoodType}>food_type</div>
-                        <button className={styles.truckBtn} type="submit" onClick={()=>{console.log("hello");}}>VIEW</button>
+                        <button className={styles.truckBtn} type="submit" onClick={()=>{console.log("view truck");}}>VIEW</button>
                     </div>
                 </div>
                 <div className = {styles.mapWrapper}>
-                    { this.state.showMap == 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
+                    { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
                     <div className={styles.map} id="map">
                         <p>Map goes here. Status: disabled</p>
                     </div>
