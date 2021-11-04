@@ -45,7 +45,7 @@ export function callMaps(map){
         searchBox.addListener("places_changed", () => {
             const places = searchBox.getPlaces();
 
-            if (places.length == 0) {
+            if (places.length === 0) {
                 return;
             }
 

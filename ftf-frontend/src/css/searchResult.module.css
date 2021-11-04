@@ -1,0 +1,47 @@
+.header{
+    text-align: center;
+}
+span{
+    color: green;
+}
+.userInfo, .truckInfo{
+    width: 800px;
+    position:relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns:  200px 200px 240px;
+    text-align: center;
+    border-bottom-style: solid;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+.userRevRat, .truckRevRat, .truckSchedule, .truckRoute{
+    margin-top: 2em;
+    position:relative;
+    background-color: gray;
+    width: 800px;
+    height: 200px;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.truckSchedule, .truckRoute{
+    height: 80px;
+}
+.truckDesc{
+    text-align: center;
+}
+.owner{
+    text-align: center;
+}
+.backBtn{
+    position: relative;
+    margin-top: 3em;
+    width: 90px;
+    height: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}

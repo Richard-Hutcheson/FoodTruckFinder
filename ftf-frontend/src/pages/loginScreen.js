@@ -28,19 +28,18 @@ class LoginScreen extends Component{
     async handleSubmit(event){
         event.preventDefault();
 
-        if (event.target.id == "enterGuest"){
-
+        if (event.target.id === "enterGuest"){
             this.props.history.push({
                 pathname: '/UserDashboard',
                 state: {user: "guest", guest: "true"} // your data array of objects
             })
-
         }else{
             const response = await loginUser(this.state.username, this.state.password);
             if (response != null){
                 console.log("response in logScreen = ", response);
                 console.log("response.id = ", response.id);
                 console.log("response.role = ", response.role)
+
                 if (response.status === "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
                 }else if (response.role === 'o'){

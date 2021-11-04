@@ -8,6 +8,8 @@ import PageNotFound from './pages/pageNotFound.js'
 import UserManageAccount from './pages/userManageAccnt'
 import TruckOwnerDashboard from './pages/truckOwnerDashboard.js';
 import ManageFoodTrucks from './pages/manageFoodTrucks.js';
+import SearchResult from './pages/searchResult.js';
+
 
 ReactDOM.render(
     
@@ -19,6 +21,7 @@ ReactDOM.render(
             <Route path = "/ManageAccount" exact component = {UserManageAccount}/>
             <Route path = "/TruckOwnerDashboard" exact component={TruckOwnerDashboard}/>
             <Route path = "/ManageFoodTrucks" exact component={ManageFoodTrucks}/>
+            <Route path = "/SearchResult" exact component = {SearchResult}/>
             <Route component={PageNotFound}/>
         </Switch>
     </Router>,

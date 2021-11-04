@@ -46,12 +46,11 @@ export async function loginUser(un, pw){
     });
     if (response != null){
         let responseJSON = await response.json().catch(error=> {console.log(error.message)});
-        console.log("response = ", responseJSON);
         return responseJSON;
     }
 }
 export async function saveUser(userDataMap){
-    if (returnUserDataJSON(userDataMap) == "err"){
+    if (returnUserDataJSON(userDataMap) === "err"){
         return "incomplete user data";
     }
     console.log(returnUserDataJSON(userDataMap));
@@ -115,7 +114,6 @@ export async function createAccount(params){
     }
 }
 export async function getUser(username){
-    
     const requestOptions = {
         method: "GET",
         headers:{
@@ -129,10 +127,12 @@ export async function getUser(username){
             window.confirm("Problem encountered with fetch operation: " + error.message);
         });
     if (response != null){
+        console.log(response);
         const data = await response.json().catch(error =>{
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
+            console.log("data = ", data);
             return data;
         }else{
             return "...unknown...";  
@@ -166,5 +166,33 @@ export async function editUser(userDataMap){
         //     return "...unknown...";  
         // }
     }else{
+    }
+}
+
+export async function getTruckByName(name){
+
+    const requestOptions = {
+        method: "GET",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        }
+    };
+    const response = await fetch(`http://localhost:8080/truckDetails/name/${name}`, requestOptions)
+        .catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
+        console.log(response);
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        if (data != null){
+            console.log("data = ", data);
+            return data;
+        }else{
+            return "...unknown...";  
+        }
     }
 }
