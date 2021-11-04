@@ -15,7 +15,7 @@ class TruckOwnerDashboard extends Component{
             searchQuery: '',
             name: '<unknown>',
             guest: 'true',
-            showMap: 'false',
+            showMap: 'true',
             role: '',
         }
         if (this.props.location.state != null){
@@ -182,10 +182,10 @@ class TruckOwnerDashboard extends Component{
                         <p>Map goes here. Status: disabled</p>
                     </div>
                 </div>
-                <div className={styles.dynamic}>
+                {/* <div className={styles.dynamic}>
                     <button className = {styles.s} type="submit" onClick={this.special}>ADD TRUCKS</button>
                     <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
-                </div>
+                </div> */}
 
             </div>
         ); 

@@ -179,6 +179,7 @@
 
     .map{
         margin-top: 2em;
+        margin-bottom: 2em;
         background-color: gray;
         width: 720px;
         height: 400px;
