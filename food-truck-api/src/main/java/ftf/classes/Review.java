@@ -22,10 +22,15 @@ public class Review {
     @Column(name = "rating")
     double rating;
 
-    @Column(name = "truckID")
-    Long truckID;
+    @JoinColumn(name = "truckID")
+    @ManyToOne
+    FoodTruck truck;
 
     @Column(name = "description")
     String reviewDescription;
+
+    @JoinColumn(name = "userID")
+    @ManyToOne
+    User user;
 
 }
