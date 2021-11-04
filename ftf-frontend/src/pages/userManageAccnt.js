@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {editUser, getUser} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/manageAccnt.module.css';
-
+import { getFoodTypes } from '../API/helperFunctions';
 
 class UserManageAccount extends Component{
 
@@ -19,7 +19,10 @@ class UserManageAccount extends Component{
             city: 'unknown',
             role: 'unknown',
             submitState: 'EDIT',
-            viewOnly: true
+            viewOnly: true,
+            distSliderVal: 10,
+            priceSelected: "No Preference"
+            
         }
         if (this.props.location.state != null){
             this.state.username = this.props.location.state.username;
@@ -31,9 +34,9 @@ class UserManageAccount extends Component{
             this.state.city = this.props.location.state.city;
             this.state.role = this.props.location.state.role;
         }
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onValueChange = this.onValueChange.bind(this);
     }
 
     async componentDidMount(){
@@ -53,13 +56,30 @@ class UserManageAccount extends Component{
             this.setState({email: response.email});
             console.log("response = ", response);
         }
+
+
+
     }
     handleChange(event){
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        // this.setState({[name]:value});
-        console.log("name = " + name + " value = " + value);
+        
+        if (event.target.id == "distSlider"){
+            let slider = document.getElementById("distSlider");
+            let output = document.getElementById("milesID");
+            output.innerHTML = slider.value;
+    
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+            this.setState({distSliderVal: event.target.value})
+        }else{
+            const target = event.target;
+            const value = target.type === 'checkbox' ? target.checked : target.value;
+            const name = target.name;
+            // this.setState({[name]:value});
+            console.log("name = " + name + " value = " + value);
+        }
+        
+
     }
     handleSubmit(event){
         event.preventDefault();
@@ -81,6 +101,9 @@ class UserManageAccount extends Component{
         else if (event.target.id == 'cancelID'){
             this.resetFields();
         }
+        else if (event.target.id == 'prefFormID'){
+            console.log("form submitted");
+        }
         else{
 
         }
@@ -95,6 +118,9 @@ class UserManageAccount extends Component{
     }
     callFunction = ()=>{
         this.saveUser();        
+    }
+    onValueChange(event){
+        this.setState({priceSelected: event.target.value})
     }
     async saveUser(){
         let udm = new Map();
@@ -134,9 +160,37 @@ class UserManageAccount extends Component{
                             <button type ="button" id = "cancelID" className= {styles.cancelBtn}  onClick={this.handleSubmit}>CANCEL</button> 
                         }
                     </div>
-                    
-                    <button className = {styles.backBtn} type = "button" onClick= {() => {this.props.history.goBack();}}> BACK </button>
+                    <h1 id = "preferenceFormID" className={styles.preferencesHeader}>FOOD TRUCK PREFERENCES</h1>
+                        <form className = {styles.prefFormClass} id = "prefFormID" onSubmit={this.handleSubmit}>
+                            <div className={styles.priceDiv}>
+                                <p>Price Range</p>
+                                <input type="radio" id="price1" name="price" value="$" checked={this.state.priceSelected === '$'} onChange={this.onValueChange}/>
+                                <label for="price1">$1-$15</label><br/>
+                                <input type="radio" id="price2" name="price" value="$$" checked={this.state.priceSelected === '$$'} onChange={this.onValueChange}/>
+                                <label for="price2">$15-$30</label><br/>
+                                <input type="radio" id="price3" name="price" value="$$$" checked={this.state.priceSelected === '$$$'} onChange={this.onValueChange}/>
+                                <label for="price3">$30+</label><br/>
+                                <input type="radio" id="priceNone" name="price" value="No Preference" checked={this.state.priceSelected === 'No Preference'} onChange={this.onValueChange}/>
+                                <label for="priceNone">No Preference</label><br/>
+                            </div>
+                            <div className={styles.distRangeClass}>
+                                <p>Truck Distance Range</p>
+                                <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
+                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
+                            </div>
+                            <div className = {styles.foodTypeDiv}>
+                            <label for="foodTypeID">Food Type Preference:</label>
+                                <select id="foodTypeID" name="carlist" form="prefFormID">
+                                    <option value="no-pref">No Preference</option>
 
+                                </select>
+                            </div>
+                            <button className={styles.formSaveBtn} type="submit">SAVE</button>
+                        </form>
+
+
+
+                    <button className = {styles.backBtn} type = "button" onClick= {() => {this.props.history.goBack();}}> BACK </button>
                 </div>
         );
     }

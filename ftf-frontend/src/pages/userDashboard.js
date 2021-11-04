@@ -44,7 +44,6 @@ class UserDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
-
     }
 
     handleChange(event){

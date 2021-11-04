@@ -20,14 +20,16 @@
     left: 50%;
     transform: translate(-50%);
 }
-.header{
+.header, .preferencesHeader{
     display: block;
     position: relative;
-    width: 300px;
+    width: 500px;
     height: 50px;
     left: 50%;
     transform: translate(-50%);
+    text-align: center;
 }
+
 .backBtn, .cancelBtn{
     display: block;
     position: relative;
