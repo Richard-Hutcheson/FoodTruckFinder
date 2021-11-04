@@ -1,26 +1,23 @@
 package ftf.classes;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
+import javax.persistence.*;
+import ftf.classes.Route;
 @Data
 @Entity
-@Table(name = Routes.TABLE_NAME)
-public class Routes {
-    public static final String TABLE_NAME = "Routes";
+@Table(name = Location.TABLE_NAME)
+public class Location {
+    public static final String TABLE_NAME = "Location";
+
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
     @SequenceGenerator(
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
     )
-    @Column(name = "routeID")
-    Long routeID;
-
-    @JoinColumn(name = "truckID")
-    @ManyToOne
-    FoodTruck truck;
+    @Column(name = "locationID")
+    Long locationID;
 
     //-decimal degrees format-
     //reference: -90 to 90 for latitude
@@ -30,4 +27,7 @@ public class Routes {
 
     @Column(name = "longitude")
     double longitude;
+
+    @ManyToOne
+    Route route;
 }

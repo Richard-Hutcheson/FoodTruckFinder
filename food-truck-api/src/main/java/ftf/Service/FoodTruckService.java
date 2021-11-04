@@ -3,6 +3,7 @@ package ftf.Service;
 import ftf.Repository.FoodTruckRepository;
 import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
+import ftf.classes.User;
 import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,15 @@ public class FoodTruckService {
 
     public void deleteTruck(FoodTruck ft) {
         Optional<FoodTruck> deleteTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
+
+        if (!deleteTruck.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        foodTruckRepository.delete(deleteTruck.get());
+    }
+
+    public void deleteTruck(String name) {
+        Optional<FoodTruck> deleteTruck = foodTruckRepository.findFoodTruckByTruckName(name);
 
         if (!deleteTruck.isPresent())
             throw new FoodTruckNotFoundException("Food Truck Not Found");

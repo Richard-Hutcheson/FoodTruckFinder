@@ -19,6 +19,10 @@ public class FoodTruckController {
     @Autowired
     private FoodTruckService foodTruckService;
 
+    @Autowired
+    private ReviewService reviewService;
+
+
     @GetMapping("/truckDetails")
     public Optional<FoodTruck> getTruckDetails(@RequestBody FoodTruck ft) {
         return foodTruckService.getTruckDetails(ft);
@@ -51,10 +55,18 @@ public class FoodTruckController {
     public FoodTruck createNewTruck(@RequestBody FoodTruck ft) { return foodTruckService.createNewTruck(ft); }
 
     @DeleteMapping("/deleteTruck")
-    public void deleteTruck(@RequestBody FoodTruck ft) { foodTruckService.deleteTruck(ft); }
+    public void deleteTruck(@RequestBody FoodTruck ft) {
+        foodTruckService.deleteTruck(ft);
+
+    }
+
+    @DeleteMapping("/deleteTruck/{name}")
+    public void deleteTruckByName(@PathVariable String name) {
+        foodTruckService.deleteTruck(name);
+    }
 
     @PatchMapping("/editTruck")
-    public FoodTruck editTruckDetails(@RequestBody FoodTruck ft) {
-        return foodTruckService.editTruckDetails(ft);
+    public Optional<FoodTruck> editTruckDetails(@RequestBody FoodTruck ft) {
+        return Optional.of(foodTruckService.editTruckDetails(ft));
     }
 }
