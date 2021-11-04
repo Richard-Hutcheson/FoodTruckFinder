@@ -57,4 +57,35 @@ public class FoodTruckService {
     }
 
     public List<FoodTruck> getTrucks() { return foodTruckRepository.findAll(); }
+
+    public FoodTruck createNewTruck(FoodTruck ft) { return foodTruckRepository.save(ft); }
+
+    public void deleteTruck(FoodTruck ft) {
+        Optional<FoodTruck> deleteTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
+
+        if (!deleteTruck.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        foodTruckRepository.delete(deleteTruck.get());
+    }
+
+    public FoodTruck editTruckDetails(FoodTruck ft) {
+        Optional<FoodTruck> updateTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
+
+        if (!updateTruck.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        FoodTruck up = updateTruck.get();
+
+        up.setOwner(ft.getOwner());
+        up.setTruckID(ft.getTruckID());
+        up.setTruckName(ft.getTruckName());
+        up.setFoodType(ft.getFoodType());
+        up.setMaxRange(ft.getMaxRange());
+        up.setMinRange(ft.getMinRange());
+        up.setDescription(ft.getDescription());
+
+        return foodTruckRepository.save(up);
+
+    }
 }
