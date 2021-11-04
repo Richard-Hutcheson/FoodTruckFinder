@@ -3,7 +3,7 @@ package ftf.classes;
 import lombok.Data;
 
 import javax.persistence.*;
-
+import ftf.classes.Route;
 @Data
 @Entity
 @Table(name = Location.TABLE_NAME)
@@ -28,7 +28,6 @@ public class Location {
     @Column(name = "longitude")
     double longitude;
 
-    @JoinColumn(name = "currentRoute")
     @ManyToOne
-    Routes route;
+    Route route;
 }
