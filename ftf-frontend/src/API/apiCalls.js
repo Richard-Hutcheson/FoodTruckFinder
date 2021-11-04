@@ -45,9 +45,9 @@ export async function loginUser(un, pw){
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
     if (response != null){
-        let responseJSON = await response.json();
+        let responseJSON = await response.json().catch(error=> {console.log(error.message)});
         console.log("response = ", responseJSON);
-        return responseJSON;
+        return JSON.stringify(responseJSON);
     }
 }
 export async function saveUser(userDataMap){

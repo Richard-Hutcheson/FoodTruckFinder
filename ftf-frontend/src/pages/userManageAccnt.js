@@ -57,8 +57,15 @@ class UserManageAccount extends Component{
             console.log("response = ", response);
         }
 
-
-
+        let foodTypeList = getFoodTypes();
+        console.log(foodTypeList);
+        let container = document.getElementById("foodTypeID");
+        for (let i = 0; i < foodTypeList.length; i++){
+            let item = document.createElement('option');
+            item.setAttribute('value', foodTypeList[i]);
+            item.innerHTML = foodTypeList[i];
+            container.appendChild(item);
+        }
     }
     handleChange(event){
         
@@ -162,28 +169,29 @@ class UserManageAccount extends Component{
                     </div>
                     <h1 id = "preferenceFormID" className={styles.preferencesHeader}>FOOD TRUCK PREFERENCES</h1>
                         <form className = {styles.prefFormClass} id = "prefFormID" onSubmit={this.handleSubmit}>
-                            <div className={styles.priceDiv}>
-                                <p>Price Range</p>
-                                <input type="radio" id="price1" name="price" value="$" checked={this.state.priceSelected === '$'} onChange={this.onValueChange}/>
-                                <label for="price1">$1-$15</label><br/>
-                                <input type="radio" id="price2" name="price" value="$$" checked={this.state.priceSelected === '$$'} onChange={this.onValueChange}/>
-                                <label for="price2">$15-$30</label><br/>
-                                <input type="radio" id="price3" name="price" value="$$$" checked={this.state.priceSelected === '$$$'} onChange={this.onValueChange}/>
-                                <label for="price3">$30+</label><br/>
-                                <input type="radio" id="priceNone" name="price" value="No Preference" checked={this.state.priceSelected === 'No Preference'} onChange={this.onValueChange}/>
-                                <label for="priceNone">No Preference</label><br/>
-                            </div>
-                            <div className={styles.distRangeClass}>
-                                <p>Truck Distance Range</p>
-                                <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
-                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
-                            </div>
-                            <div className = {styles.foodTypeDiv}>
-                            <label for="foodTypeID">Food Type Preference:</label>
-                                <select id="foodTypeID" name="carlist" form="prefFormID">
-                                    <option value="no-pref">No Preference</option>
-
-                                </select>
+                            <div className={styles.innerFormClass}>
+                                <div className={styles.priceDiv}>
+                                    <p>Price Range</p>
+                                    <input type="radio" id="price1" name="price" value="$" checked={this.state.priceSelected === '$'} onChange={this.onValueChange}/>
+                                    <label for="price1">$1-$15</label><br/>
+                                    <input type="radio" id="price2" name="price" value="$$" checked={this.state.priceSelected === '$$'} onChange={this.onValueChange}/>
+                                    <label for="price2">$15-$30</label><br/>
+                                    <input type="radio" id="price3" name="price" value="$$$" checked={this.state.priceSelected === '$$$'} onChange={this.onValueChange}/>
+                                    <label for="price3">$30+</label><br/>
+                                    <input type="radio" id="priceNone" name="price" value="No Preference" checked={this.state.priceSelected === 'No Preference'} onChange={this.onValueChange}/>
+                                    <label for="priceNone">No Preference</label><br/>
+                                </div>
+                                <div className={styles.distRangeClass}>
+                                    <p>Truck Distance Range</p>
+                                    <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
+                                    <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
+                                </div>
+                                <div className = {styles.foodTypeDiv}>
+                                    <p>Food Type Preference:</p>
+                                    <select id="foodTypeID" name="carlist" form="prefFormID">
+                                        <option value="no-pref">No Preference</option>
+                                    </select>
+                                </div>                       
                             </div>
                             <button className={styles.formSaveBtn} type="submit">SAVE</button>
                         </form>
