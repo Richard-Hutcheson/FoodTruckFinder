@@ -40,9 +40,11 @@ class LoginScreen extends Component{
             if (response != null){
                 console.log("response in logScreen = ", response);
                 console.log("response.id = ", response.id);
+                console.log("response.role = ", response.role)
                 if (response.status == "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
                 }else if (response.role === 'o'){
+                    console.log("REACHED HERE");
                     this.props.history.push({
                         pathname: '/TruckOwnerDashboard',
                         state: {user: this.state.username, guest: 'false'} // your data array of objects
