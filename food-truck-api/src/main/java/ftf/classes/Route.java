@@ -1,14 +1,16 @@
 package ftf.classes;
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = Routes.TABLE_NAME)
-public class Routes {
-    public static final String TABLE_NAME = "Routes";
+@Table(name = Route.TABLE_NAME)
+public class Route {
+    public static final String TABLE_NAME = "Route";
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
     @SequenceGenerator(
@@ -21,4 +23,9 @@ public class Routes {
     @JoinColumn(name = "truckID")
     @ManyToOne
     FoodTruck truck;
+
+    //one route has many locations
+    @OneToMany(mappedBy = "route")
+    //@JoinColumn(name = "locationID",referencedColumnName = "routeID")
+    List<Location> locations;
 }
