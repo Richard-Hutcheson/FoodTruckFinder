@@ -2,6 +2,7 @@ package ftf.Controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import ftf.Service.UserService;
+import ftf.classes.Review;
 import ftf.classes.User;
 import ftf.classes.View;
 import ftf.exceptions.InvalidLoginException;

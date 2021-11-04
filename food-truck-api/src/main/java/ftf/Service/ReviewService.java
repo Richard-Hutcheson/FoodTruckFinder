@@ -28,5 +28,8 @@ public class ReviewService {
         return reviews;
     }
 
+    public List<Review> findByUserId(Long id) {
+        return reviewRepository.findByUserId(id);
+    }
 
 }
