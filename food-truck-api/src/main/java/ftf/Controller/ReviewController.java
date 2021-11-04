@@ -47,5 +47,9 @@ public class ReviewController {
 
         return reviewService.findByUserId(userReview.get().getId());
     }
+    @PostMapping("/postReview")
+    public Review saveReview(@RequestBody Review review){
+        return reviewService.saveReview(review);
+    }
 
 }
