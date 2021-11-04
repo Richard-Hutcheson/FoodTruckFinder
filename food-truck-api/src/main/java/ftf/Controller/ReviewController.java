@@ -24,8 +24,6 @@ public class ReviewController {
         return reviewService.findById(truckID);
     }
 
-
-
     @GetMapping("/reviews/name/{truckName}")
     public List<Review> getReviewByTruckName(@PathVariable String truckName){
         //store information of the truck into the class
