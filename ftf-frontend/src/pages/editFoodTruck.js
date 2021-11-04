@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import styles from '../css/manageAccnt.module.css';
 import { getFoodTypes } from '../API/helperFunctions';
 
-class UserManageAccount extends Component{
+class EditFoodTruck extends Component{
 
     constructor(props){
         super(props);
@@ -211,4 +211,4 @@ class UserManageAccount extends Component{
         );
     }
 }
-export default UserManageAccount;
+export default EditFoodTruck;

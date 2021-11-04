@@ -101,7 +101,7 @@ class UserDashboard extends Component{
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
                         {this.state.guest !=='true' && 
-                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>}
+                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
                         </div>
                     </div>
                     {this.state.guest ==='true' && <a href="/" className = {styles.logout}>EXIT</a>}

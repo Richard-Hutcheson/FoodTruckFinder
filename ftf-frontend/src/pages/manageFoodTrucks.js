@@ -18,6 +18,7 @@ class ManageFoodTrucks extends Component{
             this.state.user = this.props.location.state.user;
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
+            this.state.userID = this.props.location.state.userID;
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -44,6 +45,7 @@ class ManageFoodTrucks extends Component{
                     <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
+                            <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>Dashboard</Link>
                             <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
                             <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.user}}}>Manage Food Trucks</Link>
                         </div>
@@ -52,7 +54,25 @@ class ManageFoodTrucks extends Component{
                 </div>
                 <p>your user id = {this.state.userID}</p>
 
-
+                <div className={styles.truckRecsContainer} id = "recTrucksID">
+                    <div className={styles.truckRecTitle}>
+                        <p>Your Food Trucks</p>
+                    </div>
+                    <div className={styles.textBar}>
+                        <div className={styles.textBarText}>TRUCK NAME</div>
+                        <div className={styles.textBarText}>PRICE</div>
+                        <div className={styles.textBarText}>FOOD TYPE</div>
+                        <div className={styles.textBarText}></div>
+                    </div>
+                    <div className={styles.recItem}>
+                        <div className={styles.truckName}>truck0</div>
+                        <div className={styles.truckPrice}>$x.xx</div>
+                        <div className={styles.truckFoodType}>food_type</div>
+                        <button className={styles.truckBtn} type="submit" onClick={()=>{
+                            <Link to= {{ pathname: "/EditFoodTruck", state: {user: this.state.username, userID: this.state.userID}}}></Link>
+                        }}>EDIT</button>
+                    </div>
+                </div>
             </div>
         ); 
     }
