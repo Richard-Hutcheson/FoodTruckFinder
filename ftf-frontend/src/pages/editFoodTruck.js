@@ -47,14 +47,13 @@ class EditFoodTruck extends Component{
             console.log("response = ", response);
         }
         else{
-            this.setState({userid: response.id});
-            this.setState({username: response.username});
-            this.setState({password: response.password});
+            this.setState({truckid: response.truckid});
             this.setState({name: response.name});
-            this.setState({address: response.address});
-            this.setState({city: response.city});
-            this.setState({state: response.state});
-            this.setState({email: response.email});
+            this.setState({description: response.description});
+            this.setState({foodType: response.foodType});
+            this.setState({max: response.max});
+            this.setState({min: response.min});
+            this.setState({userid: response.userid});
             console.log("response = ", response);
         }
 
