@@ -78,7 +78,6 @@ public class UserController {
 
     @PatchMapping("/editAccount")
     public User editAccount(@RequestBody User user) {
-        System.out.println("HERE");
         Optional<User> updated = userServe.findById(user.getId());
 
         if (updated.isPresent())
