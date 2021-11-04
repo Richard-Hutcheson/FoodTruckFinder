@@ -29,6 +29,42 @@
     transform: translate(-50%);
     text-align: center;
 }
+.prefFormClass{
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
+.innerFormClass{
+    position: relative;
+    width: 800px;
+    height: 200px;
+    display: grid;
+    grid-template-columns: 266px 266px 266px;
+    grid-template-rows: auto auto;
+    left: 50%;
+    transform: translate(-50%);
+
+}
+.distRangeClass, .foodTypeDiv{
+    text-align: center;
+}
+.formSaveBtn{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%);
+
+}
+
+
+
+
+
+
+
 
 .backBtn, .cancelBtn{
     display: block;
