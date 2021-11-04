@@ -70,6 +70,15 @@ public class FoodTruckService {
         foodTruckRepository.delete(deleteTruck.get());
     }
 
+    public void deleteTruck(String name) {
+        Optional<FoodTruck> deleteTruck = foodTruckRepository.findFoodTruckByTruckName(name);
+
+        if (!deleteTruck.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        foodTruckRepository.delete(deleteTruck.get());
+    }
+
     public FoodTruck editTruckDetails(FoodTruck ft) {
         Optional<FoodTruck> updateTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
 
