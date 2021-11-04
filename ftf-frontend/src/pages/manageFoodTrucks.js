@@ -40,7 +40,18 @@ class ManageFoodTrucks extends Component{
     render(){ 
         return (
             <div>
-                <p>hello</p>
+                <div className = {styles.navbar}>
+                    <div className={styles.dropdownDiv}>
+                        <button className={styles.dropbtn}>{this.state.user}</button>
+                        <div className={styles.dropdownContent}>
+                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
+                            <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.user}}}>Manage Food Trucks</Link>
+                        </div>
+                    </div>
+                    <a href="/" className = {styles.logout}>logout</a>
+                </div>
+                <p>your user id = {this.state.userID}</p>
+
 
             </div>
         ); 
