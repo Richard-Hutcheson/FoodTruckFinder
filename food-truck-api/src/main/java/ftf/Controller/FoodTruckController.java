@@ -66,7 +66,7 @@ public class FoodTruckController {
     }
 
     @PatchMapping("/editTruck")
-    public FoodTruck editTruckDetails(@RequestBody FoodTruck ft) {
-        return foodTruckService.editTruckDetails(ft);
+    public Optional<FoodTruck> editTruckDetails(@RequestBody FoodTruck ft) {
+        return Optional.of(foodTruckService.editTruckDetails(ft));
     }
 }
