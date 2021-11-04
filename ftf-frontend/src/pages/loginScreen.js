@@ -25,7 +25,6 @@ class LoginScreen extends Component{
     }
 
     async handleSubmit(event){
-        // window.confirm("username = " + this.state.username + ', password = ' + this.state.password +  ', roll = ' + this.state.role);
         event.preventDefault();
 
         if (event.target.id == "enterGuest"){
@@ -41,7 +40,13 @@ class LoginScreen extends Component{
                 console.log("response in logScreen = ", response);
                 if (response.status == "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
-                }else{
+                }else if (response.role === 'o'){
+                    this.props.history.push({
+                        pathname: '/TruckOwnerDashboard',
+                        state: {user: this.state.username, guest: 'false'} // your data array of objects
+                    })
+                }
+                else{
                     this.props.history.push({
                         pathname: '/UserDashboard',
                         state: {user: this.state.username, guest: 'false'} // your data array of objects

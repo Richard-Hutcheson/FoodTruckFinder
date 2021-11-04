@@ -44,7 +44,6 @@ class UserDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
-
     }
 
     handleChange(event){
@@ -92,108 +91,72 @@ class UserDashboard extends Component{
                 callMaps(map);
                 this.setState({showMap: 'true'});
         }
-
-
-        
     }
     render(){ 
-        //GUEST USER
-        if (this.state.guest == 'true'){
-            return (
-                <div>
-                    <div className = {styles.navbar}>
-                        <div className={styles.dropdownDiv}>
-                            <button className={styles.dropbtn}>{this.state.user}</button>
-                            <div className={styles.dropdownContent}>
-                            </div>
+    
+        return (
+            <div>
+                <div className = {styles.navbar}>
+                    <div className={styles.dropdownDiv}>
+                        <button className={styles.dropbtn}>{this.state.user}</button>
+                        <div className={styles.dropdownContent}>
+                        {this.state.guest !=='true' && 
+                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>}
                         </div>
-                        <a href="/" className = {styles.logout}>EXIT</a>
                     </div>
-                    <p>your user id = guest</p>
-                    <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+                    {this.state.guest ==='true' && <a href="/" className = {styles.logout}>EXIT</a>}
+                    {this.state.guest !=='true' &&<a href="/" className = {styles.logout}>logout</a>}
+                </div>
+                {this.state.guest !== 'true' && <p>your user id = {this.state.userID}</p>}
+                {this.state.guest === 'true' && <p>your user id = guest</p>}
+                
+                <form className={styles.searchForm} onSubmit={this.handleSubmit}>
 
-                        <div className={styles.searchSubDiv}>
+                    <div className={styles.searchSubDiv}>
 
-                            <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
-                            <button  className={styles.searchBtn} type="submit">Submit</button>                            
-                        </div>
+                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                        <button  className={styles.searchBtn} type="submit">Submit</button>                            
+                    </div>
 
-                        <select name="searchOptions" className={styles.searchOptions}>
-                            <option value="name">Food Truck By Name</option>
-                            <option value="price">Food Truck By Price</option>
-                            <option value="location">Food Truck By Location</option>
-                            <option value="type">Food Truck By Food Type</option>
-                            <option value="user">User</option>
-                        </select>
-                    </form>
-                    <div className = {styles.mapWrapper}>
-                        <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>
-                        <div className={styles.map} id="map"></div>
+                    <select name="searchOptions" className={styles.searchOptions}>
+                        <option value="name">Food Truck By Name</option>
+                        <option value="price">Food Truck By Price</option>
+                        <option value="location">Food Truck By Location</option>
+                        <option value="type">Food Truck By Food Type</option>
+                        <option value="user">User</option>
+                    </select>
+                </form>
+                <div className={styles.truckRecsContainer} id = "recTrucksID">
+                    <div className={styles.truckRecTitle}>
+                        <p>Food Truck Recommendations</p>
+                    </div>
+                    <div className={styles.textBar}>
+                        <div className={styles.textBarText}>TRUCK NAME</div>
+                        <div className={styles.textBarText}>PRICE</div>
+                        <div className={styles.textBarText}>FOOD TYPE</div>
+                        <div className={styles.textBarText}></div>
+                    </div>
+                    <div className={styles.recItem}>
+                        <div className={styles.truckName}>truck0</div>
+                        <div className={styles.truckPrice}>$x.xx</div>
+                        <div className={styles.truckFoodType}>food_type</div>
+                        <button className={styles.truckBtn} type="submit" onClick={()=>{console.log("hello");}}>VIEW</button>
                     </div>
                 </div>
-            );
-        }
-        //AUTHENTICATED USER
-        else{
-            return (
-                <div>
-                    <div className = {styles.navbar}>
-                        <div className={styles.dropdownDiv}>
-                            <button className={styles.dropbtn}>{this.state.user}</button>
-                            <div className={styles.dropdownContent}>
-                                <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
-                            </div>
-                        </div>
-                        <a href="/" className = {styles.logout}>logout</a>
+                <div className = {styles.mapWrapper}>
+                    { this.state.showMap == 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
+                    <div className={styles.map} id="map">
+                        <p>Map goes here. Status: disabled</p>
                     </div>
-                    <p>your user id = {this.state.userID}</p>
-                    <form className={styles.searchForm} onSubmit={this.handleSubmit}>
-
-                        <div className={styles.searchSubDiv}>
-
-                            <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
-                            <button  className={styles.searchBtn} type="submit">Submit</button>                            
-                        </div>
-
-                        <select name="searchOptions" className={styles.searchOptions}>
-                            <option value="name">Food Truck By Name</option>
-                            <option value="price">Food Truck By Price</option>
-                            <option value="location">Food Truck By Location</option>
-                            <option value="type">Food Truck By Food Type</option>
-                            <option value="user">User</option>
-                        </select>
-                    </form>
-                    <div className={styles.truckRecsContainer} id = "recTrucksID">
-                        <div className={styles.truckRecTitle}>
-                            <p>Food Truck Recommendations</p>
-                        </div>
-                        <div className={styles.textBar}>
-                            <div className={styles.textBarText}>TRUCK NAME</div>
-                            <div className={styles.textBarText}>PRICE</div>
-                            <div className={styles.textBarText}>FOOD TYPE</div>
-                            <div className={styles.textBarText}></div>
-                        </div>
-                        <div className={styles.recItem}>
-                            <div className={styles.truckName}>truck0</div>
-                            <div className={styles.truckPrice}>$x.xx</div>
-                            <div className={styles.truckFoodType}>food_type</div>
-                            <button className={styles.truckBtn} type="submit" onClick={()=>{console.log("hello");}}>VIEW</button>
-                        </div>
-                    </div>
-                    <div className = {styles.mapWrapper}>
-                        { this.state.showMap == 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
-                        <div className={styles.map} id="map">
-                            <p>Map goes here. Status: disabled</p>
-                        </div>
-                    </div>
-                    <div className={styles.dynamic}>
-                        <button className = {styles.s} type="submit" onClick={this.special}>ADD TRUCKS</button>
-                        <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
-                    </div>
-
                 </div>
-            );
-        }
+                <div className={styles.dynamic}>
+                    <button className = {styles.s} type="submit" onClick={this.special}>ADD TRUCKS</button>
+                    <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
+                </div>
+
+            </div>
+        );
     }
+    
 }
 export default UserDashboard;
