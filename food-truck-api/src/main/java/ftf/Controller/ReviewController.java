@@ -26,13 +26,14 @@ public class ReviewController {
     FoodTruckService ftService;
 
     /*
-    @GetMapping("/{truckID}")
+    @GetMapping("/reviews/{truckID}")
     public List<Review> getReviews(@PathVariable Long truckID){
-        //return reviewService.getReviews(truckID);
-        //return reviewService.
+
     }
 
      */
+
+
     @GetMapping("/{truckName}/reviews")
     public List<Review> getReviews(@PathVariable String truckName){
         //store information of the truck into the class
