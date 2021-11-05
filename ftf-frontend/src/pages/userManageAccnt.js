@@ -105,7 +105,6 @@ class UserManageAccount extends Component{
                 document.querySelectorAll('.field').forEach(x=>{
                     if (x.value !== ''){
                         this.setState({[x.name]: String(x.value)}, this.callFunction);
-                        console.log(this.state.state);
                     }else{
                     }
                 });
@@ -131,11 +130,12 @@ class UserManageAccount extends Component{
         });
     }
     
-    callFunction = ()=>{
-        this.saveUser();        
-    }
+
     onValueChange(event){
         this.setState({priceSelected: event.target.value})
+    }
+    callFunction = ()=>{
+        this.saveUser();        
     }
     async saveUser(){
         let udm = new Map();
@@ -208,13 +208,7 @@ class UserManageAccount extends Component{
                         {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
                         {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
 
-                    </div>
-
-
-                {/* <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>Back</Link> */}
-                {/* <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>Back</Link> */}
-                
-                                
+                    </div>          
             </div>
         );
     }

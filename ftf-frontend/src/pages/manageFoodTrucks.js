@@ -49,14 +49,14 @@ class ManageFoodTrucks extends Component{
                 btn.setAttribute('type', 'submit');
                 btn.setAttribute('class', styles.truckBtn);
                 btn.setAttribute('id', response[i].truckName);
-                btn.innerText = "VIEW";
+                btn.innerText = "EDIT";
                 recItem.innerHTML = `
                     <div class=${styles.truckName}>${response[i].truckName}</div>
                     <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                     <div class=${styles.truckFoodType}>${response[i].foodType}</div>
                 `
                 btn.onclick = function() {
-                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                    document.location.href = `http://localhost:3000/EditTruck?truck=${response[i].truckName}`;
                 }
     
                 recItem.appendChild(btn);

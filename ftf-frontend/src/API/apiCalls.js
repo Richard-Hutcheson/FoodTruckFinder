@@ -220,3 +220,60 @@ export async function getAllTrucks(){
         }
     }
 }
+
+export async function editTruck(userDataMap){
+    console.log("datamap = ", userDataMap);
+    const requestOptions = {
+        method: "PATCH",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify({
+            truckID: userDataMap.get('truckID'),
+            truckName: userDataMap.get('truckName'),
+            description: userDataMap.get('description'),
+            minRange: userDataMap.get('minRange'),
+            maxRange: userDataMap.get('maxRange'),
+            foodType: userDataMap.get('foodType'),
+            owner: userDataMap.get('owner'),
+        })
+    };
+    const response = await fetch(`http://localhost:8080/editTruck`, requestOptions)
+        .catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        if (data != null){
+            console.log("data = ", data);
+            return data;
+        }else{
+            return "...unknown...";  
+        }
+    }
+}
+
+export async function deleteTruck(truckName){
+    const requestOptions = {
+        method: "DELETE",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+    };
+    const response = await fetch(`http://localhost:8080/deleteTruck/${truckName}`, requestOptions)
+        .catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        return data;
+    }
+}
