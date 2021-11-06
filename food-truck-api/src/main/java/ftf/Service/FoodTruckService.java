@@ -79,7 +79,7 @@ public class FoodTruckService {
         if (foodTruckRepository.findFoodTruckByTruckName(ft.getTruckName()).isPresent())
             throw new TruckNameTakenException("Truck Name already exist");
 
-        foodTruckRepository.save(ft);
+        return foodTruckRepository.save(ft);
     }
 
     public void deleteTruck(FoodTruck ft) {

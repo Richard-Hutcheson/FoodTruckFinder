@@ -19,6 +19,6 @@ public class RouteController {
 
     @GetMapping("/route/{truckName}")
     public Optional<Route> getRouteByTruckName(@PathVariable String truckName) {
-        return Optional.of(new Route());
+
     }
 }
