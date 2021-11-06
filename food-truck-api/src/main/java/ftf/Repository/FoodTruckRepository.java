@@ -12,4 +12,6 @@ public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
     Optional<FoodTruck> findFoodTruckByTruckID(Long ID);
     List<FoodTruck> findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(double min, double max);
     List<FoodTruck> findFoodTrucksByFoodType(String foodType);
+    List<FoodTruck> findByTruckNameContains(String name);
+    List<FoodTruck> findByTruckNameLike(String name);
 }

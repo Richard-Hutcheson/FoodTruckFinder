@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FoodTruckService {
@@ -38,6 +37,20 @@ public class FoodTruckService {
             throw new FoodTruckNotFoundException("Food Truck Not Found");
 
         return foodTruck;
+    }
+
+    public List<FoodTruck> getTruckDetailsByLikeName(String name) {
+        List<FoodTruck> foodTruckContains = foodTruckRepository.findByTruckNameContains(name);
+        List<FoodTruck> foodTruckLike = foodTruckRepository.findByTruckNameLike('%' + name + '%');
+        Set<FoodTruck> unionFound = new HashSet<>();
+
+        if (foodTruckContains.isEmpty() && foodTruckLike.isEmpty())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        unionFound.addAll(foodTruckContains);
+        unionFound.addAll(foodTruckLike);
+
+        return new ArrayList<>(unionFound);
     }
 
     public List<FoodTruck> getTrucksPriceRange(double min, double max) {

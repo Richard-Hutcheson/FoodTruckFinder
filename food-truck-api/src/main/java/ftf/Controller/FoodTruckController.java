@@ -34,10 +34,10 @@ public class FoodTruckController {
     }
 
     // WORK IN PROGRESS: WILL RETURN A LIST OF TRUCKS SIMILAR TO SEARCH NAME
-//    @GetMapping("/truckDetails/names/{name}")
-//    public List<FoodTruck> getTrucksByLikeNames(@PathVariable String name) {
-//
-//    }
+    @GetMapping("/truckDetails/names/{name}")
+    public List<FoodTruck> getTrucksByLikeNames(@PathVariable String name) {
+        return foodTruckService.getTruckDetailsByLikeName(name);
+    }
 
     @GetMapping("/truckDetails/id/{id}")
     public Optional<FoodTruck> getTruckDetailsById(@PathVariable Long id) { return foodTruckService.getTruckDetailsById(id); }
