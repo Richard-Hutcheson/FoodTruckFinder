@@ -92,7 +92,7 @@ public class UserController {
         return userServe.getUsers();
     }
 
-    @GetMapping("/users/truckOwners")
+    @GetMapping("/users/truckOwners/{name}")
     public List<User> getTruckOwners() {
         return userServe.getTruckOwners();
     }
