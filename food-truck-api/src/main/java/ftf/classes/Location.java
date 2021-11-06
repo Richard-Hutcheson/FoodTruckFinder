@@ -16,6 +16,7 @@ public class Location {
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
     )
+
     @Column(name = "locationID")
     Long locationID;
 
