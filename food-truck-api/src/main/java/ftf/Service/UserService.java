@@ -73,4 +73,9 @@ public class UserService {
     public List<User> findByUsernameAndPassword(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password);
     }
+
+    public List<User> getTruckOwners() {
+        List<User> list = userRepository.findByRole("O");
+        return list;
+    }
 }

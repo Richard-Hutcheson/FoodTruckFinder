@@ -87,9 +87,13 @@ public class UserController {
     //This is for testing purposes, it will retrieve all the usernames
     //within the database
     @GetMapping("/api/users")
-    @JsonView(View.UserView.class)
+//    @JsonView(View.UserView.class)
     public List<User> getUsers(){
         return userServe.getUsers();
     }
 
+    @GetMapping("/users/truckOwners")
+    public List<User> getTruckOwners() {
+        return userServe.getTruckOwners();
+    }
 }
