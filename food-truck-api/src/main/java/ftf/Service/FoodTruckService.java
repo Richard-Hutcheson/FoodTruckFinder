@@ -42,10 +42,11 @@ public class FoodTruckService {
     public List<FoodTruck> getTruckDetailsByLikeName(String name) {
         List<FoodTruck> foodTruckContains = foodTruckRepository.findByTruckNameContains(name);
         List<FoodTruck> foodTruckLike = foodTruckRepository.findByTruckNameLike('%' + name + '%');
-        Set<FoodTruck> unionFound = new HashSet<>();
 
         if (foodTruckContains.isEmpty() && foodTruckLike.isEmpty())
             throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        Set<FoodTruck> unionFound = new HashSet<>();
 
         unionFound.addAll(foodTruckContains);
         unionFound.addAll(foodTruckLike);
