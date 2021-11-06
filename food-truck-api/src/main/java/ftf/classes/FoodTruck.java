@@ -43,6 +43,4 @@ public class FoodTruck {
 
     @Column(name = "foodType")
     String foodType;
-
-
 }

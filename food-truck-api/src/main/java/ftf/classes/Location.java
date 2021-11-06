@@ -30,5 +30,6 @@ public class Location {
     double longitude;
 
     @ManyToOne
+    @JoinColumn(name = "routeID")
     Route route;
 }
