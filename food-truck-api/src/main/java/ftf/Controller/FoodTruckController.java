@@ -55,10 +55,7 @@ public class FoodTruckController {
     public FoodTruck createNewTruck(@RequestBody FoodTruck ft) { return foodTruckService.createNewTruck(ft); }
 
     @DeleteMapping("/deleteTruck")
-    public void deleteTruck(@RequestBody FoodTruck ft) {
-        foodTruckService.deleteTruck(ft);
-
-    }
+    public void deleteTruck(@RequestBody FoodTruck ft) { foodTruckService.deleteTruck(ft); }
 
     @DeleteMapping("/deleteTruck/{name}")
     public void deleteTruckByName(@PathVariable String name) {

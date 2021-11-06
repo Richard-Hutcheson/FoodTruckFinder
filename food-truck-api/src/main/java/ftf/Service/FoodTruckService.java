@@ -5,6 +5,7 @@ import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
 import ftf.classes.User;
 import ftf.exceptions.FoodTruckNotFoundException;
+import ftf.exceptions.TruckNameTakenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +75,12 @@ public class FoodTruckService {
 
     public List<FoodTruck> getTrucks() { return foodTruckRepository.findAll(); }
 
-    public FoodTruck createNewTruck(FoodTruck ft) { return foodTruckRepository.save(ft); }
+    public FoodTruck createNewTruck(FoodTruck ft) {
+        if (foodTruckRepository.findFoodTruckByTruckName(ft.getTruckName()).isPresent())
+            throw new TruckNameTakenException("Truck Name already exist");
+
+        foodTruckRepository.save(ft);
+    }
 
     public void deleteTruck(FoodTruck ft) {
         Optional<FoodTruck> deleteTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());

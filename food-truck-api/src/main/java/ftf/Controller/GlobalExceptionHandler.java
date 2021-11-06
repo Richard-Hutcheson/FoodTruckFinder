@@ -32,9 +32,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(FoodTruckNotFoundException.class)
-    public ResponseEntity<Object>handleUserNotFoundException(FoodTruckNotFoundException ex,
+    public ResponseEntity<Object>handleFoodTruckNotFoundException(FoodTruckNotFoundException ex,
                                                              WebRequest request){
         return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TruckNameTakenException.class)
+    public ResponseEntity<Object>handleTruckNameTakenException(TruckNameTakenException ex,
+                                                             WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.CONFLICT,LocalDateTime.now()),HttpStatus.CONFLICT);
     }
 
 }
