@@ -6,6 +6,7 @@ import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
 import ftf.classes.User;
 import ftf.exceptions.FoodTruckNotFoundException;
+import ftf.exceptions.InvalidLoginException;
 import ftf.exceptions.TruckNameTakenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,6 +136,12 @@ public class FoodTruckService {
 
     public List<FoodTruck> getFoodTrucksByUsername(String name) {
         Optional<User> user = userRepository.findByUsername(name);
+
+        // check if the user is an owner
+        if (!user.get().getRole().equals("O"))
+            throw new InvalidLoginException("User is not an authorized truck owner");
+
+
         List<FoodTruck> allFoodTrucks = foodTruckRepository.findAll();
         List<FoodTruck> foundTrucks = new ArrayList<FoodTruck>();
 
@@ -147,6 +154,9 @@ public class FoodTruckService {
                 foundTrucks.add(ft);
             }
         }
+
+        if (foundTrucks.isEmpty())
+            throw new FoodTruckNotFoundException("User does not own any food trucks");
 
         return foundTrucks;
     }
