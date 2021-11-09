@@ -26,6 +26,6 @@ public class Route {
 
     //one route has many locations
     @OneToMany(mappedBy = "route")
-    //@JoinColumn(name = "locationID",referencedColumnName = "routeID")
-    List<Location> locations;
+//    @JoinColumn(name = "locationID", referencedColumnName = "routeID")
+    List<Location> location;
 }

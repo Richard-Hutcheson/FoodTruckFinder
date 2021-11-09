@@ -2,6 +2,7 @@ package ftf.Controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import ftf.Service.UserService;
+import ftf.classes.FoodTruck;
 import ftf.classes.Review;
 import ftf.classes.User;
 import ftf.classes.View;
@@ -87,9 +88,14 @@ public class UserController {
     //This is for testing purposes, it will retrieve all the usernames
     //within the database
     @GetMapping("/api/users")
-    @JsonView(View.UserView.class)
+//    @JsonView(View.UserView.class)
     public List<User> getUsers(){
         return userServe.getUsers();
+    }
+
+    @GetMapping("/users/truckOwners")
+    public List<User> getTruckOwners() {
+        return userServe.getTruckOwners();
     }
 
 }
