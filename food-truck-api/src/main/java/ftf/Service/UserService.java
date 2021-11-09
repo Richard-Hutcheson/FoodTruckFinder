@@ -1,5 +1,6 @@
 package ftf.Service;
 
+import ftf.classes.FoodTruck;
 import ftf.classes.User;
 import ftf.Repository.UserRepository;
 import ftf.exceptions.InvalidLoginException;
@@ -78,4 +79,5 @@ public class UserService {
         List<User> list = userRepository.findByRole("O");
         return list;
     }
+
 }

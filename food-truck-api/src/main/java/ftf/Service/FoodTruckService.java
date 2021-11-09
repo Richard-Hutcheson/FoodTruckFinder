@@ -1,6 +1,7 @@
 package ftf.Service;
 
 import ftf.Repository.FoodTruckRepository;
+import ftf.Repository.UserRepository;
 import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
 import ftf.classes.User;
@@ -17,6 +18,9 @@ public class FoodTruckService {
 
     @Autowired
     FoodTruckRepository foodTruckRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     public FoodTruckService(FoodTruckRepository foodTruckRepository) { this.foodTruckRepository = foodTruckRepository; }
@@ -127,5 +131,12 @@ public class FoodTruckService {
             throw new FoodTruckNotFoundException("Food Truck by type " + st + " could not be found");
 
         return list;
+    }
+
+    public List<FoodTruck> getFoodTrucksByUsername(String name) {
+        Optional<User> user = userRepository.findByUsername(name);
+
+        List<FoodTruck> foodTrucks = foodTruckRepository.findFoodTrucksByUserID(user.get().getId());
+        return foodTrucks;
     }
 }

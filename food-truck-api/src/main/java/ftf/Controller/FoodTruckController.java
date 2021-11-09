@@ -22,7 +22,6 @@ public class FoodTruckController {
     @Autowired
     private ReviewService reviewService;
 
-
     @GetMapping("/truckDetails")
     public Optional<FoodTruck> getTruckDetails(@RequestBody FoodTruck ft) {
         return foodTruckService.getTruckDetails(ft);
@@ -65,5 +64,10 @@ public class FoodTruckController {
     @PatchMapping("/editTruck")
     public Optional<FoodTruck> editTruckDetails(@RequestBody FoodTruck ft) {
         return Optional.of(foodTruckService.editTruckDetails(ft));
+    }
+
+    @GetMapping("/users/foodTrucks/{name}")
+    public List<FoodTruck> getFoodTrucksByUsername(@PathVariable String name) {
+        return foodTruckService.getFoodTrucksByUsername(name);
     }
 }
