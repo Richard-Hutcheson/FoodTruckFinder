@@ -95,34 +95,48 @@ public class RecommendationsService {
 //        if (!recFoodTypes.isPresent())
 //            saveUser(userRec.get());
 
-        ArrayList<FoodTruck> topRecListByType = new ArrayList<>();
+        ArrayList<Map.Entry<Integer, String>> occurencesOfEachType = new ArrayList<Map.Entry<Integer, String>>();
 
-        TreeMap<Integer, String> occurencesOfEachType = new TreeMap<>();
+
+//        TreeMap<Integer, String> occurencesOfEachType = new TreeMap<>();
 
 
         /* BUG: Because Tree map doesn't allow duplicate keys if food types have
         * the same number of occurences the Tree map will only choose one of the
         *  two
         */
-        occurencesOfEachType.put(recFoodTypes.get().getAmericanCount(), "American");
-        occurencesOfEachType.put(recFoodTypes.get().getChineseCount(), "Chinese");
-        occurencesOfEachType.put(recFoodTypes.get().getFrenchCount(), "French");
-        occurencesOfEachType.put(recFoodTypes.get().getGermanCount(), "German");
-        occurencesOfEachType.put(recFoodTypes.get().getGreekCount(), "Greek");
-        occurencesOfEachType.put(recFoodTypes.get().getIndianCount(), "Indian");
-        occurencesOfEachType.put(recFoodTypes.get().getItalianCount(), "Italian");
-        occurencesOfEachType.put(recFoodTypes.get().getJapaneseCount(), "Japanese");
-        occurencesOfEachType.put(recFoodTypes.get().getKoreanCount(), "Korean");
-        occurencesOfEachType.put(recFoodTypes.get().getMexicanCount(), "Mexican");
-        occurencesOfEachType.put(recFoodTypes.get().getThaiCount(), "Thai");
-        occurencesOfEachType.put(recFoodTypes.get().getVietnameseCount(), "Vietnamese");
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getAmericanCount(), "American"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getChineseCount(), "Chinese"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getFrenchCount(), "French"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getGermanCount(), "German"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getGreekCount(), "Greek"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getIndianCount(), "Indian"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getItalianCount(), "Italian"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getJapaneseCount(), "Japanese"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getKoreanCount(), "Korean"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getMexicanCount(), "Mexican"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getThaiCount(), "Thai"));
+        occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getVietnameseCount(), "Vietnamese"));
 
-        ArrayList<String> descendingOrderStrings = new ArrayList<>(occurencesOfEachType.descendingMap().values());
+        // Sort each occurence in descending order
+        Collections.sort(occurencesOfEachType, new Comparator<Map.Entry<Integer, String>>() {
+            @Override
+            public int compare(Map.Entry<Integer, String> o1, Map.Entry<Integer, String> o2) {
+                return o2.getKey() - o1.getKey();
+            }
+        });
+
+//        ArrayList<String> descendingOrderStrings = new ArrayList<String>();
         ArrayList<FoodTruck> foodTrucks = new ArrayList<FoodTruck>();
 
-        // find top three food type occurences
-        for (String str : descendingOrderStrings) {
-            foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodType(str));
+        int count = 0;
+
+        while (occurencesOfEachType.get(count).getKey() > 0 && count < occurencesOfEachType.size()) {
+            String value = occurencesOfEachType.get(count).getValue();
+            if (!foodTruckRepository.findFoodTrucksByFoodType(value).isEmpty())
+                foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodType(value));
+
+            count++;
         }
 
         // user has no recomendations for trucks
