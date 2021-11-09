@@ -135,8 +135,19 @@ public class FoodTruckService {
 
     public List<FoodTruck> getFoodTrucksByUsername(String name) {
         Optional<User> user = userRepository.findByUsername(name);
+        List<FoodTruck> allFoodTrucks = foodTruckRepository.findAll();
+        List<FoodTruck> foundTrucks = new ArrayList<FoodTruck>();
 
-        List<FoodTruck> foodTrucks = foodTruckRepository.findFoodTrucksByUserID(user.get().getId());
-        return foodTrucks;
+        for (FoodTruck ft : allFoodTrucks) {
+
+            // if the food truck owner equals the passed in user
+            if (ft.getOwner().equals(user.get())) {
+
+                // add the food truck to the list
+                foundTrucks.add(ft);
+            }
+        }
+
+        return foundTrucks;
     }
 }

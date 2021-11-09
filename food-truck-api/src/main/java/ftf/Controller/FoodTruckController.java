@@ -3,6 +3,7 @@ package ftf.Controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import ftf.Service.FoodTruckService;
 import ftf.Service.ReviewService;
+import ftf.Service.UserService;
 import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
 import ftf.classes.View;
