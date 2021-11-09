@@ -100,6 +100,10 @@ public class RecommendationsService {
         TreeMap<Integer, String> occurencesOfEachType = new TreeMap<>();
 
 
+        /* BUG: Because Tree map doesn't allow duplicate keys if food types have
+        * the same number of occurences the Tree map will only choose one of the
+        *  two
+        */
         occurencesOfEachType.put(recFoodTypes.get().getAmericanCount(), "American");
         occurencesOfEachType.put(recFoodTypes.get().getChineseCount(), "Chinese");
         occurencesOfEachType.put(recFoodTypes.get().getFrenchCount(), "French");
