@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface RecommendationsRepository extends JpaRepository<Recommendations, Long> {
     Optional<Recommendations> findRecommendationsByUserID(User user);
+
 }

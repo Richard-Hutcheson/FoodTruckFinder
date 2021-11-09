@@ -1,11 +1,9 @@
 package ftf.Controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import ftf.Service.RecommendationsService;
 import ftf.Service.UserService;
-import ftf.classes.FoodTruck;
-import ftf.classes.Review;
-import ftf.classes.User;
-import ftf.classes.View;
+import ftf.classes.*;
 import ftf.exceptions.InvalidLoginException;
 import ftf.exceptions.UserNotFoundException;
 import ftf.exceptions.UsernameTakenException;

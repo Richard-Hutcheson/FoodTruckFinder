@@ -43,4 +43,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.CONFLICT,LocalDateTime.now()),HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(FoodTypeNotFoundException.class)
+    public ResponseEntity<Object>handleTruckNameTakenException(FoodTypeNotFoundException ex,
+                                                               WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
+    }
+
 }
