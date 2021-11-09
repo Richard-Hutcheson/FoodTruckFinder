@@ -3,6 +3,7 @@ package ftf.Controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import ftf.Service.FoodTruckService;
 import ftf.Service.ReviewService;
+import ftf.Service.UserService;
 import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
 import ftf.classes.View;
@@ -22,7 +23,6 @@ public class FoodTruckController {
     @Autowired
     private ReviewService reviewService;
 
-
     @GetMapping("/truckDetails")
     public Optional<FoodTruck> getTruckDetails(@RequestBody FoodTruck ft) {
         return foodTruckService.getTruckDetails(ft);
@@ -34,10 +34,10 @@ public class FoodTruckController {
     }
 
     // WORK IN PROGRESS: WILL RETURN A LIST OF TRUCKS SIMILAR TO SEARCH NAME
-//    @GetMapping("/truckDetails/names/{name}")
-//    public List<FoodTruck> getTrucksByLikeNames(@PathVariable String name) {
-//
-//    }
+    @GetMapping("/truckDetails/names/{name}")
+    public List<FoodTruck> getTrucksByLikeNames(@PathVariable String name) {
+        return foodTruckService.getTruckDetailsByLikeName(name);
+    }
 
     @GetMapping("/truckDetails/id/{id}")
     public Optional<FoodTruck> getTruckDetailsById(@PathVariable Long id) { return foodTruckService.getTruckDetailsById(id); }
@@ -55,10 +55,7 @@ public class FoodTruckController {
     public FoodTruck createNewTruck(@RequestBody FoodTruck ft) { return foodTruckService.createNewTruck(ft); }
 
     @DeleteMapping("/deleteTruck")
-    public void deleteTruck(@RequestBody FoodTruck ft) {
-        foodTruckService.deleteTruck(ft);
-
-    }
+    public void deleteTruck(@RequestBody FoodTruck ft) { foodTruckService.deleteTruck(ft); }
 
     @DeleteMapping("/deleteTruck/{name}")
     public void deleteTruckByName(@PathVariable String name) {
@@ -68,5 +65,10 @@ public class FoodTruckController {
     @PatchMapping("/editTruck")
     public Optional<FoodTruck> editTruckDetails(@RequestBody FoodTruck ft) {
         return Optional.of(foodTruckService.editTruckDetails(ft));
+    }
+
+    @GetMapping("/users/foodTrucks/{name}")
+    public List<FoodTruck> getFoodTrucksByUsername(@PathVariable String name) {
+        return foodTruckService.getFoodTrucksByUsername(name);
     }
 }

@@ -1,22 +1,27 @@
 package ftf.Service;
 
 import ftf.Repository.FoodTruckRepository;
+import ftf.Repository.UserRepository;
 import ftf.classes.FoodTruck;
 import ftf.classes.FoodType;
 import ftf.classes.User;
 import ftf.exceptions.FoodTruckNotFoundException;
+import ftf.exceptions.InvalidLoginException;
+import ftf.exceptions.TruckNameTakenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FoodTruckService {
 
     @Autowired
     FoodTruckRepository foodTruckRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     public FoodTruckService(FoodTruckRepository foodTruckRepository) { this.foodTruckRepository = foodTruckRepository; }
@@ -40,6 +45,21 @@ public class FoodTruckService {
         return foodTruck;
     }
 
+    public List<FoodTruck> getTruckDetailsByLikeName(String name) {
+        List<FoodTruck> foodTruckContains = foodTruckRepository.findByTruckNameContains(name);
+        List<FoodTruck> foodTruckLike = foodTruckRepository.findByTruckNameLike('%' + name + '%');
+
+        if (foodTruckContains.isEmpty() && foodTruckLike.isEmpty())
+            throw new FoodTruckNotFoundException("Food Truck Not Found");
+
+        Set<FoodTruck> unionFound = new HashSet<>();
+
+        unionFound.addAll(foodTruckContains);
+        unionFound.addAll(foodTruckLike);
+
+        return new ArrayList<>(unionFound);
+    }
+
     public List<FoodTruck> getTrucksPriceRange(double min, double max) {
         List<FoodTruck> foodTrucks = foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min, max);
 
@@ -60,7 +80,12 @@ public class FoodTruckService {
 
     public List<FoodTruck> getTrucks() { return foodTruckRepository.findAll(); }
 
-    public FoodTruck createNewTruck(FoodTruck ft) { return foodTruckRepository.save(ft); }
+    public FoodTruck createNewTruck(FoodTruck ft) {
+        if (foodTruckRepository.findFoodTruckByTruckName(ft.getTruckName()).isPresent())
+            throw new TruckNameTakenException("Truck Name already exist");
+
+        return foodTruckRepository.save(ft);
+    }
 
     public void deleteTruck(FoodTruck ft) {
         Optional<FoodTruck> deleteTruck = foodTruckRepository.findFoodTruckByTruckID(ft.getTruckID());
@@ -107,5 +132,32 @@ public class FoodTruckService {
             throw new FoodTruckNotFoundException("Food Truck by type " + st + " could not be found");
 
         return list;
+    }
+
+    public List<FoodTruck> getFoodTrucksByUsername(String name) {
+        Optional<User> user = userRepository.findByUsername(name);
+
+        // check if the user is an owner
+        if (!user.get().getRole().equals("O"))
+            throw new InvalidLoginException("User is not an authorized truck owner");
+
+
+        List<FoodTruck> allFoodTrucks = foodTruckRepository.findAll();
+        List<FoodTruck> foundTrucks = new ArrayList<FoodTruck>();
+
+        for (FoodTruck ft : allFoodTrucks) {
+
+            // if the food truck owner equals the passed in user
+            if (ft.getOwner().equals(user.get())) {
+
+                // add the food truck to the list
+                foundTrucks.add(ft);
+            }
+        }
+
+        if (foundTrucks.isEmpty())
+            throw new FoodTruckNotFoundException("User does not own any food trucks");
+
+        return foundTrucks;
     }
 }

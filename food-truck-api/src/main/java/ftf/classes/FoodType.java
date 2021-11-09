@@ -12,5 +12,7 @@ public enum FoodType {
     THAI,
     INDIAN,
     FRENCH,
+    DRINK,
+    DESSERT,
     GERMAN;
 }
