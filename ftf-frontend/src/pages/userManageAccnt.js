@@ -102,7 +102,22 @@ class UserManageAccount extends Component{
                 this.setState({submitState: 'SAVE'});
                 this.setState({viewOnly: false});
             }else{
+                //make sure all values are correct length, if they are out of length then don't save!
+                let cont = true;
                 document.querySelectorAll('.field').forEach(x=>{
+                    console.log("x.name = ", x.name, " and length = ", x.value.length);
+                    if ((x.name === "state" && x.value.length != 2) || (x.value.length > 254)){
+                        cont = false;
+                    }
+                });
+                if (!cont){
+                    window.confirm(`Length of one or more fields exceeds maximum char length.\
+                        State must be two alphabetical characters. Other fields must be < 254 chars`);
+                    return;
+                }
+                //user potentially made changes, save
+                document.querySelectorAll('.field').forEach(x=>{
+                    //user made change
                     if (x.value !== ''){
                         this.setState({[x.name]: String(x.value)}, this.callFunction);
                     }else{
