@@ -53,15 +53,24 @@ class UserManageAccount extends Component{
         }
         else{
 
-            this.setState({userid: response.id});
-            this.setState({username: response.username});
-            this.setState({password: response.password});
-            this.setState({name: response.name});
-            this.setState({address: response.address});
-            this.setState({city: response.city});
-            this.setState({state: response.state});
-            this.setState({email: response.email});
-            this.setState({role: response.role});
+            this.setState({
+                userid: response.id, 
+                username: response.username,
+                password: response.password, 
+                name: response.name,
+                address: response.address,
+                city: response.city,
+                state: response.state,
+                email: response.email,
+                role: response.role} );
+            // this.setState({username: response.username});
+            // this.setState({password: response.password});
+            // this.setState({name: response.name});
+            // this.setState({address: response.address});
+            // this.setState({city: response.city});
+            // this.setState({state: response.state});
+            // this.setState({email: response.email});
+            // this.setState({role: response.role});
 
         }
 
