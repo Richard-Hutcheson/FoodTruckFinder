@@ -35,4 +35,17 @@ public class ReviewService {
     public Review saveReview(Review review) {
         return reviewRepository.save(review);
     }
+
+    public double getAvgFoodTruckRating(FoodTruck truck) {
+        List<Review> reviews = reviewRepository.findByTruck(truck);
+        double sum = 0.0;
+        int count = 0;
+
+        for (Review r : reviews) {
+            sum += r.getRating();
+            count++;
+        }
+
+        return (sum / (double)count);
+    }
 }

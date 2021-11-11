@@ -3,11 +3,9 @@ package ftf.Service;
 
 import ftf.Repository.FoodTruckRepository;
 import ftf.Repository.RecommendationsRepository;
+import ftf.Repository.ReviewRepository;
 import ftf.Repository.UserRepository;
-import ftf.classes.FoodTruck;
-import ftf.classes.FoodType;
-import ftf.classes.Recommendations;
-import ftf.classes.User;
+import ftf.classes.*;
 import ftf.exceptions.FoodTruckNotFoundException;
 import ftf.exceptions.FoodTypeNotFoundException;
 import ftf.exceptions.UserNotFoundException;
@@ -28,6 +26,12 @@ public class RecommendationsService {
 
     @Autowired
     FoodTruckRepository foodTruckRepository;
+
+    @Autowired
+    ReviewRepository reviewRepository;
+
+    @Autowired
+    ReviewService reviewService;
 
     public Optional<Recommendations> updateFoodTypeRecommendation(String username, String foodType) {
         Optional<User> user = userRepository.findByUsername(username);
@@ -178,6 +182,19 @@ public class RecommendationsService {
         return foodTruckRepository.findFoodTrucksByFoodType(user.getFoodTypePref());
     }
 
+    public List<FoodTruck> getRecommendedByRating(User user) {
+       List <FoodTruck> allTrucks = foodTruckRepository.findAll();
+       List<FoodTruck> fts = new ArrayList<>();
+
+       for (FoodTruck ft : allTrucks) {
+           if (reviewService.getAvgFoodTruckRating(ft) >= user.getRatingPref()) {
+               fts.add(ft);
+           }
+       }
+
+       return fts;
+    }
+
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
         Optional<User> userPreferences = userRepository.findByUsername(username);
 
@@ -186,9 +203,12 @@ public class RecommendationsService {
 
         List<FoodTruck> foodTrucks = getRecommendedByPriceRange(userPreferences.get());
         List<FoodTruck> foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
+        List<FoodTruck> foodRatingTrucks = getRecommendedByRating(userPreferences.get());
+        // TODO: add location
 
         // intersect of price and food type
         foodTrucks.retainAll(foodTypeTrucks);
+        foodTrucks.retainAll(foodRatingTrucks);
 
         return foodTrucks;
     }
