@@ -21,16 +21,11 @@ public class RouteController {
 
     @Autowired
     RouteService routeService;
-    @Autowired
-    FoodTruckService ftService;
+
 
     @GetMapping("/routes/{truckName}")
     public List<Route> getRoutesByTruckName(@PathVariable String truckName) {
-        Optional<FoodTruck> truck = ftService.getTruckDetailsByName(truckName);
-        //if(truck.isPresent()) {
-            return routeService.getRoutesByTruckName(truck.get());
-        //}else{
-            //throw new FoodTruckNotFoundException("Food Truck not found");
-        //}
+
+        return routeService.getRoutesByTruckName(truckName);
     }
 }

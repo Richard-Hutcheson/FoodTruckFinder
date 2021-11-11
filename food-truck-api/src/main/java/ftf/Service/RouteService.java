@@ -16,11 +16,18 @@ public class RouteService {
 
     @Autowired
     RouteRepository routeRepository;
+    @Autowired
+    FoodTruckService ftService;
 
 
 
-    public List<Route> getRoutesByTruckName(FoodTruck truck) {
-        List<Route> routes = routeRepository.findByTruck(truck);
-        return routes;
+    public List<Route> getRoutesByTruckName(String truckName) {
+        Optional<FoodTruck> truck = ftService.getTruckDetailsByName(truckName);
+        if(truck.isPresent()){
+            List<Route> routes = routeRepository.findByTruck(truck.get());
+            return routes;
+        }else{
+            throw new FoodTruckNotFoundException("Food Truck not found");
+        }
     }
 }
