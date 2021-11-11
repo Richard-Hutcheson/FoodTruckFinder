@@ -92,8 +92,7 @@ class LoginScreen extends Component{
                     <button className = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
                 </a>
                 <button className = {styles.enterAsGuestBtn} id = "enterGuest" type = "button" onClick = {this.handleSubmit}> ENTER AS GUEST </button>
-                
-                <a href="https://imgur.com/qX1JclU"><img src="https://i.imgur.com/qX1JclU.jpg" title="source: imgur.com" /></a>
+                {/* <img src="https://i.ibb.co/PZsGz3K/test-menu.jpg" /> */}
                 
                 <footer className={styles.footerClass}>
                     <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
