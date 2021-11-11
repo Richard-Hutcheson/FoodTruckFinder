@@ -170,12 +170,7 @@ public class RecommendationsService {
         return Optional.of(rec);
     }
 
-    public List<FoodTruck> getRecommendedFoodTrucks(String username,
-                                                    double minPrice,
-                                                    double maxPrice,
-                                                    double rating,
-                                                    String city,
-                                                    boolean prevHistory ) {
+    public List<FoodTruck> getRecommendedFoodTrucks(String username) {
         return new ArrayList<FoodTruck>();
     }
 }

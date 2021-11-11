@@ -15,15 +15,11 @@ public class RecommendationsController {
     @Autowired
     RecommendationsService RecService;
 
-    @GetMapping("/recommendUser/{username}/{minPrice}/{maxPrice}/{rating}/{city}/{prevHistory}")
-    public List<FoodTruck> getRecommendedFoodTrucks(@PathVariable String username,
-                                                    @PathVariable double minPrice,
-                                                    @PathVariable double maxPrice,
-                                                    @PathVariable double rating,
-                                                    @PathVariable String city,
-                                                    @PathVariable boolean prevHistory) {
-        return RecService.getRecommendedFoodTrucks(username, minPrice, maxPrice, rating, city, prevHistory);
+    @GetMapping("/recommendUser/{username}")
+    public List<FoodTruck> getRecommendedFoodTrucks(@PathVariable String username) {
+        return RecService.getRecommendedFoodTrucks(username);
     }
+
 
 
     /*
