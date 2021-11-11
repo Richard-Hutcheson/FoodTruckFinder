@@ -103,6 +103,9 @@ class ManageFoodTrucks extends Component{
 
                     </div>
                 </div>
+                <div className = {styles.addTruckBtn}>
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {user: this.state.user, userID: this.state.userID}}}>ADD TRUCK</Link>}
+                </div>
                 <div className = {styles.backBtn}>
                         {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
                         {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}

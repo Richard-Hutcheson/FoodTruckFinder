@@ -83,6 +83,7 @@
     margin-left: 0;
     margin-right: 0;
     transition: .3s;
+    
 }
 #createBtn:hover{
     opacity: 50%;
@@ -105,4 +106,27 @@
 #backBtn:hover{
     opacity: 50%;
     border-top-width: .6em;
+}
+
+.ownerClass {
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    left: 50%;
+    width: 185px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.ownerClass input{
+    position: relative;
+    opacity: 100;
+    cursor: pointer;
+}
+.ownerClass input:checked ~ .checkmark:after {
+    display: block;
 }

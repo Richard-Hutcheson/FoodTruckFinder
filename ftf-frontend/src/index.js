@@ -10,6 +10,7 @@ import TruckOwnerDashboard from './pages/truckOwnerDashboard.js';
 import ManageFoodTrucks from './pages/manageFoodTrucks.js';
 import SearchResult from './pages/searchResult.js';
 import EditTruck from './pages/editFoodTruck.js';
+import AddTruck from './pages/addFoodTruck.js';
 
 ReactDOM.render(
     
@@ -23,6 +24,7 @@ ReactDOM.render(
             <Route path = "/ManageFoodTrucks" exact component={ManageFoodTrucks}/>
             <Route path = "/SearchResult" exact component = {SearchResult}/>
             <Route path = "/EditTruck" exact component = {EditTruck}/>
+            <Route path = "/AddTruck" exact component = {AddTruck}/>
             <Route component={PageNotFound}/>
         </Switch>
     </Router>,

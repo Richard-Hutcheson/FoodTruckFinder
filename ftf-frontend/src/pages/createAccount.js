@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import styles from "../css/createAcnt.module.css"
 import {saveUser} from "../API/apiCalls.js"
 
@@ -12,20 +12,30 @@ class CreateAccount extends Component{
             email: '',
             address: '',
             city: '',
-            state: ''    
+            state: '', 
+            role: 'a'
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+    
     handleChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        this.setState({
-            [name]:value
-        });
-        console.log("name = " + name + " value = " + value);
-    
+
+        if(event.target.id === "checkboxID") {
+            if(value == true) {
+                this.setState({role: 'o'});
+            } else {
+                this.setState({role: 'a'});
+            }
+        } else {
+            this.setState({
+                [name]:value
+            });
+            console.log("name = " + name + " value = " + value);
+        }
     }
     async handleSubmit(event){
         event.preventDefault();
@@ -38,14 +48,25 @@ class CreateAccount extends Component{
         userData.set('address', this.state.address);
         userData.set('state', this.state.state);
         userData.set('city', this.state.city);
+        userData.set('role', this.state.role);
+
+        console.log("THE ROLE IS " + this.state.role + " WHEN CREATING AN ACCOUNT");
+
         const response = await saveUser(userData);
         if (response != null){
             console.log("response in create account = ", response);
             
-            this.props.history.push({
-                pathname: '/UserDashboard',
-                state: {user: this.state.username, name: this.state.name}
-            })
+            if(this.state.role === 'a') {
+                this.props.history.push({
+                    pathname: '/UserDashboard',
+                    state: {user: this.state.username, name: this.state.name}
+                })
+            } else {
+                this.props.history.push({
+                    pathname: '/TruckOwnerDashboard',
+                    state: {user: this.state.username, name: this.state.name}
+                })
+            }
         }else{
             console.log("response is undefined");
         }
@@ -87,6 +108,12 @@ class CreateAccount extends Component{
 
                             <label htmlFor="state" id = {styles.state}>  State:</label>
                             <input type="text"  className={styles.inputClass} id={styles.stateInput} name="state" onChange={this.handleChange} required></input>
+
+                        </div>
+
+                        <div className={styles.ownerClass}>
+                            <label htmlFor="role" id = {styles.role}>Food Truck Owner:</label>
+                            <input type="checkbox" onChange={this.handleChange} id ="checkboxID"></input>
 
                         </div>
                         
