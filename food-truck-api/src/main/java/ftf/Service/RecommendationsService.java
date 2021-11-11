@@ -5,6 +5,7 @@ import ftf.Repository.FoodTruckRepository;
 import ftf.Repository.RecommendationsRepository;
 import ftf.Repository.UserRepository;
 import ftf.classes.FoodTruck;
+import ftf.classes.FoodType;
 import ftf.classes.Recommendations;
 import ftf.classes.User;
 import ftf.exceptions.FoodTruckNotFoundException;
@@ -36,40 +37,40 @@ public class RecommendationsService {
             throw new UserNotFoundException("Recommendation for user not found");
 
 
-        if (foodType.equalsIgnoreCase("American")) {
+        if (foodType.equalsIgnoreCase(FoodType.AMERICAN.name())) {
             rec.setAmericanCount(rec.getAmericanCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Chinese")) {
+        else if (foodType.equalsIgnoreCase(FoodType.CHINESE.name())) {
             rec.setChineseCount(rec.getChineseCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("French")) {
+        else if (foodType.equalsIgnoreCase(FoodType.FRENCH.name())) {
             rec.setFrenchCount(rec.getFrenchCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("German")) {
+        else if (foodType.equalsIgnoreCase(FoodType.GERMAN.name())) {
             rec.setGermanCount(rec.getGermanCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Greek")) {
+        else if (foodType.equalsIgnoreCase(FoodType.GREEK.name())) {
             rec.setGreekCount(rec.getGreekCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Indian")) {
+        else if (foodType.equalsIgnoreCase(FoodType.INDIAN.name())) {
             rec.setIndianCount(rec.getIndianCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Italian")) {
+        else if (foodType.equalsIgnoreCase(FoodType.ITALIAN.name())) {
             rec.setItalianCount(rec.getItalianCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Japanese")) {
+        else if (foodType.equalsIgnoreCase(FoodType.JAPANESE.name())) {
             rec.setJapaneseCount(rec.getJapaneseCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Korean")) {
+        else if (foodType.equalsIgnoreCase(FoodType.KOREAN.name())) {
             rec.setKoreanCount(rec.getKoreanCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Mexican")) {
+        else if (foodType.equalsIgnoreCase(FoodType.MEXICAN.name())) {
             rec.setMexicanCount(rec.getMexicanCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Thai")) {
+        else if (foodType.equalsIgnoreCase(FoodType.THAI.name())) {
             rec.setThaiCount(rec.getThaiCount() + 1);
         }
-        else if (foodType.equalsIgnoreCase("Vietnamese")) {
+        else if (foodType.equalsIgnoreCase(FoodType.VIETNAMESE.name())) {
             rec.setVietnameseCount(rec.getVietnameseCount() + 1);
         }
         else {
@@ -88,11 +89,7 @@ public class RecommendationsService {
             throw new UserNotFoundException("User not found");
 
         Optional<Recommendations> recFoodTypes = recRepo.findRecommendationsByUserID(userRec.get());
-        Recommendations rec = recFoodTypes.get();
-
-
         ArrayList<Map.Entry<Integer, String>> occurencesOfEachType = new ArrayList<Map.Entry<Integer, String>>();
-
 
         occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getAmericanCount(), "American"));
         occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getChineseCount(), "Chinese"));
@@ -115,7 +112,6 @@ public class RecommendationsService {
             }
         });
 
-//        ArrayList<String> descendingOrderStrings = new ArrayList<String>();
         ArrayList<FoodTruck> foodTrucks = new ArrayList<FoodTruck>();
 
         int count = 0;
