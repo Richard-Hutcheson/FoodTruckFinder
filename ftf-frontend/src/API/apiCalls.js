@@ -278,10 +278,33 @@ export async function deleteTruck(truckName){
     }
 }
 
+export async function insertUserFoodRec(username){
+
+    const requestOptions = {
+        method: "POST",
+    };
+    const response = await fetch(`http://localhost:8080/createUserRec/${username}`, requestOptions)
+    .catch(error =>{
+        window.confirm("Problem encountered with fetch operation: " + error.message);
+    });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            window.confirm("Problem encountered with JSON operation: " + error.message);
+        });;
+        if (data != null){
+            return data;
+        } else {
+            return "...unknown...";
+        }
+    }
+}
+
+
 export async function addTruck(truckDataMap){
     console.log("datamap = ", truckDataMap);
     const requestOptions = {
         method:"POST",
+
         headers:{
             "Content-Type": "application/json",
             "Accept": "application/json",

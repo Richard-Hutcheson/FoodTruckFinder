@@ -3,6 +3,7 @@ import javax.persistence.*;
 
 import lombok.Data;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,18 @@ public class Route {
     @ManyToOne
     FoodTruck truck;
 
-    //one route has many locations
+    //one route has many locations (addresses)
+    /*
     @OneToMany(mappedBy = "route")
 //    @JoinColumn(name = "locationID", referencedColumnName = "routeID")
     List<Location> location;
+    */
+    @Column(name = "address")
+    String address;
+
+    @Column(name = "city")
+    String city;
+
+    @Column(name = "state")
+    String state;
 }

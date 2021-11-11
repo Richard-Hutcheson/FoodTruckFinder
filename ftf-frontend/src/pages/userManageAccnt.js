@@ -52,15 +52,24 @@ class UserManageAccount extends Component{
         }
         else{
 
-            this.setState({userid: response.id});
-            this.setState({username: response.username});
-            this.setState({password: response.password});
-            this.setState({name: response.name});
-            this.setState({address: response.address});
-            this.setState({city: response.city});
-            this.setState({state: response.state});
-            this.setState({email: response.email});
-            this.setState({role: response.role});
+            this.setState({
+                userid: response.id, 
+                username: response.username,
+                password: response.password, 
+                name: response.name,
+                address: response.address,
+                city: response.city,
+                state: response.state,
+                email: response.email,
+                role: response.role} );
+            // this.setState({username: response.username});
+            // this.setState({password: response.password});
+            // this.setState({name: response.name});
+            // this.setState({address: response.address});
+            // this.setState({city: response.city});
+            // this.setState({state: response.state});
+            // this.setState({email: response.email});
+            // this.setState({role: response.role});
 
         }
 
@@ -101,7 +110,22 @@ class UserManageAccount extends Component{
                 this.setState({submitState: 'SAVE'});
                 this.setState({viewOnly: false});
             }else{
+                //make sure all values are correct length, if they are out of length then don't save!
+                let cont = true;
                 document.querySelectorAll('.field').forEach(x=>{
+                    console.log("x.name = ", x.name, " and length = ", x.value.length);
+                    if ((x.name === "state" && x.value.length != 2) || (x.value.length > 254)){
+                        cont = false;
+                    }
+                });
+                if (!cont){
+                    window.confirm(`Length of one or more fields exceeds maximum char length.\
+                        State must be two alphabetical characters. Other fields must be < 254 chars`);
+                    return;
+                }
+                //user potentially made changes, save
+                document.querySelectorAll('.field').forEach(x=>{
+                    //user made change
                     if (x.value !== ''){
                         this.setState({[x.name]: String(x.value)}, this.callFunction);
                     }else{

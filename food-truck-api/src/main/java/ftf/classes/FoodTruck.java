@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import org.hibernate.annotations.Formula;
 
+import java.net.URL;
+
 @Data
 @Entity
 @Table(name = FoodTruck.TABLE_NAME)
@@ -43,4 +45,7 @@ public class FoodTruck {
 
     @Column(name = "foodType")
     String foodType;
+
+    @Column(name = "menuURL", columnDefinition="VARCHAR(500)")
+    URL menuURL;
 }
