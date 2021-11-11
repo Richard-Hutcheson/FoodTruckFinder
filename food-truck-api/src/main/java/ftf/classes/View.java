@@ -4,4 +4,5 @@ package ftf.classes;
 public interface View {
     public class UserView{}
     public class FoodTruckView{}
+    public class RouteView{}
 }

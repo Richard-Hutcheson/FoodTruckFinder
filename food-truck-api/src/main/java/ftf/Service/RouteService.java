@@ -17,17 +17,10 @@ public class RouteService {
     @Autowired
     RouteRepository routeRepository;
 
-    @Autowired
-    FoodTruckRepository foodTruckRepository;
 
-    public List<Route> getRoutesByTruckName(String name) {
-       Optional<FoodTruck> truck = foodTruckRepository.findFoodTruckByTruckName(name);
-       if(truck.isPresent()) {
-           return routeRepository.findRoutesByTruckID(truck.get().getTruckID());
-       }else{
-          throw new FoodTruckNotFoundException("Food Truck not found");
-       }
-        //return Optional.of(new Route());
+
+    public List<Route> getRoutesByTruckName(FoodTruck truck) {
+        List<Route> routes = routeRepository.findByTruck(truck);
+        return routes;
     }
-
 }

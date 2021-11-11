@@ -2,7 +2,9 @@ package ftf.Controller;
 
 import ftf.Service.FoodTruckService;
 import ftf.Service.RouteService;
+import ftf.classes.FoodTruck;
 import ftf.classes.Route;
+import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +21,16 @@ public class RouteController {
 
     @Autowired
     RouteService routeService;
+    @Autowired
+    FoodTruckService ftService;
 
     @GetMapping("/routes/{truckName}")
     public List<Route> getRoutesByTruckName(@PathVariable String truckName) {
-        return routeService.getRoutesByTruckName(truckName);
-
+        Optional<FoodTruck> truck = ftService.getTruckDetailsByName(truckName);
+        //if(truck.isPresent()) {
+            return routeService.getRoutesByTruckName(truck.get());
+        //}else{
+            //throw new FoodTruckNotFoundException("Food Truck not found");
+        //}
     }
 }
