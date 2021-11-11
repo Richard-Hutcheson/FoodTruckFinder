@@ -90,21 +90,10 @@ public class RecommendationsService {
         Optional<Recommendations> recFoodTypes = recRepo.findRecommendationsByUserID(userRec.get());
         Recommendations rec = recFoodTypes.get();
 
-        // IMPORTANT: do we want to create a entry in the userRec table like this?
-        // Or do we want to call and endpoint to do it?
-//        if (!recFoodTypes.isPresent())
-//            saveUser(userRec.get());
 
         ArrayList<Map.Entry<Integer, String>> occurencesOfEachType = new ArrayList<Map.Entry<Integer, String>>();
 
 
-//        TreeMap<Integer, String> occurencesOfEachType = new TreeMap<>();
-
-
-        /* BUG: Because Tree map doesn't allow duplicate keys if food types have
-        * the same number of occurences the Tree map will only choose one of the
-        *  two
-        */
         occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getAmericanCount(), "American"));
         occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getChineseCount(), "Chinese"));
         occurencesOfEachType.add(new AbstractMap.SimpleEntry<Integer, String>(recFoodTypes.get().getFrenchCount(), "French"));
