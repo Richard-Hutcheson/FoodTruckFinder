@@ -174,6 +174,10 @@ public class RecommendationsService {
         return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(user.getMinPricePref(), user.getMaxPricePref());
     }
 
+    public List<FoodTruck> getRecommendedByFoodType(User user) {
+        return foodTruckRepository.findFoodTrucksByFoodType(user.getFoodTypePref());
+    }
+
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
         Optional<User> userPreferences = userRepository.findByUsername(username);
 
