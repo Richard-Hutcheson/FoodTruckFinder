@@ -57,4 +57,7 @@ public class User {
 
     @Column(name = "maxPricePref")
     double maxPricePref;
+
+    @Column(name = "prevHistoryPref")
+    String prevHistoryPref;
 }
