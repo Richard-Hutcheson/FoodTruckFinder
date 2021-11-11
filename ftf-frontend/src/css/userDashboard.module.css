@@ -138,7 +138,10 @@
         border-bottom-style: solid;
         border-top-style: solid;
         border-color: #4CAF50;
-        height: 3em;
+        height: 2.2em;
+    }
+    .truckRecTitle p{
+        margin: .4em 0;
     }
     .textBar{
         border-bottom-style: solid;

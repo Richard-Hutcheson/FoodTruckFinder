@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getUser} from '../API/apiCalls';
+import {getAllTrucks, getUser, insertUserFoodRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -48,6 +48,10 @@ class TruckOwnerDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
+        //INSERT USER INTO FOOD TRUCK REC TABLE
+        response = await insertUserFoodRec(this.state.user).catch(error=>{
+            console.log(error.message);
+        })
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
         response = await getAllTrucks().catch(error=>{
             console.log(error.message);
@@ -100,6 +104,7 @@ class TruckOwnerDashboard extends Component{
         }else{
             alert("search field is empty");
         }
+
     }
     special(event){
         let val = event.target.innerHTML;
@@ -129,10 +134,7 @@ class TruckOwnerDashboard extends Component{
         }else{
                 callMaps(map);
                 this.setState({showMap: 'true'});
-        }
-
-
-        
+        }        
     }
     render(){ 
         return (

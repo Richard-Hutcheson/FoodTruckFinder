@@ -40,8 +40,13 @@ class CreateAccount extends Component{
         userData.set('address', this.state.address);
         userData.set('state', this.state.state);
         userData.set('city', this.state.city);
-        const response = await saveUser(userData);
-        if (response != null){
+        const response = await saveUser(userData).catch(error=>{
+            console.log(error.message);
+        });
+        if (response.status === 'CONFLICT'){
+            alert("Could Not Create Account. Likely, username is already taken!");
+        }
+        else if (response != null){
             console.log("response in create account = ", response);
             
             this.props.history.push({

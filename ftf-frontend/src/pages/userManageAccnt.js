@@ -229,8 +229,9 @@ class UserManageAccount extends Component{
                         <button className={styles.formSaveBtn} type="submit">SAVE</button>
                     </form>
                     <div className = {styles.backBtn}>
-                        {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
-                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
+                        <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>
+                        {/* {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>} */}
+                        {/* {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>} */}
 
                     </div>          
             </div>

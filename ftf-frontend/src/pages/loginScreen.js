@@ -42,13 +42,14 @@ class LoginScreen extends Component{
 
                 if (response.status === "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
-                }else if (response.role === 'o'){
-                    console.log("Truck owner has successfully logged in.");
-                    this.props.history.push({
-                        pathname: '/TruckOwnerDashboard',
-                        state: {user: this.state.username, guest: 'false'} // your data array of objects
-                    })
                 }
+                // else if (response.role === 'o'){
+                //     console.log("Truck owner has successfully logged in.");
+                //     this.props.history.push({
+                //         pathname: '/TruckOwnerDashboard',
+                //         state: {user: this.state.username, guest: 'false'} // your data array of objects
+                //     })
+                // }
                 else{
                     console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({

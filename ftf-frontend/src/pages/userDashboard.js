@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getUser, insertUserFoodRec} from '../API/apiCalls';
+import {getAllTrucks, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -17,6 +17,7 @@ class UserDashboard extends Component{
             guest: 'true',
             showMap: 'false',
             role: '',
+            queryType: '',
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
@@ -38,7 +39,6 @@ class UserDashboard extends Component{
         }
         this.setState({userID: response.id});
         this.setState({role: response.role});
-        console.log("ROLE = ", this.state.role);
         if (this.state.showMap === 'true'){
             try{
                 callMaps(map);
@@ -51,14 +51,11 @@ class UserDashboard extends Component{
             console.log(error.message);
         })
 
-
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
         response = await getAllTrucks().catch(error=>{
             console.log(error.message);
         })
-        if (response == null){
-            response = "unable to retrieve";
-        }
+
         //response should be an array
         for (let i =0; i < response.length;++i){
             let container = document.getElementById('recTrucksID');
@@ -87,15 +84,24 @@ class UserDashboard extends Component{
     handleChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log("value = " + value);
-        this.setState({
-            searchQuery: value
-        });
+        if (event.target.id === 'searchOptionsID'){
+            this.setState({queryType: value});
+        }else{
+            this.setState({
+                searchQuery: value
+            });
+        }
     }
-    handleSubmit(event){
+    async handleSubmit(event){
         event.preventDefault();
-        if (this.state.searchQuery !== ""){
-            console.log("search query = " + this.state.searchQuery);
+        if (this.state.searchQuery !== "" && event.target.id === 'searchFormID'){
+            // //update user's food type preferences based on search history of food type
+            // if (this.state.queryType === 'food type'){
+            //     let response = await updateFoodTypeRec(this.state.user, this.state.searchQuery).catch(error=>{
+            //         console.log(error.message);
+            //     })
+            // }
+
             this.props.history.push({
                 pathname: '/SearchResult',
                 state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value} // your data array of objects
@@ -124,7 +130,6 @@ class UserDashboard extends Component{
                 btn.addEventListener("click", function(){
                     console.log("hey!");
                 });
-
                 recItem.appendChild(btn);
                 truck.appendChild(recItem);
                 container.appendChild(truck);
@@ -135,15 +140,18 @@ class UserDashboard extends Component{
         }
     }
     render(){ 
-    
         return (
             <div>
                 <div className = {styles.navbar}>
                     <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
-                        {this.state.guest !=='true' && 
-                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
+                            {this.state.guest !=='true' && 
+                                <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
+                            {this.state.guest !== 'true' && this.state.role === 'o' && 
+                                <Link to= {{ pathname: "/ManageFoodTrucks", state: {user: this.state.user, userID: this.state.userID, role: this.state.role}}}>Manage Food Trucks</Link>
+                            }
+
                         </div>
                     </div>
                     {this.state.guest ==='true' && <a href="/" className = {styles.logout}>EXIT</a>}
@@ -152,15 +160,33 @@ class UserDashboard extends Component{
                 {this.state.guest !== 'true' && <p>your user id = {this.state.userID}</p>}
                 {this.state.guest === 'true' && <p>your user id = guest</p>}
                 
-                <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+                <form className={styles.searchForm} id = "searchFormID" onSubmit={this.handleSubmit}>
 
                     <div className={styles.searchSubDiv}>
 
-                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                        <input list = 'foodTypeList' className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
                         <button  className={styles.searchBtn} type="submit">Submit</button>                            
+                        {this.state.queryType === 'food type' && 
+                            <datalist id="foodTypeList">
+                                <option>American</option>
+                                <option>Chinese</option>
+                                <option>Italian</option>
+                                <option>Mexican</option>
+                                <option>Greek</option>
+                                <option>Korean</option>
+                                <option>Japanese</option>
+                                <option>Vietnamese</option>
+                                <option>Thai</option>
+                                <option>Indian</option>
+                                <option>French</option>
+                                <option>German</option>
+                                <option>Dessert</option>
+                                <option>Drink</option>
+                            </datalist>
+                        }
                     </div>
 
-                    <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID'>
+                    <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID' onChange = {this.handleChange}>
                         <option value="truck_name">Food Truck By Name</option>
                         <option value="truck price">Food Truck By Price</option>
                         <option value="food type">Food Truck By Food Type</option>
@@ -169,7 +195,7 @@ class UserDashboard extends Component{
                 </form>
                 <div className={styles.truckRecsContainer} id = "recTrucksID">
                     <div className={styles.truckRecTitle}>
-                        <p>Food Truck Recommendations</p>
+                        <p><b>Food Truck Recommendations</b></p>
                     </div>
                     <div className={styles.textBar}>
                         <div className={styles.textBarText}>TRUCK NAME</div>
@@ -177,7 +203,6 @@ class UserDashboard extends Component{
                         <div className={styles.textBarText}>FOOD TYPE</div>
                         <div className={styles.textBarText}></div>
                     </div>
-
                 </div>
                 <div className = {styles.mapWrapper}>
                     { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}

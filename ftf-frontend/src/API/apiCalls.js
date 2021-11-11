@@ -139,7 +139,6 @@ export async function getUser(username){
 }
 
 export async function editUser(userDataMap){
-    console.log(userDataMap);
     const requestOptions = {
         method: "PATCH",
         headers:{
@@ -303,4 +302,32 @@ export async function insertUserFoodRec(username){
         }
     }
 
+}
+
+export async function updateFoodTypeRec(username, foodType){
+
+    const requestOptions = {
+        method: "PATCH",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        }    
+    }
+    const response = await fetch(`http://localhost:8080/updateRecommendation/${username}/${foodType}`, requestOptions)
+    .catch(error =>{
+        console.log("hello");
+        window.confirm("Problem encountered with fetch operation: " + error.message);
+    });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        // if (data != null){
+        //     return data;
+        // }else{
+        //     return "...unknown...";  
+        // }
+    }else{
+    }
 }
