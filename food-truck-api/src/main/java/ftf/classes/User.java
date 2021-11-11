@@ -60,4 +60,7 @@ public class User {
 
     @Column(name = "prevHistoryPref")
     String prevHistoryPref;
+
+    @Column(name = "foodTypePref")
+    String foodTypePref;
 }
