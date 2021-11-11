@@ -44,4 +44,17 @@ public class User {
 
     @Column(name = "email")
     String email;
+
+    //this is equivalent to proximity
+    @Column(name = "cityPref")
+    String cityPref;
+
+    @Column(name = "ratingPref")
+    double ratingPref;
+
+    @Column(name = "minPricePref")
+    double minPricePref;
+
+    @Column(name = "maxPricePref")
+    double maxPricePref;
 }
