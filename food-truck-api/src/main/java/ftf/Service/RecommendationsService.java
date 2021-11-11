@@ -220,6 +220,11 @@ public class RecommendationsService {
         foodTrucks.retainAll(foodRatingTrucks);
         foodTrucks.retainAll(foodLocationTrucks);
 
+        if (foodTrucks.size() < 5) {
+
+        }
+
+
         return foodTrucks;
     }
 }
