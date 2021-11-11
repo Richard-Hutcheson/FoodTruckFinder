@@ -170,7 +170,22 @@ public class RecommendationsService {
         return Optional.of(rec);
     }
 
+    public List<FoodTruck> getRecommendedByPriceRange(User user) {
+        return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(user.getMinPricePref(), user.getMaxPricePref());
+    }
+
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
-        return new ArrayList<FoodTruck>();
+        Optional<User> userPreferences = userRepository.findByUsername(username);
+
+        if (!userPreferences.isPresent())
+            throw new UserNotFoundException("User not found");
+
+        List<FoodTruck> foodTrucks = getRecommendedByPriceRange(userPreferences.get());
+        List<FoodTruck> foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
+
+        // intersect of price and food type
+        foodTrucks.retainAll(foodTypeTrucks);
+
+        return foodTrucks;
     }
 }
