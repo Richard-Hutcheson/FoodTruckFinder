@@ -5,10 +5,12 @@ import ftf.Service.UserService;
 import ftf.classes.FoodTruck;
 import ftf.classes.Review;
 import ftf.classes.User;
+import ftf.exceptions.FoodTruckNotFoundException;
 import ftf.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,4 +54,13 @@ public class ReviewController {
         return reviewService.saveReview(review);
     }
 
+    @GetMapping("/reviews/avgRating/{truckName}")
+    public Optional<Double> getAverageRatingTruck(@PathVariable String truckName) {
+        Optional<FoodTruck> ft = ftService.getTruckDetailsByName(truckName);
+
+        if (!ft.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck not found");
+
+        return Optional.of(reviewService.getAvgFoodTruckRating(ft.get()));
+    }
 }
