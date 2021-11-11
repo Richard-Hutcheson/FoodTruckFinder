@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface RouteRepository extends JpaRepository<Route, Long> {
     Optional<Route> findRouteByRouteID(Long routeID);
     List<Route> findByTruck(FoodTruck truck);
+    List<Route> findRoutesByCity(String city);
 }

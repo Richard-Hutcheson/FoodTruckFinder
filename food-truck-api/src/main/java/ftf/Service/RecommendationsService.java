@@ -1,10 +1,7 @@
 package ftf.Service;
 
 
-import ftf.Repository.FoodTruckRepository;
-import ftf.Repository.RecommendationsRepository;
-import ftf.Repository.ReviewRepository;
-import ftf.Repository.UserRepository;
+import ftf.Repository.*;
 import ftf.classes.*;
 import ftf.exceptions.FoodTruckNotFoundException;
 import ftf.exceptions.FoodTypeNotFoundException;
@@ -28,10 +25,10 @@ public class RecommendationsService {
     FoodTruckRepository foodTruckRepository;
 
     @Autowired
-    ReviewRepository reviewRepository;
+    ReviewService reviewService;
 
     @Autowired
-    ReviewService reviewService;
+    RouteRepository routeRepository;
 
     public Optional<Recommendations> updateFoodTypeRecommendation(String username, String foodType) {
         Optional<User> user = userRepository.findByUsername(username);
@@ -195,6 +192,18 @@ public class RecommendationsService {
        return fts;
     }
 
+    public List<FoodTruck> getRecommendedByLocation(User user) {
+        List<Route> route = routeRepository.findRoutesByCity(user.getCityPref());
+
+        List<FoodTruck> fts = new ArrayList<>();
+
+        for (Route r : route) {
+            fts.add(r.getTruck());
+        }
+
+        return fts;
+    }
+
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
         Optional<User> userPreferences = userRepository.findByUsername(username);
 
@@ -204,11 +213,12 @@ public class RecommendationsService {
         List<FoodTruck> foodTrucks = getRecommendedByPriceRange(userPreferences.get());
         List<FoodTruck> foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
         List<FoodTruck> foodRatingTrucks = getRecommendedByRating(userPreferences.get());
-        // TODO: add location
+        List<FoodTruck> foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
 
         // intersect of price and food type
         foodTrucks.retainAll(foodTypeTrucks);
         foodTrucks.retainAll(foodRatingTrucks);
+        foodTrucks.retainAll(foodLocationTrucks);
 
         return foodTrucks;
     }
