@@ -13,6 +13,7 @@ import ftf.exceptions.FoodTypeNotFoundException;
 import ftf.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 
@@ -167,5 +168,14 @@ public class RecommendationsService {
         }
 
         return Optional.of(rec);
+    }
+
+    public List<FoodTruck> getRecommendedFoodTrucks(String username,
+                                                    double minPrice,
+                                                    double maxPrice,
+                                                    double rating,
+                                                    String city,
+                                                    boolean prevHistory ) {
+        return new ArrayList<FoodTruck>();
     }
 }

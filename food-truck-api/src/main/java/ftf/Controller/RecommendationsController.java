@@ -15,6 +15,18 @@ public class RecommendationsController {
     @Autowired
     RecommendationsService RecService;
 
+    @GetMapping("/recommendUser/{username}/{minPrice}/{maxPrice}/{rating}/{city}/{prevHistory}")
+    public List<FoodTruck> getRecommendedFoodTrucks(@PathVariable String username,
+                                                    @PathVariable double minPrice,
+                                                    @PathVariable double maxPrice,
+                                                    @PathVariable double rating,
+                                                    @PathVariable String city,
+                                                    @PathVariable boolean prevHistory) {
+        return RecService.getRecommendedFoodTrucks(username, minPrice, maxPrice, rating, city, prevHistory);
+    }
+
+
+    /*
     // gets the highest occuring food type of foodtrucks searched by user
     @GetMapping("/recommendUser/{username}")
     public List<FoodTruck> getRecommendUserByFoodType(@PathVariable String username) {
@@ -33,4 +45,6 @@ public class RecommendationsController {
     public Optional<Recommendations> insertUserFoodTypeRec(@PathVariable String username) {
         return RecService.saveUser(username);
     }
+
+     */
 }
