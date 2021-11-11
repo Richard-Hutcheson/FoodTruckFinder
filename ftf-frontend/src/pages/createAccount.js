@@ -64,34 +64,34 @@ class CreateAccount extends Component{
                         <div className={styles.groupClass}>
                             <label htmlFor="username" id = {styles.username}>Username:</label>
                             <input type="text" className={styles.inputClass} id={styles.usernameInput} name="username" onChange={this.handleChange} required 
-                                maxlength = "30" autoComplete = "off"></input>
+                                maxLength = "30" autoComplete = "off"></input>
                         </div>
                         <div className={styles.groupClass}>
                             <label htmlFor="password" id = {styles.password}>Password:</label>
                             <input type="text" className={styles.inputClass} id={styles.passwordInput} name="password"  onChange={this.handleChange} required
-                                 maxlength = "30" autoComplete = "off"></input>
+                                 maxLength = "30" autoComplete = "off"></input>
                             
                         </div>
                         <div className={styles.groupClass}>
                             <label htmlFor="name" id = {styles.name}>Name:</label>
-                            <input type="text" className={styles.inputClass} id={styles.nameInput} name="name" onChange={this.handleChange} required maxlength = "254"></input>
+                            <input type="text" className={styles.inputClass} id={styles.nameInput} name="name" onChange={this.handleChange} required maxLength = "254"></input>
                         </div>
                         
                         <div className={styles.groupClass}>
                             <label htmlFor="email" id = {styles.email}>Email:</label>
-                            <input type="text" className={styles.inputClass} id={styles.emailInput} name="email"  onChange={this.handleChange} required maxlength = "254"></input>
+                            <input type="text" className={styles.inputClass} id={styles.emailInput} name="email"  onChange={this.handleChange} required maxLength = "254"></input>
                         </div>
                         
                         <div className={styles.addressClass}>
                             <label htmlFor="address" id = {styles.address}>Address:</label>
-                            <input type="text" className={styles.inputClass} id={styles.addressInput} name="address" onChange={this.handleChange} required maxlength = "254"></input>
+                            <input type="text" className={styles.inputClass} id={styles.addressInput} name="address" onChange={this.handleChange} required maxLength = "254"></input>
                 
                             <label htmlFor="city" id = {styles.city}>   City:</label>
-                            <input type="text" className={styles.inputClass} id={styles.cityInput} name="city" onChange={this.handleChange} required maxlength = "254"></input>
+                            <input type="text" className={styles.inputClass} id={styles.cityInput} name="city" onChange={this.handleChange} required maxLength = "254"></input>
 
                             <label htmlFor="state" id = {styles.state}>  State:</label>
                             <input type="text"  className={styles.inputClass} id={styles.stateInput} name="state" onChange={this.handleChange} required 
-                                maxlength = "2" minlength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]"></input>
+                                maxLength = "2" minlength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]"></input>
                         </div>
                         
                         <input type = "submit" value = "CREATE" id= {styles.createBtn}></input>

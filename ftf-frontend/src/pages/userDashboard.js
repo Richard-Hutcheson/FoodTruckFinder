@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getUser} from '../API/apiCalls';
+import {getAllTrucks, getUser, insertUserFoodRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -46,6 +46,12 @@ class UserDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
+        //INSERT USER INTO FOOD TRUCK REC TABLE
+        response = await insertUserFoodRec(this.state.user).catch(error=>{
+            console.log(error.message);
+        })
+
+
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
         response = await getAllTrucks().catch(error=>{
             console.log(error.message);
@@ -78,8 +84,6 @@ class UserDashboard extends Component{
             container.appendChild(truck);
         }
     }
-
-
     handleChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
