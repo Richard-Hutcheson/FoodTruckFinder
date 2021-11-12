@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 
+import static org.hibernate.sql.InFragment.NULL;
+
 @Service
 public class RecommendationsService {
 
@@ -207,21 +209,64 @@ public class RecommendationsService {
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
         Optional<User> userPreferences = userRepository.findByUsername(username);
 
+        List<FoodTruck> foodTrucks = foodTruckRepository.findAll();
+        List<FoodTruck> foodTypeTrucks = new ArrayList<>();
+        List<FoodTruck> foodLocationTrucks = new ArrayList<>();
+        List<FoodTruck> foodRatingTrucks = new ArrayList<>();
+        List<FoodTruck> foodTrucksPrice = new ArrayList<>();
+        HashMap<List<FoodTruck>,Boolean> m = new HashMap<>();
+
+
         if (!userPreferences.isPresent())
             throw new UserNotFoundException("User not found");
 
-        List<FoodTruck> foodTrucks = getRecommendedByPriceRange(userPreferences.get());
-        List<FoodTruck> foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
-        List<FoodTruck> foodRatingTrucks = getRecommendedByRating(userPreferences.get());
-        List<FoodTruck> foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
+        //need to determine what preferences to utilize, so first check if they are
+        //null
+                                                    //hibernate's NULL
+        if(userPreferences.get().getFoodTypePref() != NULL){
+            foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
+            m.put(foodTypeTrucks,new Boolean(true));
+        }else{
+            m.put(foodTypeTrucks,new Boolean(false));
+        }
+
+        if(userPreferences.get().getCityPref() != NULL){
+            foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
+            m.put(foodLocationTrucks,new Boolean(true));
+        }else{
+            m.put(foodLocationTrucks,new Boolean(false));
+        }
+
+        if(userPreferences.get().getMinPricePref() != 0 &&
+                userPreferences.get().getMaxPricePref() != 0){
+            foodTrucks = getRecommendedByPriceRange(userPreferences.get());
+            m.put(foodTrucksPrice,new Boolean(true));
+        }else{
+            m.put(foodTrucksPrice,new Boolean(false));
+        }
+
+        if(userPreferences.get().getRatingPref() != 0){
+            foodRatingTrucks = getRecommendedByRating(userPreferences.get());
+            m.put(foodRatingTrucks,new Boolean(true));
+        }else{
+            m.put(foodRatingTrucks,new Boolean(false));
+        }
+
+
+        for(Map.Entry<List<FoodTruck>,Boolean> listEntry: m.entrySet()){
+            if(listEntry.getValue() == true){
+                //finds intersects based on if there are price preferences
+                foodTrucks.retainAll(listEntry.getKey());
+            }
+        }
 
         // intersect of price and food type
-        foodTrucks.retainAll(foodTypeTrucks);
-        foodTrucks.retainAll(foodRatingTrucks);
-        foodTrucks.retainAll(foodLocationTrucks);
+        //foodTrucks.retainAll(foodTypeTrucks);
+        //foodTrucks.retainAll(foodRatingTrucks);
+        //foodTrucks.retainAll(foodLocationTrucks);
 
         if (foodTrucks.size() < 5) {
-
+            //todo in future
         }
 
 
