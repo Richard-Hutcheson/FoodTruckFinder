@@ -19,12 +19,7 @@
     height: 30px;
     left: 50%;
     transform: translate(-50%);
-    /* position: absolute;
-    width: 100px;
-    height: 30px;
-    bottom: -50px;
-    left: 50%;
-    transform: translate(-50%); */
+
 }
 .header, .preferencesHeader{
     display: block;
@@ -43,26 +38,33 @@
 }
 .innerFormClass{
     position: relative;
-    width: 800px;
+    display: block;
+    width: 630px;
     height: 200px;
     display: grid;
-    grid-template-columns: 266px 266px 266px;
-    grid-template-rows: auto auto;
+    grid-template-columns: 170px 230px 230px;
+    grid-template-rows: auto;
     left: 50%;
     transform: translate(-50%);
 
 }
-.distRangeClass, .foodTypeDiv{
+
+/* .distRangeClass, .foodTypeDiv{
     text-align: center;
-}
+} */
 .formSaveBtn{
     display: block;
     position: relative;
-    width: 100px;
+    width: 150px;
     height: 30px;
     left: 50%;
     transform: translate(-50%);
-
+}
+.foodTypeDiv select{
+    display: block;
+    position: relative;
+    left: 40%;
+    transform: translateX(-50%);
 }
 
 .backBtn, .cancelBtn{
@@ -72,10 +74,17 @@
     height: 30px;
     left: 50%;
     transform: translate(-50%);
-    margin: 10px 0;
+    margin: 30px 0;
     text-align: center;
     text-decoration: none;
 }
+.cancelBtn{
+    margin: 10px 0;
+}
+.backBtn:hover{
+    opacity: 60%;
+}
+
 .backBtn a{
     position: relative;
     width: 100px;

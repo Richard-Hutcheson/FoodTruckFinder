@@ -60,7 +60,7 @@ export async function saveUser(userDataMap){
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
-
+ 
         },
         body: JSON.stringify({
             userid: 1,

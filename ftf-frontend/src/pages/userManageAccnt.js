@@ -22,7 +22,9 @@ class UserManageAccount extends Component{
             submitState: 'EDIT',
             viewOnly: true,
             distSliderVal: 10,
-            priceSelected: "No Preference"
+            priceSelected: "No Preference",
+            distPreference: "No Preference",
+            foodTypePref: "No Preference",
             
         }
         if (this.props.location.state != null){
@@ -63,15 +65,6 @@ class UserManageAccount extends Component{
                 state: response.state,
                 email: response.email,
                 role: response.role} );
-            // this.setState({username: response.username});
-            // this.setState({password: response.password});
-            // this.setState({name: response.name});
-            // this.setState({address: response.address});
-            // this.setState({city: response.city});
-            // this.setState({state: response.state});
-            // this.setState({email: response.email});
-            // this.setState({role: response.role});
-
         }
 
         let foodTypeList = getFoodTypes();
@@ -110,7 +103,9 @@ class UserManageAccount extends Component{
             if (this.state.submitState === "EDIT"){
                 this.setState({submitState: 'SAVE'});
                 this.setState({viewOnly: false});
-            }else{
+            }
+            //The accnt detials are saved
+            else{
                 //make sure all values are correct length, if they are out of length then don't save!
                 let cont = true;
                 document.querySelectorAll('.field').forEach(x=>{
@@ -138,8 +133,13 @@ class UserManageAccount extends Component{
         else if (event.target.id === 'cancelID'){
             this.resetFields();
         }
+        //SAVE FOOD TRUCK PREFERENCES
         else if (event.target.id === 'prefFormID'){
             console.log("form submitted");
+            let foodTypePrefSelection = document.getElementById("foodTypeID");
+            this.setState({foodTypePref: foodTypePrefSelection.options[foodTypePrefSelection.selectedIndex].value}, f=>{
+                console.log(this.state.priceSelected," ", this.state.distPreference, " ", this.state.foodTypePref);
+            });
         }
         else{
 
@@ -156,7 +156,11 @@ class UserManageAccount extends Component{
     
 
     onValueChange(event){
-        this.setState({priceSelected: event.target.value})
+        if (event.target.name === "price"){
+            this.setState({priceSelected: event.target.value})
+        }else if (event.target.name === "distPref"){
+            this.setState({distPreference: event.target.value})
+        }
     }
     callFunction = ()=>{
         this.saveUser();        
@@ -216,17 +220,22 @@ class UserManageAccount extends Component{
                             </div>
                             <div className={styles.distRangeClass}>
                                 <p>Truck Distance Range</p>
-                                <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
-                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
+                                <input type="radio" id="distPref1" name="distPref" value="sameCity" checked={this.state.distPreference === 'sameCity'} onChange={this.onValueChange}/>
+                                <label htmlFor="distPref1">Within same city</label><br/>
+                                <input type="radio" id="distPrefNone" name="distPref" value="No Preference" checked={this.state.distPreference === 'No Preference'} onChange={this.onValueChange}/>
+                                <label htmlFor="distPrefNone">No Preference</label><br/>
+
+                                {/* <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
+                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p> */}
                             </div>
                             <div className = {styles.foodTypeDiv}>
                                 <p>Food Type Preference:</p>
-                                <select id="foodTypeID" name="carlist" form="prefFormID">
-                                    <option value="no-pref">No Preference</option>
+                                <select id="foodTypeID" name="foodTypeList" form="prefFormID">
+                                    <option value="No Preference">No Preference</option>
                                 </select>
                             </div>                       
                         </div>
-                        <button className={styles.formSaveBtn} type="submit">SAVE</button>
+                        <button className={styles.formSaveBtn} type="submit">SAVE PREFERENCES</button>
                     </form>
                     <div className = {styles.backBtn}>
                         <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>
