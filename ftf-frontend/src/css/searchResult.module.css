@@ -18,7 +18,7 @@ span{
     align-content: space-evenly;
     align-items: center;
 }
-.userRevRat, .truckRevRat, .truckSchedule, .truckRoute{
+.userRevRat, .truckRevRat, .truckSchedule, .truckRoute, .truckMenu{
     margin-top: 2em;
     position:relative;
     background-color: gray;
@@ -34,14 +34,65 @@ span{
 .truckDesc{
     text-align: center;
 }
+.listTrucks{
+    text-align: center;
+}
 .owner{
     text-align: center;
 }
 .backBtn{
     position: relative;
     margin-top: 3em;
+    margin-bottom: 3em;
     width: 90px;
     height: 30px;
     left: 50%;
     transform: translateX(-50%);
+}
+.truckRecsContainer{
+    position: relative;
+    display: block;
+    width: 720px;
+    height: 300px;
+    background-color: rgb(163, 163, 163);
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 25px;
+    border-style: solid;
+    border-color:#4CAF50;
+    border-width: .5em;
+    border-radius: .5em;
+    overflow-y: scroll;
+}
+.truckRecTitle{
+    text-align: center;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-color: #4CAF50;
+    height: 3em;
+}
+.recItem{
+    height: 50px;
+    border-bottom-style: solid;
+    border-color: black;
+    display: grid;
+    grid-template-columns: 218px 175px 200px 100px;
+}
+.textBar{
+    border-bottom-style: solid;
+    border-bottom-color: #4CAF50;
+    display:grid;
+    grid-template-columns: auto auto auto 100px;
+
+}
+.truckName, .truckPrice, .truckFoodType, .truckBtn{
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    top:50%;
+    transform: translateY(-50%);
+}
+.truckBtn{
+    height: 30px;
+    width: 100px;
 }

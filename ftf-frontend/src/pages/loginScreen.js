@@ -42,13 +42,14 @@ class LoginScreen extends Component{
 
                 if (response.status === "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
-                }else if (response.role === 'o'){
-                    console.log("Truck owner has successfully logged in.");
-                    this.props.history.push({
-                        pathname: '/TruckOwnerDashboard',
-                        state: {user: this.state.username, guest: 'false'} // your data array of objects
-                    })
                 }
+                // else if (response.role === 'o'){
+                //     console.log("Truck owner has successfully logged in.");
+                //     this.props.history.push({
+                //         pathname: '/TruckOwnerDashboard',
+                //         state: {user: this.state.username, guest: 'false'} // your data array of objects
+                //     })
+                // }
                 else{
                     console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({
@@ -74,11 +75,13 @@ class LoginScreen extends Component{
                     <div className={styles.loginWrapper}>
                         <div className = {styles.usernameField}>
                             <label htmlFor="username" className = {styles.usernameLabel}>username:</label>
-                            <input type="text" className={styles.username} name="username"  value = {this.state.username} onChange={this.handleChange} required></input>
+                            <input type="text" className={styles.username} name="username"  value = {this.state.username}
+                                onChange={this.handleChange} required autoComplete = "off" maxLength = "254"></input>
                         </div>
                         <div className = {styles.passwordField}>
                             <label htmlFor="pass" className = {styles.passwordLabel}>password:</label>
-                            <input type="password" className={styles.password} name="password" value = {this.state.password} onChange={this.handleChange} required></input>
+                            <input type="password" className={styles.password} name="password" value = {this.state.password} 
+                                onChange={this.handleChange} required autoComplete = "off" maxLength = "254"></input>
                         </div>
                     </div>
                     <div className = {styles.loginBtnClass}>
@@ -89,6 +92,8 @@ class LoginScreen extends Component{
                     <button className = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
                 </a>
                 <button className = {styles.enterAsGuestBtn} id = "enterGuest" type = "button" onClick = {this.handleSubmit}> ENTER AS GUEST </button>
+                {/* <img src="https://i.ibb.co/PZsGz3K/test-menu.jpg" /> */}
+                
                 <footer className={styles.footerClass}>
                     <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
                 </footer> 

@@ -80,7 +80,7 @@
     }
     .searchSubDiv{
         position: relative;
-        width: 600px;
+        width: 620px;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -93,6 +93,9 @@
         left: 50%;
         transform: translateX(-50%);
         margin-bottom: .5em;
+        border-style: solid;
+        border-radius: 1em;
+        border-width: .6em;
     }
     .searchBtn{
         position: relative;
@@ -101,7 +104,9 @@
         border-color: rgb(228, 228, 228);
         width: 100px;
         height: 30px;
-        float: right;  
+        float: right; 
+        margin-top: 5px;
+        
         
     }
     .searchBtn:hover{
@@ -133,7 +138,10 @@
         border-bottom-style: solid;
         border-top-style: solid;
         border-color: #4CAF50;
-        height: 3em;
+        height: 2.2em;
+    }
+    .truckRecTitle p{
+        margin: .4em 0;
     }
     .textBar{
         border-bottom-style: solid;

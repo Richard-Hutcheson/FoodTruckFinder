@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -93,6 +93,38 @@ class SearchResult extends Component{
                 })
             }
 
+        }else if (this.state.queryType === 'food type'){
+             //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
+            response = await getAllTrucks().catch(error=>{
+                console.log(error.message);
+            })
+
+            //response should be an array
+            for (let i =0; i < response.length;++i){
+                if (response[i].foodType === this.state.searchQuery){
+                    let container = document.getElementById('recTrucksID');
+                    let truck = document.createElement('div');
+                    let recItem = document.createElement('div');
+                    recItem.setAttribute("class", styles.recItem);
+                    let btn = document.createElement('button');
+                    btn.setAttribute('type', 'submit');
+                    btn.setAttribute('class', styles.truckBtn);
+                    btn.setAttribute('id', response[i].truckName);
+                    btn.innerText = "VIEW";
+                    recItem.innerHTML = `
+                        <div class=${styles.truckName}>${response[i].truckName}</div>
+                        <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
+                        <div class=${styles.truckFoodType}>${response[i].foodType}</div>
+                    `
+                    btn.onclick = function() {
+                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                    }
+                    recItem.appendChild(btn);
+                    truck.appendChild(recItem);
+                    container.appendChild(truck);
+                }
+                
+            }
         }
 
         
@@ -132,9 +164,9 @@ class SearchResult extends Component{
                 </div>
             );
         }
-        //FOOD TRUCK RELATED QUERY
-        else{
-            return (
+
+        else if (this.state.queryType === "truck_name"){
+            return(
                 <div>
                     <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
                     <div className = {styles.truckInfo}>
@@ -160,10 +192,38 @@ class SearchResult extends Component{
                     <div className= {styles.truckRoute}>
                         <p>Truck Route</p>
                     </div>
+                    <div className= {styles.truckMenu}>
+                        <p>Truck Menu</p>
+                    </div>
                     <div className= {styles.truckRevRat}>
                         <p>Truck Reviews and Ratings Here</p>
                     </div>
                     <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
+                </div>
+                
+            );
+        }
+
+
+        //FOOD TRUCK RELATED QUERY
+        else{
+            return (
+                <div>
+                    <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
+                    <p  className = {styles.listTrucks}>TRUCK RESULTS HERE</p>
+                    <div className={styles.truckRecsContainer} id = "recTrucksID">
+                        <div className={styles.truckRecTitle}>
+                            <p><b>Food Truck Recommendations</b></p>
+                        </div>
+                        <div className={styles.textBar}>
+                            <div className={styles.textBarText}>TRUCK NAME</div>
+                            <div className={styles.textBarText}>PRICE</div>
+                            <div className={styles.textBarText}>FOOD TYPE</div>
+                            <div className={styles.textBarText}></div>
+                        </div>
+                    </div>
+                    <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
+
                 </div>
             );
         }
