@@ -223,14 +223,14 @@ public class RecommendationsService {
         //need to determine what preferences to utilize, so first check if they are
         //null
                                                     //hibernate's NULL
-        if(userPreferences.get().getFoodTypePref() != NULL){
+        if(!Objects.equals(userPreferences.get().getFoodTypePref(), NULL)){
             foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
             m.put(foodTypeTrucks,new Boolean(true));
         }else{
             m.put(foodTypeTrucks,new Boolean(false));
         }
 
-        if(userPreferences.get().getCityPref() != NULL){
+        if(!Objects.equals(userPreferences.get().getCityPref(), NULL)){
             foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
             m.put(foodLocationTrucks,new Boolean(true));
         }else{
@@ -265,7 +265,11 @@ public class RecommendationsService {
         //foodTrucks.retainAll(foodRatingTrucks);
         //foodTrucks.retainAll(foodLocationTrucks);
 
-        if (foodTrucks.size() < 5) {
+
+        if(foodTrucks.size() > 5){
+
+
+        }else if (foodTrucks.size() < 5) {
             //todo in future
         }
 
