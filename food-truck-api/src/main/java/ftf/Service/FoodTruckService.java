@@ -120,6 +120,7 @@ public class FoodTruckService {
         up.setMaxRange(ft.getMaxRange());
         up.setMinRange(ft.getMinRange());
         up.setDescription(ft.getDescription());
+        up.setMenuURL(ft.getMenuURL());
 
         return foodTruckRepository.save(up);
 
