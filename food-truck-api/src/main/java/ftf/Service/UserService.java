@@ -59,6 +59,12 @@ public class UserService {
         up.setName(user.getName());
         up.setState(user.getState());
         up.setEmail(user.getEmail());
+        up.setCityPref(user.getCityPref());
+        up.setRatingPref(user.getRatingPref());
+        up.setMinPricePref(user.getMinPricePref());
+        up.setMaxPricePref(user.getMaxPricePref());
+        up.setPrevHistoryPref(user.getPrevHistoryPref());
+        up.setFoodTypePref(user.getFoodTypePref());
 
         userRepository.save(up);
 
