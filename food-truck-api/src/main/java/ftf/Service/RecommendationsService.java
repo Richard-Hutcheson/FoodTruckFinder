@@ -174,7 +174,8 @@ public class RecommendationsService {
     }
 
     public List<FoodTruck> getRecommendedByPriceRange(User user) {
-        return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(user.getMinPricePref(), user.getMaxPricePref());
+
+        return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(Double.parseDouble(user.getMinPricePref()), Double.parseDouble(user.getMaxPricePref()));
     }
 
     public List<FoodTruck> getRecommendedByFoodType(User user) {
@@ -186,7 +187,7 @@ public class RecommendationsService {
        List<FoodTruck> fts = new ArrayList<>();
 
        for (FoodTruck ft : allTrucks) {
-           if (reviewService.getAvgFoodTruckRating(ft) >= user.getRatingPref()) {
+           if (reviewService.getAvgFoodTruckRating(ft) >= Double.parseDouble(user.getRatingPref())) {
                fts.add(ft);
            }
        }
@@ -237,15 +238,15 @@ public class RecommendationsService {
             m.put(foodLocationTrucks,new Boolean(false));
         }
 
-        if(userPreferences.get().getMinPricePref() != -1 &&
-                userPreferences.get().getMaxPricePref() != -1){
+        if(!Objects.equals(userPreferences.get().getMaxPricePref(), NULL) &&
+            !Objects.equals(userPreferences.get().getMinPricePref(),NULL)){
             foodTrucks = getRecommendedByPriceRange(userPreferences.get());
             m.put(foodTrucksPrice,new Boolean(true));
         }else{
             m.put(foodTrucksPrice,new Boolean(false));
         }
 
-        if(userPreferences.get().getRatingPref() != 0){
+        if(!Objects.equals(userPreferences.get().getRatingPref(), NULL)){
             foodRatingTrucks = getRecommendedByRating(userPreferences.get());
             m.put(foodRatingTrucks,new Boolean(true));
         }else{

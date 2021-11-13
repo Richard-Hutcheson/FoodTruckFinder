@@ -10,7 +10,7 @@ import java.util.List;
 public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
     Optional<FoodTruck> findFoodTruckByTruckName(String name);
     Optional<FoodTruck> findFoodTruckByTruckID(Long ID);
-    List<FoodTruck> findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(double min, double max);
+    List<FoodTruck> findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(Double min, Double max);
     List<FoodTruck> findFoodTrucksByFoodType(String foodType);
     List<FoodTruck> findByTruckNameContains(String name);
     List<FoodTruck> findByTruckNameLike(String name);
