@@ -49,13 +49,13 @@ public class User {
     @Column(name = "cityPref")
     String cityPref;
 
-    @Column(name = "ratingPref")
+    @Column(name = "ratingPref",columnDefinition = "double default 0")
     double ratingPref;
 
-    @Column(name = "minPricePref")
+    @Column(name = "minPricePref",columnDefinition = "double default 0")
     double minPricePref;
 
-    @Column(name = "maxPricePref")
+    @Column(name = "maxPricePref",columnDefinition = "double default 0")
     double maxPricePref;
 
     @Column(name = "prevHistoryPref")
