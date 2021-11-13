@@ -207,6 +207,10 @@ public class RecommendationsService {
         return fts;
     }
 
+    public List<FoodTruck> getRecommendedFoodType(User user) {
+        return foodTruckRepository.findFoodTrucksByFoodType(user.getFoodTypePref());
+    }
+
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
         Optional<User> userPreferences = userRepository.findByUsername(username);
 
@@ -225,7 +229,7 @@ public class RecommendationsService {
         //null
                                                     //hibernate's NULL
         if(!Objects.equals(userPreferences.get().getFoodTypePref(), NULL)){
-            foodTypeTrucks = getRecommendUserByFoodType(userPreferences.get().getUsername());
+            foodTypeTrucks = getRecommendedFoodType(userPreferences.get());
             m.put(foodTypeTrucks,new Boolean(true));
         }else{
             m.put(foodTypeTrucks,new Boolean(false));
