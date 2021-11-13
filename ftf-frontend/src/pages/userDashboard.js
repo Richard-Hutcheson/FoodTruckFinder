@@ -58,6 +58,7 @@ class UserDashboard extends Component{
         response = await getRecommendedTrucks(this.state.user).catch(error=>{
             console.log(error.message);
         })
+        console.log("Response = ", response);
 
         //response should be an array
         for (let i =0; i < response.length;++i){
