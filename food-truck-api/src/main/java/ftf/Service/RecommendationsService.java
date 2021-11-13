@@ -176,10 +176,10 @@ public class RecommendationsService {
     public List<FoodTruck> getRecommendedByPriceRange(User user) {
 
         Double min = null, max = null;
-        if(user.getMinPricePref() != NULL){
+        if(user.getMinPricePref() != null){
             min = Double.parseDouble(user.getMinPricePref());
         }
-        if(user.getMaxPricePref() != NULL){
+        if(user.getMaxPricePref() != null){
             max = Double.parseDouble(user.getMaxPricePref());
         }
         return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min,max);
