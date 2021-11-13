@@ -31,15 +31,21 @@ class CreateAccount extends Component{
     }
     async handleSubmit(event){
         event.preventDefault();
-        let userData = new Map();
-        userData.set('userID', '-1');
-        userData.set('username', this.state.username);
-        userData.set('password', this.state.password);
-        userData.set('name', this.state.name);
-        userData.set('email', this.state.email);
-        userData.set('address', this.state.address);
-        userData.set('state', this.state.state);
-        userData.set('city', this.state.city);
+        let userData = {
+            userid: -1,
+            username: this.state.username,
+            password: this.state.password,
+            name: this.state.name,
+            email: this.state.email,
+            address: this.state.address,
+            state: this.state.state,
+            city: this.state.city,
+            maxPricePref: -1,
+            minPricePref: -1,
+            ratingPref: -1,
+            role: "a",
+        }
+
         const response = await saveUser(userData).catch(error=>{
             console.log(error.message);
         });

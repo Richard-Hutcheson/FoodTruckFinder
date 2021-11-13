@@ -36,6 +36,4 @@ public class RecommendationsController {
     public Optional<Recommendations> insertUserFoodTypeRec(@PathVariable String username) {
         return RecService.saveUser(username);
     }
-
-     */
 }

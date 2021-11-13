@@ -4,6 +4,10 @@ import styles from '../css/manageAccnt.module.css';
 import { getFoodTypes } from '../API/helperFunctions';
 import {Link} from "react-router-dom";
 
+const LOW_RANGE = 1;
+const MID_RANGE = 15;
+const HIGH_RANGE = 30;
+const MAX_RANGE = 99999;
 
 class UserManageAccount extends Component{
 
@@ -23,7 +27,10 @@ class UserManageAccount extends Component{
             viewOnly: true,
             distSliderVal: 10,
             priceSelected: "No Preference",
+            minPricePref: -1,
+            maxPricePref: -1,
             distPreference: "No Preference",
+            distCity: "unknown",
             foodTypePref: "No Preference",
             
         }
@@ -36,7 +43,6 @@ class UserManageAccount extends Component{
             this.state.state = this.props.location.state.state;
             this.state.city = this.props.location.state.city;
             this.state.role = this.props.location.state.role;
-            console.log("REACHED IF STATEMENT ROLE: ", this.state.role);
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,6 +60,30 @@ class UserManageAccount extends Component{
             console.log("response = ", response);
         }
         else{
+            //if user has a preference, set selector accordingly
+            if (response.maxPricePref >= LOW_RANGE && response.maxPricePref <= MID_RANGE){
+                this.setState({priceSelected: "$"});
+
+            }else if (response.maxPricePref >= MID_RANGE && response.maxPricePref <= HIGH_RANGE){
+                this.setState({priceSelected: "$$"});
+
+            }else if (response.maxPricePref >= HIGH_RANGE){
+                this.setState({priceSelected: "$$$"});
+            }else{
+                this.setState({priceSelected: "No Preference"});
+            }
+
+            if (response.cityPref != null || response.cityPref != "No Preference"){
+                this.setState({cityPref: response.cityPref, distPreference: "sameCity"});
+            }else{
+                this.setState({cityPref: "No Preference", distPreference: "No Preference"});
+            }
+
+            if (response.foodTypePref == "No Preference" || response.foodTypePref == null){
+                this.setState({foodTypePref: "No Preference"});
+            }else{
+                this.setState({foodTypePref: response.foodTypePref});
+            }
 
             this.setState({
                 userid: response.id, 
@@ -64,7 +94,8 @@ class UserManageAccount extends Component{
                 city: response.city,
                 state: response.state,
                 email: response.email,
-                role: response.role} );
+                role: response.role,
+            } );
         }
 
         let foodTypeList = getFoodTypes();
@@ -94,8 +125,6 @@ class UserManageAccount extends Component{
             // this.setState({[name]:value});
             console.log("name = " + name + " value = " + value);
         }
-        
-
     }
     handleSubmit(event){
         event.preventDefault();
@@ -137,8 +166,14 @@ class UserManageAccount extends Component{
         else if (event.target.id === 'prefFormID'){
             console.log("form submitted");
             let foodTypePrefSelection = document.getElementById("foodTypeID");
-            this.setState({foodTypePref: foodTypePrefSelection.options[foodTypePrefSelection.selectedIndex].value}, f=>{
-                console.log(this.state.priceSelected," ", this.state.distPreference, " ", this.state.foodTypePref);
+            let selection = foodTypePrefSelection.options[foodTypePrefSelection.selectedIndex].value;
+            if (selection === "No Preference"){
+                selection = null;
+            }
+            this.setState({foodTypePref: selection}, f=>{
+                console.log(this.state.priceSelected + "\n" + this.state.distPreference + "\n" + this.state.foodTypePref);
+                this.saveUser();
+
             });
         }
         else{
@@ -157,25 +192,45 @@ class UserManageAccount extends Component{
 
     onValueChange(event){
         if (event.target.name === "price"){
-            this.setState({priceSelected: event.target.value})
+            if (event.target.value === "$"){
+        
+                this.setState({minPricePref: LOW_RANGE, maxPricePref: MID_RANGE, priceSelected: "$"});
+            }else if (event.target.value === "$$"){
+                this.setState({minPricePref: MID_RANGE, maxPricePref: HIGH_RANGE, priceSelected: "$$"});
+
+            }else if (event.target.value === "$$$"){
+                this.setState({minPricePref: HIGH_RANGE, maxPricePref: MAX_RANGE, priceSelected: "$$$"});
+            }else{
+                this.setState({minPricePref: -1, maxPricePref: -1, priceSelected: "No Preference"});
+            }
         }else if (event.target.name === "distPref"){
-            this.setState({distPreference: event.target.value})
+            if (event.target.value === "No Preference"){
+                this.setState({distPreference: event.target.value, distCity: null})
+            }else{
+                this.setState({distPreference: event.target.value, distCity: this.state.city})
+            }
+            
         }
     }
     callFunction = ()=>{
         this.saveUser();        
     }
     async saveUser(){
-        let udm = new Map();
-        udm.set('userID', this.state.userid);
-        udm.set('username', this.state.username);
-        udm.set('password', this.state.password);
-        udm.set('name', this.state.name);
-        udm.set('email', this.state.email);
-        udm.set('address', this.state.address);
-        udm.set('state', this.state.state);
-        udm.set('city', this.state.city);
-        await editUser(udm);
+        let userData = {
+            id: this.state.userid,
+            username: this.state.username,
+            password: this.state.password,
+            name: this.state.name,
+            email: this.state.email,
+            address: this.state.address,
+            state: this.state.state,
+            city: this.state.city,
+            foodTypePref: this.state.foodTypePref,
+            cityPref: this.state.distCity,
+            max_price_pref: this.state.maxPricePref,
+            min_price_pref: this.state.minPricePref,
+        }
+        await editUser(userData);
     }
     
     render(){ 

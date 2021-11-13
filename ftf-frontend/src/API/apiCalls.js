@@ -8,25 +8,6 @@
                     "Content-Type": "application/json",
             "Accept": "application/json",
 */
-export function returnUserDataJSON(userDataMap){
-    try{
-        let userData = {            
-            id: userDataMap.get('userID'),
-            name: userDataMap.get('name'),
-            username: userDataMap.get('username'),
-            password: userDataMap.get('password'),
-            email: userDataMap.get('email'),
-            address: userDataMap.get('address'),
-            state: userDataMap.get('state'),
-            city: userDataMap.get('city'),
-            role: 'a'
-        }
-        return JSON.stringify(userData);
-    }catch(error){
-        console.log(error.message);
-        return "err";
-    }
-}
 export async function noahCall(){
     const response = await fetch('http://localhost:8080/noah', {
         method: "GET",
@@ -49,30 +30,16 @@ export async function loginUser(un, pw){
         return responseJSON;
     }
 }
-export async function saveUser(userDataMap){
-    if (returnUserDataJSON(userDataMap) === "err"){
-        return "incomplete user data";
-    }
-    console.log(returnUserDataJSON(userDataMap));
+export async function saveUser(userData){
+
     const response = await fetch(`http://localhost:8080/saveuser`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
- 
         },
-        body: JSON.stringify({
-            userid: 1,
-            name: userDataMap.get('name'),
-            username: userDataMap.get('username'),
-            password: userDataMap.get('password'),
-            email: userDataMap.get('email'),
-            address: userDataMap.get('address'),
-            state: userDataMap.get('state'),
-            city: userDataMap.get('city'),
-            role: 'a'
-        })
+        body: JSON.stringify(userData),
     }).catch(error =>{
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
@@ -130,7 +97,7 @@ export async function getUser(username){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
-            console.log("data = ", data);
+            console.log("get user = ", data);
             return data;
         }else{
             return "...unknown...";  
@@ -138,7 +105,8 @@ export async function getUser(username){
     }
 }
 
-export async function editUser(userDataMap){
+export async function editUser(userData){
+    console.log("edit user data = ", userData)
     const requestOptions = {
         method: "PATCH",
         headers:{
@@ -146,26 +114,20 @@ export async function editUser(userDataMap){
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
-        body: returnUserDataJSON(userDataMap)
+        body: JSON.stringify(userData),
     }
     const response = await fetch(`http://localhost:8080/editAccount`, requestOptions)
     .catch(error =>{
-        console.log("hello");
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
     if (response != null){
         const data = await response.json().catch(error =>{
-            // window.confirm("Problem encountered with JSON operation: " + error.message);
+            window.confirm("Problem encountered with JSON operation: " + error.message);
         });
-        // if (data != null){
-        //     return data;
-        // }else{
-        //     return "...unknown...";  
-        // }
+
     }else{
     }
 }
-
 export async function getTruckByName(name){
 
     const requestOptions = {
@@ -185,7 +147,7 @@ export async function getTruckByName(name){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
-            console.log("data = ", data);
+            console.log("truck by name = ", data);
             return data;
         }else{
             return "...unknown...";  
@@ -212,7 +174,7 @@ export async function getAllTrucks(){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
-            console.log("data = ", data);
+            console.log("all trucks = ", data);
             return data;
         }else{
             return "...unknown...";  
@@ -248,7 +210,7 @@ export async function editTruck(userDataMap){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
-            console.log("data = ", data);
+            console.log("edit truck data = ", data);
             return data;
         }else{
             return "...unknown...";  
@@ -331,3 +293,4 @@ export async function updateFoodTypeRec(username, foodType){
     }else{
     }
 }
+

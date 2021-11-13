@@ -40,7 +40,6 @@ public class UserController {
 
     @GetMapping("/findUser/{username}")
     public Optional<User> findUserByUsername(@PathVariable String username) {
-        System.out.println("username = " + username);
 
         var user = userServe.findByUsername(username);
 //        System.out.println(user.get().getId());
@@ -72,13 +71,14 @@ public class UserController {
                 .findAny().orElseThrow(() -> new InvalidLoginException("User not found!")));
     }
 
-
     @PatchMapping("/editAccount")
     public User editAccount(@RequestBody User user) {
         Optional<User> updated = userServe.findById(user.getId());
 
-        if (updated.isPresent())
+        if (updated.isPresent()){
             return userServe.updateUser(user);
+        }
+
 
         throw new UserNotFoundException("User ID not Found");
     }
