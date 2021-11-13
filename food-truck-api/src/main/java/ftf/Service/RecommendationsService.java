@@ -189,7 +189,11 @@ public class RecommendationsService {
         return foodTruckRepository.findFoodTrucksByFoodType(user.getFoodTypePref());
     }
 
-    public List<FoodTruck> getRecommendedByRating(User user) {
+    public List<FoodTruck> getRecommendedByRating(User user) throws Exception {
+        if(user.getRatingPref() == null){
+            throw new Exception("Rating is null");
+        }
+
        List <FoodTruck> allTrucks = foodTruckRepository.findAll();
        List<FoodTruck> fts = new ArrayList<>();
 
@@ -262,7 +266,11 @@ public class RecommendationsService {
         }
 
         if(!Objects.equals(userPreferences.get().getRatingPref(), NULL)){
-            foodRatingTrucks = getRecommendedByRating(userPreferences.get());
+            try {
+                foodRatingTrucks = getRecommendedByRating(userPreferences.get());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             m.put(foodRatingTrucks,new Boolean(true));
         }else{
             m.put(foodRatingTrucks,new Boolean(false));
