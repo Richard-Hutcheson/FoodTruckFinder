@@ -239,22 +239,22 @@ public class RecommendationsService {
         //need to determine what preferences to utilize, so first check if they are
         //null
                                                     //hibernate's NULL
-        if(!Objects.equals(userPreferences.get().getFoodTypePref(), NULL)){
+        if(!Objects.equals(userPreferences.get().getFoodTypePref(), null)){
             foodTypeTrucks = getRecommendedFoodType(userPreferences.get());
             m.put(foodTypeTrucks,new Boolean(true));
         }else{
             m.put(foodTypeTrucks,new Boolean(false));
         }
 
-        if(!Objects.equals(userPreferences.get().getCityPref(), NULL)){
+        if(!Objects.equals(userPreferences.get().getCityPref(), null)){
             foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
             m.put(foodLocationTrucks,new Boolean(true));
         }else{
             m.put(foodLocationTrucks,new Boolean(false));
         }
 
-        if(!Objects.equals(userPreferences.get().getMaxPricePref(), NULL) &&
-            !Objects.equals(userPreferences.get().getMinPricePref(),NULL)){
+        if(!Objects.equals(userPreferences.get().getMaxPricePref(), null) &&
+            !Objects.equals(userPreferences.get().getMinPricePref(), null)){
             try {
                 foodTrucks = getRecommendedByPriceRange(userPreferences.get());
             } catch (Exception e) {
@@ -265,7 +265,7 @@ public class RecommendationsService {
             m.put(foodTrucksPrice,new Boolean(false));
         }
 
-        if(!Objects.equals(userPreferences.get().getRatingPref(), NULL)){
+        if(!Objects.equals(userPreferences.get().getRatingPref(), null)){
             try {
                 foodRatingTrucks = getRecommendedByRating(userPreferences.get());
             } catch (Exception e) {
