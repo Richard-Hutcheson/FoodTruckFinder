@@ -173,16 +173,16 @@ public class RecommendationsService {
         return Optional.of(rec);
     }
 
-    public List<FoodTruck> getRecommendedByPriceRange(User user) {
+    public List<FoodTruck> getRecommendedByPriceRange(User user) throws Exception {
 
         Double min = null, max = null;
-        if(user.getMinPricePref() != null){
+        if(user.getMinPricePref() != null && user.getMaxPricePref() != null) {
             min = Double.parseDouble(user.getMinPricePref());
-        }
-        if(user.getMaxPricePref() != null){
             max = Double.parseDouble(user.getMaxPricePref());
+            return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min, max);
+        }else{
+            throw new Exception("Min and Max must both not be null");
         }
-        return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min,max);
     }
 
     public List<FoodTruck> getRecommendedByFoodType(User user) {
@@ -251,7 +251,11 @@ public class RecommendationsService {
 
         if(!Objects.equals(userPreferences.get().getMaxPricePref(), NULL) &&
             !Objects.equals(userPreferences.get().getMinPricePref(),NULL)){
-            foodTrucks = getRecommendedByPriceRange(userPreferences.get());
+            try {
+                foodTrucks = getRecommendedByPriceRange(userPreferences.get());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             m.put(foodTrucksPrice,new Boolean(true));
         }else{
             m.put(foodTrucksPrice,new Boolean(false));
