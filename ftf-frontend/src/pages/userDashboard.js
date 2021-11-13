@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
+import {getAllTrucks, getRecommendedTrucks, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -52,7 +52,10 @@ class UserDashboard extends Component{
         })
 
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
-        response = await getAllTrucks().catch(error=>{
+        // response = await getAllTrucks().catch(error=>{
+        //     console.log(error.message);
+        // })
+        response = await getRecommendedTrucks(this.state.user).catch(error=>{
             console.log(error.message);
         })
 
@@ -96,12 +99,11 @@ class UserDashboard extends Component{
         event.preventDefault();
         if (this.state.searchQuery !== "" && event.target.id === 'searchFormID'){
             // //update user's food type preferences based on search history of food type
-            // if (this.state.queryType === 'food type'){
-            //     let response = await updateFoodTypeRec(this.state.user, this.state.searchQuery).catch(error=>{
-            //         console.log(error.message);
-            //     })
-            // }
-
+            if (this.state.queryType === 'food type'){
+                let response = await updateFoodTypeRec(this.state.user, this.state.searchQuery).catch(error=>{
+                    console.log(error.message);
+                })
+            }
             this.props.history.push({
                 pathname: '/SearchResult',
                 state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value} // your data array of objects

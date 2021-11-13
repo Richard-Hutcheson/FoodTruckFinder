@@ -130,7 +130,7 @@ public class RecommendationsService {
 
         // user has no recomendations for trucks
         if (foodTrucks.isEmpty())
-            throw new FoodTruckNotFoundException("No Recommended trucks found because user has not searched enough");
+            throw new FoodTruckNotFoundException("No recommended trucks found because user has not searched enough");
 
         return foodTrucks;
     }

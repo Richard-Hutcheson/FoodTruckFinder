@@ -27,11 +27,12 @@ class UserManageAccount extends Component{
             viewOnly: true,
             distSliderVal: 10,
             priceSelected: "No Preference",
-            minPricePref: -1,
-            maxPricePref: -1,
+            minPricePref: null,
+            maxPricePref: null,
             distPreference: "No Preference",
             distCity: "unknown",
             foodTypePref: "No Preference",
+            tempFoodTypePref: "No Preference",
             
         }
         if (this.props.location.state != null){
@@ -55,6 +56,18 @@ class UserManageAccount extends Component{
                 console.log(error.message);
             }
         );
+
+            
+        let foodTypeList = getFoodTypes();
+        let container = document.getElementById("foodTypeID");
+        for (let i = 0; i < foodTypeList.length; i++){
+            let item = document.createElement('option');
+            item.setAttribute('value', foodTypeList[i]);
+            item.innerHTML = foodTypeList[i];
+            container.appendChild(item);
+        }
+
+
         if (response == null){
             response = "unable to retrieve";
             console.log("response = ", response);
@@ -73,16 +86,17 @@ class UserManageAccount extends Component{
                 this.setState({priceSelected: "No Preference"});
             }
 
-            if (response.cityPref != null || response.cityPref != "No Preference"){
-                this.setState({cityPref: response.cityPref, distPreference: "sameCity"});
+            if (response.cityPref == null || response.cityPref === "No Preference" || response.cityPref === "unknown"){
+                this.setState({cityPref: null, distPreference: "No Preference"});
             }else{
-                this.setState({cityPref: "No Preference", distPreference: "No Preference"});
+                this.setState({cityPref: response.cityPref, distPreference: "sameCity"});
+
             }
 
             if (response.foodTypePref == "No Preference" || response.foodTypePref == null){
-                this.setState({foodTypePref: "No Preference"});
+                this.setState({foodTypePref: "No Preference", tempFoodTypePref: "No Preference"});
             }else{
-                this.setState({foodTypePref: response.foodTypePref});
+                this.setState({foodTypePref: response.foodTypePref, tempFoodTypePref: response.foodTypePref});
             }
 
             this.setState({
@@ -98,32 +112,29 @@ class UserManageAccount extends Component{
             } );
         }
 
-        let foodTypeList = getFoodTypes();
-        let container = document.getElementById("foodTypeID");
-        for (let i = 0; i < foodTypeList.length; i++){
-            let item = document.createElement('option');
-            item.setAttribute('value', foodTypeList[i]);
-            item.innerHTML = foodTypeList[i];
-            container.appendChild(item);
-        }
     }
+
     handleChange(event){
         event.preventDefault();
-        if (event.target.id === "distSlider"){
-            let slider = document.getElementById("distSlider");
-            let output = document.getElementById("milesID");
-            output.innerHTML = slider.value;
+        // if (event.target.id === "distSlider"){
+        //     let slider = document.getElementById("distSlider");
+        //     let output = document.getElementById("milesID");
+        //     output.innerHTML = slider.value;
     
-            slider.oninput = function() {
-                output.innerHTML = this.value;
-            }
-            this.setState({distSliderVal: event.target.value})
-        }else{
-            const target = event.target;
-            const value = target.type === 'checkbox' ? target.checked : target.value;
-            const name = target.name;
-            // this.setState({[name]:value});
-            console.log("name = " + name + " value = " + value);
+        //     slider.oninput = function() {
+        //         output.innerHTML = this.value;
+        //     }
+        //     this.setState({distSliderVal: event.target.value})
+        // }else{
+        //     const target = event.target;
+        //     const value = target.type === 'checkbox' ? target.checked : target.value;
+        //     const name = target.name;
+        //     // this.setState({[name]:value});
+        //     console.log("name = " + name + " value = " + value);
+        // }
+        if (event.target.id === "foodTypeID"){
+            console.log(event.target.value);
+            this.setState({tempFoodTypePref: event.target.value})
         }
     }
     handleSubmit(event){
@@ -201,7 +212,7 @@ class UserManageAccount extends Component{
             }else if (event.target.value === "$$$"){
                 this.setState({minPricePref: HIGH_RANGE, maxPricePref: MAX_RANGE, priceSelected: "$$$"});
             }else{
-                this.setState({minPricePref: -1, maxPricePref: -1, priceSelected: "No Preference"});
+                this.setState({minPricePref: null, maxPricePref: null, priceSelected: "No Preference"});
             }
         }else if (event.target.name === "distPref"){
             if (event.target.value === "No Preference"){
@@ -227,8 +238,8 @@ class UserManageAccount extends Component{
             city: this.state.city,
             foodTypePref: this.state.foodTypePref,
             cityPref: this.state.distCity,
-            max_price_pref: this.state.maxPricePref,
-            min_price_pref: this.state.minPricePref,
+            maxPricePref: this.state.maxPricePref,
+            minPricePref: this.state.minPricePref,
         }
         await editUser(userData);
     }
@@ -285,7 +296,7 @@ class UserManageAccount extends Component{
                             </div>
                             <div className = {styles.foodTypeDiv}>
                                 <p>Food Type Preference:</p>
-                                <select id="foodTypeID" name="foodTypeList" form="prefFormID">
+                                <select id="foodTypeID" name="foodTypeList" form="prefFormID" onChange={this.handleChange} value = {this.state.tempFoodTypePref}>
                                     <option value="No Preference">No Preference</option>
                                 </select>
                             </div>                       

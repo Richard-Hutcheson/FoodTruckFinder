@@ -294,3 +294,27 @@ export async function updateFoodTypeRec(username, foodType){
     }
 }
 
+export async function getRecommendedTrucks(username){
+
+    const requestOptions = {
+        method: "GET",
+        headers:{
+            "Access-Control-Allow-Origin": "*"
+        }    
+    }
+    const response = await fetch(`http://localhost:8080/getRecommendedTrucks/${username}`, requestOptions)
+    .catch(error =>{
+        window.confirm("Problem encountered with fetch operation: " + error.message);
+    });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        if (data != null){
+            return data;
+        }else{
+            return null;  
+        }
+    }else{
+    }
+}
