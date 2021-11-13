@@ -237,8 +237,8 @@ public class RecommendationsService {
             m.put(foodLocationTrucks,new Boolean(false));
         }
 
-        if(userPreferences.get().getMinPricePref() != 0 &&
-                userPreferences.get().getMaxPricePref() != 0){
+        if(userPreferences.get().getMinPricePref() != -1 &&
+                userPreferences.get().getMaxPricePref() != -1){
             foodTrucks = getRecommendedByPriceRange(userPreferences.get());
             m.put(foodTrucksPrice,new Boolean(true));
         }else{
