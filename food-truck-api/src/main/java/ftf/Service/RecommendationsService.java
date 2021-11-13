@@ -175,7 +175,14 @@ public class RecommendationsService {
 
     public List<FoodTruck> getRecommendedByPriceRange(User user) {
 
-        return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(Double.parseDouble(user.getMinPricePref()), Double.parseDouble(user.getMaxPricePref()));
+        Double min = null, max = null;
+        if(user.getMinPricePref() != NULL){
+            min = Double.parseDouble(user.getMinPricePref());
+        }
+        if(user.getMaxPricePref() != NULL){
+            max = Double.parseDouble(user.getMaxPricePref());
+        }
+        return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min,max);
     }
 
     public List<FoodTruck> getRecommendedByFoodType(User user) {
