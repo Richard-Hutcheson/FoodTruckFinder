@@ -179,7 +179,8 @@ public class RecommendationsService {
         if(user.getMinPricePref() != null && user.getMaxPricePref() != null) {
             min = Double.parseDouble(user.getMinPricePref());
             max = Double.parseDouble(user.getMaxPricePref());
-            return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min, max);
+            //return foodTruckRepository.findFoodTrucksByMinRangeIsGreaterThanEqualAndMaxRangeIsLessThanEqual(min, max);
+            return foodTruckRepository.findFoodTrucksByMaxRangeIsLessThanEqual(max);
         }else{
             throw new Exception("Min and Max must both not be null");
         }
@@ -238,7 +239,7 @@ public class RecommendationsService {
 
         //need to determine what preferences to utilize, so first check if they are
         //null
-                                                    //hibernate's NULL
+
         if(!Objects.equals(userPreferences.get().getFoodTypePref(), null)){
             foodTypeTrucks = getRecommendedFoodType(userPreferences.get());
             m.put(foodTypeTrucks,new Boolean(true));
