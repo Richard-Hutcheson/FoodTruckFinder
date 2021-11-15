@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.hibernate.sql.InFragment.NULL;
 
@@ -224,6 +225,9 @@ public class RecommendationsService {
     }
 
     public List<FoodTruck> getRecommendedFoodTrucks(String username) {
+
+        //this will be a counter to determine what to be prioritized first
+        int countPrefs = 0;
         Optional<User> userPreferences = userRepository.findByUsername(username);
 
         List<FoodTruck> foodTrucks = foodTruckRepository.findAll();
@@ -277,11 +281,64 @@ public class RecommendationsService {
             m.put(foodRatingTrucks,new Boolean(false));
         }
 
+        //This is the list that will contain the final trucks that will be
+        //provided to the user, it will be used to convert it into a list
+        //and sort based on the number of times the particular food truck
+        //appears in the recommended
+        HashMap<FoodTruck,Integer> finalTrucks = new HashMap<>();
 
         for(Map.Entry<List<FoodTruck>,Boolean> listEntry: m.entrySet()){
-            if(listEntry.getValue() == true){
-                //finds intersects based on if there are price preferences
-                foodTrucks.retainAll(listEntry.getKey());
+            //if it is true (i.e. a recommendation that fits the criteria
+            //the user had
+            if(listEntry.getValue()){
+                //Iterate through the entire list for that key
+
+                for(FoodTruck truck : listEntry.getKey()){
+                    Integer num = finalTrucks.get(truck);
+                    finalTrucks.put(truck,(num == null) ? 1 : num + 1);
+                }
+
+                countPrefs++;
+
+
+                //find intersects based on if there are price preferences
+                //THIS IS JUST A FILTER (WAS MY ORIGINAL ALGORITHM)
+                //foodTrucks.retainAll(listEntry.getKey());
+            }
+        }
+
+        //Converts the Map to a List, and stores the food trucks in the order from
+        //the greatest occurrences (i.e. more relevant) to least relevant.
+        List<FoodTruck> sortedTrucks = finalTrucks.entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue, Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        if(countPrefs == 0){
+            //if there were no preferences at all, then it will just return
+            //a random list, so just randomize the list
+            Collections.shuffle(foodTrucks);
+            return foodTrucks;
+        }else{
+            //If the sorted trucks are less than the number of trucks that will be
+            //presented to the user (5)
+            if (sortedTrucks.size() < 5) {
+                //randomly shuffle the food trucks as the remainders will
+                //just be random since there are no preferences to fill.
+                Collections.shuffle(foodTrucks);
+                while(sortedTrucks.size() < 5){
+                    Random rand = new Random();
+                    FoodTruck randomTruck = foodTrucks.get(rand.nextInt(foodTrucks.size()));
+                    sortedTrucks.add(randomTruck);
+                }
+                //After randomly inserted the sorted trucks to hit that "5" recommendations
+                //size, return the sorted truck list.
+                return sortedTrucks;
+            }else{
+                //Normal, so just return that sorted trucks list
+                //Richard will just trim the number if the list exceeds the amount
+                //of recommendations (5)
+                return sortedTrucks;
             }
         }
 
@@ -291,14 +348,6 @@ public class RecommendationsService {
         //foodTrucks.retainAll(foodLocationTrucks);
 
 
-        if(foodTrucks.size() > 5){
-
-
-        }else if (foodTrucks.size() < 5) {
-            //todo in future
-        }
-
-
-        return foodTrucks;
+        //return foodTrucks;
     }
 }
