@@ -47,5 +47,5 @@ public class FoodTruck {
     String foodType;
 
     @Column(name = "menuURL", columnDefinition="VARCHAR(500)")
-    URL menuURL;
+    String menuURL;
 }
