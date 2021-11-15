@@ -247,15 +247,19 @@ public class RecommendationsService {
         if(!Objects.equals(userPreferences.get().getFoodTypePref(), null)){
             foodTypeTrucks = getRecommendedFoodType(userPreferences.get());
             m.put(foodTypeTrucks,new Boolean(true));
+            System.out.println("TRUE FOR FOOD TYPE");
         }else{
             m.put(foodTypeTrucks,new Boolean(false));
+            System.out.println("FALSE FOR FOOD TYPE");
         }
 
         if(!Objects.equals(userPreferences.get().getCityPref(), null)){
             foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
             m.put(foodLocationTrucks,new Boolean(true));
+            System.out.println("TRUE FOR CITY TYPE");
         }else{
             m.put(foodLocationTrucks,new Boolean(false));
+            System.out.println("FALSE FOR CITY TYPE");
         }
 
         if(!Objects.equals(userPreferences.get().getMaxPricePref(), null) &&
@@ -266,8 +270,10 @@ public class RecommendationsService {
                 e.printStackTrace();
             }
             m.put(foodTrucksPrice,new Boolean(true));
+            System.out.println("TRUE FOR PRICE RANGE TYPE");
         }else{
             m.put(foodTrucksPrice,new Boolean(false));
+            System.out.println("FALSE FOR PRICE RANGE TYPE");
         }
 
         if(!Objects.equals(userPreferences.get().getRatingPref(), null)){
@@ -277,8 +283,10 @@ public class RecommendationsService {
                 e.printStackTrace();
             }
             m.put(foodRatingTrucks,new Boolean(true));
+            System.out.println("TRUE FOR RATING TYPE");
         }else{
             m.put(foodRatingTrucks,new Boolean(false));
+            System.out.println("FALSE FOR RATING TYPE");
         }
 
         //This is the list that will contain the final trucks that will be
@@ -307,12 +315,22 @@ public class RecommendationsService {
             }
         }
 
+        //This is for testing and debugging:
+        System.out.println("NUMBER OF PREFERENCES: " + countPrefs);
+
+        for(Map.Entry<FoodTruck,Integer> listEntry: finalTrucks.entrySet()){
+            System.out.println("Truck: "+ listEntry.getKey().getTruckName() + "Count: "
+                    + listEntry.getValue() );
+        }
+
         //Converts the Map to a List, and stores the food trucks in the order from
         //the greatest occurrences (i.e. more relevant) to least relevant.
         List<FoodTruck> sortedTrucks = finalTrucks.entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getValue, Comparator.reverseOrder()))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
+
+
 
         if(countPrefs == 0){
             //if there were no preferences at all, then it will just return
@@ -329,7 +347,11 @@ public class RecommendationsService {
                 while(sortedTrucks.size() < 5){
                     Random rand = new Random();
                     FoodTruck randomTruck = foodTrucks.get(rand.nextInt(foodTrucks.size()));
-                    sortedTrucks.add(randomTruck);
+                    //If the random truck is not already in the list, then it can be added
+                    //to the remainder of the sorted trucks
+                    if(!sortedTrucks.contains(randomTruck)) {
+                        sortedTrucks.add(randomTruck);
+                    }
                 }
                 //After randomly inserted the sorted trucks to hit that "5" recommendations
                 //size, return the sorted truck list.
