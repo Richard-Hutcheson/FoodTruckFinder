@@ -23,9 +23,11 @@ class SearchResult extends Component{
             maxPrice: '',
             foodType: '',
             truckOwner: '',
+            menuURL: '',
             queryType: 'invalid',
             searchQuery: '',
-            noResults: 'false'
+            noResults: 'false',
+            writeReview: false,
         }
         if (this.props.location.state != null){
             this.state.searchQuery = this.props.location.state.searchQuery;
@@ -50,7 +52,6 @@ class SearchResult extends Component{
 
     async componentDidMount(){
         let response = '...unknown...';
-        console.log("-< ", this.state.queryType);
 
         if (this.state.queryType === 'user\'s username'){
             console.log(this.state.searchQuery)
@@ -89,6 +90,7 @@ class SearchResult extends Component{
                     minPrice: response.minRange,
                     foodType: response.foodType,
                     truckOwner: response.owner.username,
+                    menuURL: response.menuURL
 
                 })
             }
@@ -98,7 +100,6 @@ class SearchResult extends Component{
             response = await getAllTrucks().catch(error=>{
                 console.log(error.message);
             })
-
             //response should be an array
             for (let i =0; i < response.length;++i){
                 if (response[i].foodType === this.state.searchQuery){
@@ -138,9 +139,38 @@ class SearchResult extends Component{
     }
     handleSubmit(event){
         event.preventDefault();
+        if (event.target.id === "revRatBtn"){
+
+            if (this.state.writeReview){
+                this.setState({writeReview: false});
+            }else{
+                this.setState({writeReview: true});
+            }
+        }
+        else if (event.target.id === "postReviewID"){
+            if (this.state.writeReview == true){
+                this.setState({writeReview: false})
+            }
+            console.log ("POST REVIEW AND RATING!");
+        }
     }
 
     render(){ 
+        let loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque, lacus vitae molestie volutpat, leo risus congue justo, nec dignissim mauris ex eget arcu. Nunc fermentum scelerisque lorem vel convallis. Phasellus vel velit diam. Fusce pretium nisi nisl, at efficitur risus bibendum eu. Nulla faucibus faucibus leo eget scelerisque. In viverra tincidunt hendrerit. Nam quis malesuada nibh, ac egestas eros. Nulla non scelerisque lorem. Quisque non quam in sem consequat dignissim et vel quam.`
+        let createReview = <div></div>;
+        let revRatBtnTxt = "Rate and Review";
+        if (this.state.writeReview == true){
+            createReview =             
+            <div className= {styles.newRateReview}>
+                <label>Review</label>
+                <textarea className = {styles.newReview}></textarea>
+                <label>Rating (1-10)</label>
+                <input className = {styles.newRating} type="number" min = "0" max = "10"></input>
+                <button type= "button" id = "postReviewID" className = {styles.saveReviewBtn} onClick={this.handleSubmit}>Post</button>
+            </div>;
+            revRatBtnTxt = "Cancel";
+        }
+        
         //USER QUERY
         if (this.state.queryType === 'user\'s username'){
             return (
@@ -160,15 +190,18 @@ class SearchResult extends Component{
                     <div className= {styles.userRevRat}>
                         <p>Reviews and Ratings Here</p>
                     </div>
-                    <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
+                    <button className={styles.backBtn} id = "postReviewID" onClick={()=>{this.props.history.goBack();}}>BACK</button>
                 </div>
             );
         }
-
+        //TRUCK NAME
         else if (this.state.queryType === "truck_name"){
             return(
                 <div>
-                    <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
+
+                    {this.state.searchQuery !== '' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
+                    {this.state.searchQuery === '' && <h1 className = {styles.header}>TRUCK DETAILS</h1>}
+
                     <div className = {styles.truckInfo}>
                         <div>
                             Food Truck: <span>{this.state.truckName}</span>
@@ -194,17 +227,58 @@ class SearchResult extends Component{
                     </div>
                     <div className= {styles.truckMenu}>
                         <p>Truck Menu</p>
+                        {this.state.menuURL !== '' && <img src={this.state.menuURL} alt="menu" border="0"/>}
                     </div>
                     <div className= {styles.truckRevRat}>
-                        <p>Truck Reviews and Ratings Here</p>
+                        <p className = {styles.revRatTitle}>Truck Reviews and Ratings Here</p>
+                        <div className = {styles.revRatContent}>
+                            <div className = {styles.review}>
+                                <div className = {styles.txtRatingDiv}>
+                                    <div>
+                                        <p className = {styles.reviewUser}>Anon301</p>
+                                        <p className = {styles.userRating}>rating: x/10</p>
+                                    </div>
+                                </div>                                
+                                <p className= {styles.reviewText}>{loremIpsum}</p>
+                            </div>
+                            <div className = {styles.review}>
+                                <div className = {styles.txtRatingDiv}>
+                                    <div>
+                                        <p className = {styles.reviewUser}>Anon301</p>
+                                        <p className = {styles.userRating}>rating: x/10</p>
+                                    </div>
+                                </div>                                
+                                <p className= {styles.reviewText}>{loremIpsum}</p>
+                            </div>
+                            <div className = {styles.review}>
+                                <div className = {styles.txtRatingDiv}>
+                                    <div>
+                                        <p className = {styles.reviewUser}>Anon301</p>
+                                        <p className = {styles.userRating}>rating: x/10</p>
+                                    </div>
+                                </div>                                
+                                <p className= {styles.reviewText}>{loremIpsum}</p>
+                            </div>
+                            <div className = {styles.review}>
+                                <div className = {styles.txtRatingDiv}>
+                                    <div>
+                                        <p className = {styles.reviewUser}>Anon401</p>
+                                        <p className = {styles.userRating}>rating: x/10</p>
+                                    </div>
+                                </div>                                
+                                <p className= {styles.reviewText}>{loremIpsum}</p>
+                            </div>
+                        </div>
+                        <div className={styles.ratrevBtnDiv}>
+                            <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>
+                        </div>
+                        {createReview}
                     </div>
                     <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
                 </div>
                 
             );
         }
-
-
         //FOOD TRUCK RELATED QUERY
         else{
             return (

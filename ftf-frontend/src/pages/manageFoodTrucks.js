@@ -39,7 +39,6 @@ class ManageFoodTrucks extends Component{
         }
         //response should be an array
         for (let i = 0; i < response.length;++i){
-            console.log("->", response[i].owner.id, " ->", this.state.userID);
             if (response[i].owner.id === this.state.userID){
                 let container = document.getElementById('recTrucksID');
                 let truck = document.createElement('div');
