@@ -6,10 +6,7 @@ import ftf.classes.FoodTruck;
 import ftf.classes.Route;
 import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
 import java.util.List;
@@ -25,7 +22,15 @@ public class RouteController {
 
     @GetMapping("/routes/{truckName}")
     public List<Route> getRoutesByTruckName(@PathVariable String truckName) {
-
         return routeService.getRoutesByTruckName(truckName);
+    }
+
+    @PostMapping("/routes/{truckName}/{address}/{city}/{state}")
+    public Optional<Route> setRouteByTruckName(@PathVariable String truckName,
+                                           @PathVariable String address,
+                                           @PathVariable String city,
+                                           @PathVariable String state) {
+
+        return routeService.setRouteByTruckName(truckName, address, city, state);
     }
 }
