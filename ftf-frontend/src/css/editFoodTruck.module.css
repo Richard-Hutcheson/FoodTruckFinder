@@ -1,77 +1,50 @@
-.formContainer{
-    display: block;
-    position: relative;
-    width: 700px;
-    left: 50%;
-    transform: translate(-50%);
-    margin-top: 3em;
+.bodyContainer{
+    height: 100%;
 }
-.userForm{
-    display: grid;
-    position: relative;
-    grid-template-columns: 100px 500px;
-}
-.editSaveBtn{
-    margin-top: 15px;
-    display: block;
-    position: relative;
-    width: 100px;
-    height: 30px;
-    left: 50%;
-    transform: translate(-50%);
-}
-.header, .preferencesHeader{
-    display: block;
-    position: relative;
-    width: 500px;
-    height: 50px;
-    left: 50%;
-    transform: translate(-50%);
+h1{
     text-align: center;
 }
-.prefFormClass{
+.formClass{
+    position: relative;
     display: block;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%);
-}
-.innerFormClass{
-    position: relative;
-    width: 800px;
-    height: 200px;
-    display: grid;
-    grid-template-columns: 266px 266px 266px;
-    grid-template-rows: auto auto;
-    left: 50%;
-    transform: translate(-50%);
-
-}
-.distRangeClass, .foodTypeDiv{
     text-align: center;
 }
-.formSaveBtn{
-    display: block;
-    position: relative;
-    width: 100px;
-    height: 30px;
-    left: 50%;
-    transform: translate(-50%);
+.formClass input{
+    width: 40%;
 
 }
 
+#descID{
+    width: 40%;
+    height: 100px;
+}
+
+.scheduleDiv, .routeDiv{
+
+    position: relative;
+    background-color: gray;
+    height: 150px;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.routeDiv{
 
 
+}
 
-
-
-
-
-.backBtn, .cancelBtn{
+.editBtn{
+    margin-top: 2rem;
+    width: 150px;
+    height: 30px;
+}
+.backBtn, .delTruck{
     display: block;
     position: relative;
-    width: 100px;
+    width: 150px;
     height: 30px;
     left: 50%;
     transform: translate(-50%);
     margin: 10px 0;
 }
+

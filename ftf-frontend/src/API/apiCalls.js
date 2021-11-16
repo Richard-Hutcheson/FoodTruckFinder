@@ -182,8 +182,8 @@ export async function getAllTrucks(){
     }
 }
 
-export async function editTruck(userDataMap){
-    console.log("datamap = ", userDataMap);
+export async function editTruck(userData){
+    console.log("datamap = ", userData);
     const requestOptions = {
         method: "PATCH",
         headers:{
@@ -191,15 +191,7 @@ export async function editTruck(userDataMap){
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
-        body: JSON.stringify({
-            truckID: userDataMap.get('truckID'),
-            truckName: userDataMap.get('truckName'),
-            description: userDataMap.get('description'),
-            minRange: userDataMap.get('minRange'),
-            maxRange: userDataMap.get('maxRange'),
-            foodType: userDataMap.get('foodType'),
-            owner: userDataMap.get('owner'),
-        })
+        body: JSON.stringify(userData)
     };
     const response = await fetch(`http://localhost:8080/editTruck`, requestOptions)
         .catch(error =>{
@@ -263,7 +255,6 @@ export async function insertUserFoodRec(username){
             return "...unknown...";  
         }
     }
-
 }
 
 export async function updateFoodTypeRec(username, foodType){

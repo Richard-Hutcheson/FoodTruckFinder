@@ -5,9 +5,9 @@ import { getFoodTypes } from '../API/helperFunctions';
 import {Link} from "react-router-dom";
 
 const LOW_RANGE = 1;
-const MID_RANGE = 15;
-const HIGH_RANGE = 30;
-const MAX_RANGE = 99999;
+const MID_RANGE = 16;
+const HIGH_RANGE = 31;
+const MAX_RANGE = 999999999999;
 
 class UserManageAccount extends Component{
 
@@ -74,10 +74,10 @@ class UserManageAccount extends Component{
         }
         else{
             //if user has a preference, set selector accordingly
-            if (response.maxPricePref >= LOW_RANGE && response.maxPricePref <= MID_RANGE){
+            if (response.maxPricePref >= LOW_RANGE && response.maxPricePref < MID_RANGE){
                 this.setState({priceSelected: "$"});
 
-            }else if (response.maxPricePref >= MID_RANGE && response.maxPricePref <= HIGH_RANGE){
+            }else if (response.maxPricePref >= MID_RANGE && response.maxPricePref < HIGH_RANGE){
                 this.setState({priceSelected: "$$"});
 
             }else if (response.maxPricePref >= HIGH_RANGE){
@@ -85,15 +85,15 @@ class UserManageAccount extends Component{
             }else{
                 this.setState({priceSelected: "No Preference"});
             }
-
+            
+            //TRUCK DISTANCE PREFERENCE
             if (response.cityPref == null || response.cityPref === "No Preference" || response.cityPref === "unknown"){
-                this.setState({cityPref: null, distPreference: "No Preference"});
+                this.setState({distCity: null, distPreference: "No Preference"});
             }else{
-                this.setState({cityPref: response.cityPref, distPreference: "sameCity"});
-
+                this.setState({distCity: response.cityPref, distPreference: "sameCity"});
             }
-
-            if (response.foodTypePref == "No Preference" || response.foodTypePref == null){
+            //FOOD TYPE PREFERENCE
+            if (response.foodTypePref === "No Preference" || response.foodTypePref == null){
                 this.setState({foodTypePref: "No Preference", tempFoodTypePref: "No Preference"});
             }else{
                 this.setState({foodTypePref: response.foodTypePref, tempFoodTypePref: response.foodTypePref});
@@ -109,6 +109,8 @@ class UserManageAccount extends Component{
                 state: response.state,
                 email: response.email,
                 role: response.role,
+                maxPricePref: response.maxPricePref,
+                minPricePref: response.minPricePref,
             } );
         }
 
@@ -116,22 +118,6 @@ class UserManageAccount extends Component{
 
     handleChange(event){
         event.preventDefault();
-        // if (event.target.id === "distSlider"){
-        //     let slider = document.getElementById("distSlider");
-        //     let output = document.getElementById("milesID");
-        //     output.innerHTML = slider.value;
-    
-        //     slider.oninput = function() {
-        //         output.innerHTML = this.value;
-        //     }
-        //     this.setState({distSliderVal: event.target.value})
-        // }else{
-        //     const target = event.target;
-        //     const value = target.type === 'checkbox' ? target.checked : target.value;
-        //     const name = target.name;
-        //     // this.setState({[name]:value});
-        //     console.log("name = " + name + " value = " + value);
-        // }
         if (event.target.id === "foodTypeID"){
             console.log(event.target.value);
             this.setState({tempFoodTypePref: event.target.value})
@@ -150,13 +136,13 @@ class UserManageAccount extends Component{
                 let cont = true;
                 document.querySelectorAll('.field').forEach(x=>{
                     console.log("x.name = ", x.name, " and length = ", x.value.length);
-                    if ((x.name === "state" && x.value.length != 2) || (x.value.length > 254)){
+                    if ( x.value.length > 0 && ((x.name === "state" && x.value.length != 2) || (x.value.length > 254))){
                         cont = false;
                     }
                 });
                 if (!cont){
                     window.confirm(`Length of one or more fields exceeds maximum char length.\
-                        State must be two alphabetical characters. Other fields must be < 254 chars`);
+                    State must be two alphabetical characters. Other fields must be < 254 chars`);
                     return;
                 }
                 //user potentially made changes, save
@@ -186,6 +172,8 @@ class UserManageAccount extends Component{
                 this.saveUser();
 
             });
+            alert("CHANGES SAVED");
+
         }
         else{
 
@@ -205,9 +193,9 @@ class UserManageAccount extends Component{
         if (event.target.name === "price"){
             if (event.target.value === "$"){
         
-                this.setState({minPricePref: LOW_RANGE, maxPricePref: MID_RANGE, priceSelected: "$"});
+                this.setState({minPricePref: LOW_RANGE, maxPricePref: MID_RANGE - 1, priceSelected: "$"});
             }else if (event.target.value === "$$"){
-                this.setState({minPricePref: MID_RANGE, maxPricePref: HIGH_RANGE, priceSelected: "$$"});
+                this.setState({minPricePref: MID_RANGE, maxPricePref: HIGH_RANGE -1, priceSelected: "$$"});
 
             }else if (event.target.value === "$$$"){
                 this.setState({minPricePref: HIGH_RANGE, maxPricePref: MAX_RANGE, priceSelected: "$$$"});
@@ -278,9 +266,9 @@ class UserManageAccount extends Component{
                                 <input type="radio" id="price1" name="price" value="$" checked={this.state.priceSelected === '$'} onChange={this.onValueChange}/>
                                 <label htmlFor="price1">$1-$15</label><br/>
                                 <input type="radio" id="price2" name="price" value="$$" checked={this.state.priceSelected === '$$'} onChange={this.onValueChange}/>
-                                <label htmlFor="price2">$15-$30</label><br/>
+                                <label htmlFor="price2">$16-$30</label><br/>
                                 <input type="radio" id="price3" name="price" value="$$$" checked={this.state.priceSelected === '$$$'} onChange={this.onValueChange}/>
-                                <label htmlFor="price3">$30+</label><br/>
+                                <label htmlFor="price3">$31+</label><br/>
                                 <input type="radio" id="priceNone" name="price" value="No Preference" checked={this.state.priceSelected === 'No Preference'} onChange={this.onValueChange}/>
                                 <label htmlFor="priceNone">No Preference</label><br/>
                             </div>
@@ -290,9 +278,6 @@ class UserManageAccount extends Component{
                                 <label htmlFor="distPref1">Within same city</label><br/>
                                 <input type="radio" id="distPrefNone" name="distPref" value="No Preference" checked={this.state.distPreference === 'No Preference'} onChange={this.onValueChange}/>
                                 <label htmlFor="distPrefNone">No Preference</label><br/>
-
-                                {/* <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
-                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p> */}
                             </div>
                             <div className = {styles.foodTypeDiv}>
                                 <p>Food Type Preference:</p>
