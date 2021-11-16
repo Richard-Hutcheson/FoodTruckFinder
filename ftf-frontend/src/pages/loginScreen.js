@@ -42,6 +42,7 @@ class LoginScreen extends Component{
 
                 if (response.status === "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
+<<<<<<< HEAD
                 }
                 // else if (response.role === 'o'){
                 //     console.log("Truck owner has successfully logged in.");
@@ -50,6 +51,15 @@ class LoginScreen extends Component{
                 //         state: {user: this.state.username, guest: 'false'} // your data array of objects
                 //     })
                 // }
+=======
+                }else if (response.role === 'o'){
+                    console.log("Truck owner has successfully logged in.");
+                    this.props.history.push({
+                        pathname: '/TruckOwnerDashboard',
+                        state: {user: this.state.username, guest: 'false'} // your data array of objects
+                    })
+                }
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                 else{
                     console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({
@@ -92,7 +102,12 @@ class LoginScreen extends Component{
                     <button className = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
                 </a>
                 <button className = {styles.enterAsGuestBtn} id = "enterGuest" type = "button" onClick = {this.handleSubmit}> ENTER AS GUEST </button>
+<<<<<<< HEAD
                 {/* <img src="https://i.ibb.co/PZsGz3K/test-menu.jpg" /> */}
+=======
+                
+                <a href="https://imgur.com/qX1JclU"><img src="https://i.imgur.com/qX1JclU.jpg" title="source: imgur.com" /></a>
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                 
                 <footer className={styles.footerClass}>
                     <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>

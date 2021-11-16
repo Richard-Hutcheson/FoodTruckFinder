@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import {getUser, getTruckByName, getAllTrucks} from '../API/apiCalls';
+=======
+import {getUser, getTruckByName} from '../API/apiCalls';
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -93,6 +97,7 @@ class SearchResult extends Component{
                 })
             }
 
+<<<<<<< HEAD
         }else if (this.state.queryType === 'food type'){
              //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
             response = await getAllTrucks().catch(error=>{
@@ -125,6 +130,8 @@ class SearchResult extends Component{
                 }
                 
             }
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         }
 
         
@@ -164,9 +171,15 @@ class SearchResult extends Component{
                 </div>
             );
         }
+<<<<<<< HEAD
 
         else if (this.state.queryType === "truck_name"){
             return(
+=======
+        //FOOD TRUCK RELATED QUERY
+        else{
+            return (
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                 <div>
                     <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
                     <div className = {styles.truckInfo}>
@@ -192,14 +205,18 @@ class SearchResult extends Component{
                     <div className= {styles.truckRoute}>
                         <p>Truck Route</p>
                     </div>
+<<<<<<< HEAD
                     <div className= {styles.truckMenu}>
                         <p>Truck Menu</p>
                     </div>
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                     <div className= {styles.truckRevRat}>
                         <p>Truck Reviews and Ratings Here</p>
                     </div>
                     <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
                 </div>
+<<<<<<< HEAD
                 
             );
         }
@@ -225,6 +242,8 @@ class SearchResult extends Component{
                     <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
 
                 </div>
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             );
         }
     

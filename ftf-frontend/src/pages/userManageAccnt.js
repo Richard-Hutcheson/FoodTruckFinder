@@ -4,11 +4,14 @@ import styles from '../css/manageAccnt.module.css';
 import { getFoodTypes } from '../API/helperFunctions';
 import {Link} from "react-router-dom";
 
+<<<<<<< HEAD
 const LOW_RANGE = 1;
 const MID_RANGE = 15;
 const HIGH_RANGE = 30;
 const MAX_RANGE = 99999;
 
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 class UserManageAccount extends Component{
 
     constructor(props){
@@ -26,6 +29,7 @@ class UserManageAccount extends Component{
             submitState: 'EDIT',
             viewOnly: true,
             distSliderVal: 10,
+<<<<<<< HEAD
             priceSelected: "No Preference",
             minPricePref: null,
             maxPricePref: null,
@@ -33,6 +37,9 @@ class UserManageAccount extends Component{
             distCity: "unknown",
             foodTypePref: "No Preference",
             tempFoodTypePref: "No Preference",
+=======
+            priceSelected: "No Preference"
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             
         }
         if (this.props.location.state != null){
@@ -44,6 +51,10 @@ class UserManageAccount extends Component{
             this.state.state = this.props.location.state.state;
             this.state.city = this.props.location.state.city;
             this.state.role = this.props.location.state.role;
+<<<<<<< HEAD
+=======
+            console.log("REACHED IF STATEMENT ROLE: ", this.state.role);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,6 +67,7 @@ class UserManageAccount extends Component{
                 console.log(error.message);
             }
         );
+<<<<<<< HEAD
 
             
         let foodTypeList = getFoodTypes();
@@ -68,11 +80,14 @@ class UserManageAccount extends Component{
         }
 
 
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         if (response == null){
             response = "unable to retrieve";
             console.log("response = ", response);
         }
         else{
+<<<<<<< HEAD
             //if user has a preference, set selector accordingly
             if (response.maxPricePref >= LOW_RANGE && response.maxPricePref <= MID_RANGE){
                 this.setState({priceSelected: "$"});
@@ -98,6 +113,8 @@ class UserManageAccount extends Component{
             }else{
                 this.setState({foodTypePref: response.foodTypePref, tempFoodTypePref: response.foodTypePref});
             }
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 
             this.setState({
                 userid: response.id, 
@@ -108,6 +125,7 @@ class UserManageAccount extends Component{
                 city: response.city,
                 state: response.state,
                 email: response.email,
+<<<<<<< HEAD
                 role: response.role,
             } );
         }
@@ -136,6 +154,49 @@ class UserManageAccount extends Component{
             console.log(event.target.value);
             this.setState({tempFoodTypePref: event.target.value})
         }
+=======
+                role: response.role} );
+            // this.setState({username: response.username});
+            // this.setState({password: response.password});
+            // this.setState({name: response.name});
+            // this.setState({address: response.address});
+            // this.setState({city: response.city});
+            // this.setState({state: response.state});
+            // this.setState({email: response.email});
+            // this.setState({role: response.role});
+
+        }
+
+        let foodTypeList = getFoodTypes();
+        let container = document.getElementById("foodTypeID");
+        for (let i = 0; i < foodTypeList.length; i++){
+            let item = document.createElement('option');
+            item.setAttribute('value', foodTypeList[i]);
+            item.innerHTML = foodTypeList[i];
+            container.appendChild(item);
+        }
+    }
+    handleChange(event){
+        event.preventDefault();
+        if (event.target.id === "distSlider"){
+            let slider = document.getElementById("distSlider");
+            let output = document.getElementById("milesID");
+            output.innerHTML = slider.value;
+    
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+            this.setState({distSliderVal: event.target.value})
+        }else{
+            const target = event.target;
+            const value = target.type === 'checkbox' ? target.checked : target.value;
+            const name = target.name;
+            // this.setState({[name]:value});
+            console.log("name = " + name + " value = " + value);
+        }
+        
+
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
     handleSubmit(event){
         event.preventDefault();
@@ -143,9 +204,13 @@ class UserManageAccount extends Component{
             if (this.state.submitState === "EDIT"){
                 this.setState({submitState: 'SAVE'});
                 this.setState({viewOnly: false});
+<<<<<<< HEAD
             }
             //The accnt detials are saved
             else{
+=======
+            }else{
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                 //make sure all values are correct length, if they are out of length then don't save!
                 let cont = true;
                 document.querySelectorAll('.field').forEach(x=>{
@@ -173,6 +238,7 @@ class UserManageAccount extends Component{
         else if (event.target.id === 'cancelID'){
             this.resetFields();
         }
+<<<<<<< HEAD
         //SAVE FOOD TRUCK PREFERENCES
         else if (event.target.id === 'prefFormID'){
             console.log("form submitted");
@@ -186,6 +252,10 @@ class UserManageAccount extends Component{
                 this.saveUser();
 
             });
+=======
+        else if (event.target.id === 'prefFormID'){
+            console.log("form submitted");
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         }
         else{
 
@@ -202,6 +272,7 @@ class UserManageAccount extends Component{
     
 
     onValueChange(event){
+<<<<<<< HEAD
         if (event.target.name === "price"){
             if (event.target.value === "$"){
         
@@ -222,11 +293,15 @@ class UserManageAccount extends Component{
             }
             
         }
+=======
+        this.setState({priceSelected: event.target.value})
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
     callFunction = ()=>{
         this.saveUser();        
     }
     async saveUser(){
+<<<<<<< HEAD
         let userData = {
             id: this.state.userid,
             username: this.state.username,
@@ -242,6 +317,18 @@ class UserManageAccount extends Component{
             minPricePref: this.state.minPricePref,
         }
         await editUser(userData);
+=======
+        let udm = new Map();
+        udm.set('userID', this.state.userid);
+        udm.set('username', this.state.username);
+        udm.set('password', this.state.password);
+        udm.set('name', this.state.name);
+        udm.set('email', this.state.email);
+        udm.set('address', this.state.address);
+        udm.set('state', this.state.state);
+        udm.set('city', this.state.city);
+        await editUser(udm);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
     
     render(){ 
@@ -286,6 +373,7 @@ class UserManageAccount extends Component{
                             </div>
                             <div className={styles.distRangeClass}>
                                 <p>Truck Distance Range</p>
+<<<<<<< HEAD
                                 <input type="radio" id="distPref1" name="distPref" value="sameCity" checked={this.state.distPreference === 'sameCity'} onChange={this.onValueChange}/>
                                 <label htmlFor="distPref1">Within same city</label><br/>
                                 <input type="radio" id="distPrefNone" name="distPref" value="No Preference" checked={this.state.distPreference === 'No Preference'} onChange={this.onValueChange}/>
@@ -307,6 +395,23 @@ class UserManageAccount extends Component{
                         <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>
                         {/* {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>} */}
                         {/* {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>} */}
+=======
+                                <input type="range" min="1" max="100" value={this.state.distSliderVal} className={styles.distSliderClass} id="distSlider" onChange={this.handleChange}/>
+                                <p>Within: <span id="milesID">{this.state.distSliderVal}</span> miles</p>
+                            </div>
+                            <div className = {styles.foodTypeDiv}>
+                                <p>Food Type Preference:</p>
+                                <select id="foodTypeID" name="carlist" form="prefFormID">
+                                    <option value="no-pref">No Preference</option>
+                                </select>
+                            </div>                       
+                        </div>
+                        <button className={styles.formSaveBtn} type="submit">SAVE</button>
+                    </form>
+                    <div className = {styles.backBtn}>
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
+                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>}
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 
                     </div>          
             </div>

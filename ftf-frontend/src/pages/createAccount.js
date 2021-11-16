@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
+=======
+import React, { Component, useCallback } from 'react';
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 import styles from "../css/createAcnt.module.css"
 import {saveUser} from "../API/apiCalls.js"
 
@@ -12,15 +16,25 @@ class CreateAccount extends Component{
             email: '',
             address: '',
             city: '',
+<<<<<<< HEAD
             state: ''    
+=======
+            state: '', 
+            role: 'a'
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     handleChange(event){
         const target = event.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+<<<<<<< HEAD
         if (name === "state"){
             value = value.toUpperCase();
         }
@@ -59,6 +73,56 @@ class CreateAccount extends Component{
                 pathname: '/UserDashboard',
                 state: {user: this.state.username, name: this.state.name}
             })
+=======
+
+        if (name === "state"){
+            value = value.toUpperCase();
+        }
+
+        if(event.target.id === "checkboxID") {
+            if(value == true) {
+                this.setState({role: 'o'});
+            } else {
+                this.setState({role: 'a'});
+            }
+        } else {
+            this.setState({
+                [name]:value
+            });
+            console.log("name = " + name + " value = " + value);
+        }
+    }
+    async handleSubmit(event){
+        event.preventDefault();
+        let userData = new Map();
+        userData.set('userID', '-1');
+        userData.set('username', this.state.username);
+        userData.set('password', this.state.password);
+        userData.set('name', this.state.name);
+        userData.set('email', this.state.email);
+        userData.set('address', this.state.address);
+        userData.set('state', this.state.state);
+        userData.set('city', this.state.city);
+        userData.set('role', this.state.role);
+
+        console.log("THE ROLE IS " + this.state.role + " WHEN CREATING AN ACCOUNT");
+
+        const response = await saveUser(userData);
+        if (response != null){
+            console.log("response in create account = ", response);
+            
+            if(this.state.role === 'a') {
+                this.props.history.push({
+                    pathname: '/UserDashboard',
+                    state: {user: this.state.username, name: this.state.name}
+                })
+            } else {
+                this.props.history.push({
+                    pathname: '/TruckOwnerDashboard',
+                    state: {user: this.state.username, name: this.state.name}
+                })
+            }
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         }else{
             console.log("response is undefined");
         }
@@ -104,6 +168,15 @@ class CreateAccount extends Component{
                             <input type="text"  className={styles.inputClass} id={styles.stateInput} name="state" onChange={this.handleChange} required 
                                 maxLength = "2" minlength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]"></input>
                         </div>
+<<<<<<< HEAD
+=======
+
+                        <div className={styles.ownerClass}>
+                            <label htmlFor="role" id = {styles.role}>Food Truck Owner:</label>
+                            <input type="checkbox" onChange={this.handleChange} id ="checkboxID"></input>
+
+                        </div>
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                         
                         <input type = "submit" value = "CREATE" id= {styles.createBtn}></input>
                 </form>  

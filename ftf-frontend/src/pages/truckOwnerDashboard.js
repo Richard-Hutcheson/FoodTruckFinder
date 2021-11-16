@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import {getAllTrucks, getUser, insertUserFoodRec} from '../API/apiCalls';
+=======
+import {getAllTrucks, getUser} from '../API/apiCalls';
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -48,10 +52,13 @@ class TruckOwnerDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
+<<<<<<< HEAD
         //INSERT USER INTO FOOD TRUCK REC TABLE
         response = await insertUserFoodRec(this.state.user).catch(error=>{
             console.log(error.message);
         })
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
         response = await getAllTrucks().catch(error=>{
             console.log(error.message);
@@ -104,7 +111,10 @@ class TruckOwnerDashboard extends Component{
         }else{
             alert("search field is empty");
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
     special(event){
         let val = event.target.innerHTML;
@@ -134,7 +144,14 @@ class TruckOwnerDashboard extends Component{
         }else{
                 callMaps(map);
                 this.setState({showMap: 'true'});
+<<<<<<< HEAD
         }        
+=======
+        }
+
+
+        
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
     render(){ 
         return (
@@ -160,7 +177,11 @@ class TruckOwnerDashboard extends Component{
                     </div>
 
                     <select name="searchOptions" className={styles.searchOptions}>
+<<<<<<< HEAD
                         <option value="name">Food Truck By Name</option>
+=======
+                        <option value="truck_name">Food Truck By Name</option>
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                         <option value="price">Food Truck By Price</option>
                         <option value="location">Food Truck By Location</option>
                         <option value="type">Food Truck By Food Type</option>

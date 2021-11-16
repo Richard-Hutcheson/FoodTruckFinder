@@ -18,7 +18,11 @@ span{
     align-content: space-evenly;
     align-items: center;
 }
+<<<<<<< HEAD
 .userRevRat, .truckRevRat, .truckSchedule, .truckRoute, .truckMenu{
+=======
+.userRevRat, .truckRevRat, .truckSchedule, .truckRoute{
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     margin-top: 2em;
     position:relative;
     background-color: gray;
@@ -34,20 +38,27 @@ span{
 .truckDesc{
     text-align: center;
 }
+<<<<<<< HEAD
 .listTrucks{
     text-align: center;
 }
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 .owner{
     text-align: center;
 }
 .backBtn{
     position: relative;
     margin-top: 3em;
+<<<<<<< HEAD
     margin-bottom: 3em;
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     width: 90px;
     height: 30px;
     left: 50%;
     transform: translateX(-50%);
+<<<<<<< HEAD
 }
 .truckRecsContainer{
     position: relative;
@@ -95,4 +106,6 @@ span{
 .truckBtn{
     height: 30px;
     width: 100px;
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 }

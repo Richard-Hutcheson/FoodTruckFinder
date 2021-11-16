@@ -8,6 +8,28 @@
                     "Content-Type": "application/json",
             "Accept": "application/json",
 */
+<<<<<<< HEAD
+=======
+export function returnUserDataJSON(userDataMap){
+    try{
+        let userData = {            
+            id: userDataMap.get('userID'),
+            name: userDataMap.get('name'),
+            username: userDataMap.get('username'),
+            password: userDataMap.get('password'),
+            email: userDataMap.get('email'),
+            address: userDataMap.get('address'),
+            state: userDataMap.get('state'),
+            city: userDataMap.get('city'),
+            role: 'a'
+        }
+        return JSON.stringify(userData);
+    }catch(error){
+        console.log(error.message);
+        return "err";
+    }
+}
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 export async function noahCall(){
     const response = await fetch('http://localhost:8080/noah', {
         method: "GET",
@@ -30,16 +52,40 @@ export async function loginUser(un, pw){
         return responseJSON;
     }
 }
+<<<<<<< HEAD
 export async function saveUser(userData){
 
+=======
+export async function saveUser(userDataMap){
+    if (returnUserDataJSON(userDataMap) === "err"){
+        return "incomplete user data";
+    }
+    console.log(returnUserDataJSON(userDataMap));
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     const response = await fetch(`http://localhost:8080/saveuser`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
+<<<<<<< HEAD
         },
         body: JSON.stringify(userData),
+=======
+
+        },
+        body: JSON.stringify({
+            userid: 1,
+            name: userDataMap.get('name'),
+            username: userDataMap.get('username'),
+            password: userDataMap.get('password'),
+            email: userDataMap.get('email'),
+            address: userDataMap.get('address'),
+            state: userDataMap.get('state'),
+            city: userDataMap.get('city'),
+            role: userDataMap.get('role')
+        })
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }).catch(error =>{
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
@@ -97,7 +143,11 @@ export async function getUser(username){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
+<<<<<<< HEAD
             console.log("get user = ", data);
+=======
+            console.log("data = ", data);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             return data;
         }else{
             return "...unknown...";  
@@ -105,8 +155,13 @@ export async function getUser(username){
     }
 }
 
+<<<<<<< HEAD
 export async function editUser(userData){
     console.log("edit user data = ", userData)
+=======
+export async function editUser(userDataMap){
+    console.log(userDataMap);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     const requestOptions = {
         method: "PATCH",
         headers:{
@@ -114,20 +169,42 @@ export async function editUser(userData){
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
+<<<<<<< HEAD
         body: JSON.stringify(userData),
     }
     const response = await fetch(`http://localhost:8080/editAccount`, requestOptions)
     .catch(error =>{
+=======
+        body: returnUserDataJSON(userDataMap)
+    }
+    const response = await fetch(`http://localhost:8080/editAccount`, requestOptions)
+    .catch(error =>{
+        console.log("hello");
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
     if (response != null){
         const data = await response.json().catch(error =>{
+<<<<<<< HEAD
             window.confirm("Problem encountered with JSON operation: " + error.message);
         });
 
     }else{
     }
 }
+=======
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        // if (data != null){
+        //     return data;
+        // }else{
+        //     return "...unknown...";  
+        // }
+    }else{
+    }
+}
+
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 export async function getTruckByName(name){
 
     const requestOptions = {
@@ -147,7 +224,11 @@ export async function getTruckByName(name){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
+<<<<<<< HEAD
             console.log("truck by name = ", data);
+=======
+            console.log("data = ", data);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             return data;
         }else{
             return "...unknown...";  
@@ -174,7 +255,11 @@ export async function getAllTrucks(){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
+<<<<<<< HEAD
             console.log("all trucks = ", data);
+=======
+            console.log("data = ", data);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             return data;
         }else{
             return "...unknown...";  
@@ -210,7 +295,11 @@ export async function editTruck(userDataMap){
             // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
+<<<<<<< HEAD
             console.log("edit truck data = ", data);
+=======
+            console.log("data = ", data);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             return data;
         }else{
             return "...unknown...";  
@@ -243,11 +332,14 @@ export async function insertUserFoodRec(username){
 
     const requestOptions = {
         method: "POST",
+<<<<<<< HEAD
         headers:{
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         }
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     };
     const response = await fetch(`http://localhost:8080/createUserRec/${username}`, requestOptions)
     .catch(error =>{
@@ -259,6 +351,7 @@ export async function insertUserFoodRec(username){
         });;
         if (data != null){
             return data;
+<<<<<<< HEAD
         }else{
             return "...unknown...";  
         }
@@ -270,10 +363,25 @@ export async function updateFoodTypeRec(username, foodType){
 
     const requestOptions = {
         method: "PATCH",
+=======
+        } else {
+            return "...unknown...";
+        }
+    }
+}
+
+
+export async function addTruck(truckDataMap){
+    console.log("datamap = ", truckDataMap);
+    const requestOptions = {
+        method:"POST",
+
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         headers:{
             "Content-Type": "application/json",
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
+<<<<<<< HEAD
         }    
     }
     const response = await fetch(`http://localhost:8080/updateRecommendation/${username}/${foodType}`, requestOptions)
@@ -316,5 +424,32 @@ export async function getRecommendedTrucks(username){
             return null;  
         }
     }else{
+=======
+        },
+        body: JSON.stringify({
+            truckID: truckDataMap.get('truckID'),
+            truckName: truckDataMap.get('truckName'),
+            description: truckDataMap.get('description'),
+            minRange: truckDataMap.get('minRange'),
+            maxRange: truckDataMap.get('maxRange'),
+            foodType: truckDataMap.get('foodType'),
+            owner: truckDataMap.get('owner'),
+        })
+    };
+    const response = await fetch(`http://localhost:8080/createTruck`, requestOptions)
+        .catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        if (data != null){
+            console.log("data = ", data);
+            return data;
+        }else{
+            return "...unknown...";  
+        }
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
 }

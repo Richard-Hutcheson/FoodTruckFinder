@@ -1,4 +1,4 @@
-    * {
+* {
     font-family: 'Noto Sans Mono', monospace;
     }
     .navbar{
@@ -80,7 +80,7 @@
     }
     .searchSubDiv{
         position: relative;
-        width: 620px;
+        width: 600px;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -93,9 +93,6 @@
         left: 50%;
         transform: translateX(-50%);
         margin-bottom: .5em;
-        border-style: solid;
-        border-radius: 1em;
-        border-width: .6em;
     }
     .searchBtn{
         position: relative;
@@ -104,9 +101,7 @@
         border-color: rgb(228, 228, 228);
         width: 100px;
         height: 30px;
-        float: right; 
-        margin-top: 5px;
-        
+        float: right;  
         
     }
     .searchBtn:hover{
@@ -123,7 +118,7 @@
         display: block;
         width: 720px;
         height: 300px;
-        background-color: rgb(163, 163, 163);
+        background-color: gray;
         left: 50%;
         transform: translateX(-50%);
         margin-top: 25px;
@@ -138,14 +133,7 @@
         border-bottom-style: solid;
         border-top-style: solid;
         border-color: #4CAF50;
-<<<<<<< HEAD
-        height: 2.2em;
-    }
-    .truckRecTitle p{
-        margin: .4em 0;
-=======
         height: 3em;
->>>>>>> parent of 18eefb6d... Creating new Frontend folder
     }
     .textBar{
         border-bottom-style: solid;
@@ -191,7 +179,6 @@
 
     .map{
         margin-top: 2em;
-        margin-bottom: 2em;
         background-color: gray;
         width: 720px;
         height: 400px;
@@ -221,4 +208,59 @@
 }
 .s{
     width: 100px;
+}
+.backBtn{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    margin-top: 2em;
+    text-align: center;
+    text-decoration: none;
+    border-style: solid;
+    padding-top: 4px;
+    border-color:rgb(226, 226, 226) ;
+    background-color: rgb(226, 226, 226);
+    border-radius: .5em;
+}
+.backBtn:hover{
+    opacity: 50%;
+}
+.backBtn a{
+    position: relative;
+    width: 100px;
+    display: block;
+    height: 30px;
+    color: black
+
+}
+
+.addTruckBtn{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    margin-top: 2em;
+    text-align: center;
+    text-decoration: none;
+    border-style: solid;
+    padding-top: 4px;
+    border-color:rgb(226, 226, 226) ;
+    background-color: rgb(226, 226, 226);
+    border-radius: .5em;
+}
+.addTruckBtn:hover{
+    opacity: 50%;
+}
+.addTruckBtn a{
+    position: relative;
+    width: 100px;
+    display: block;
+    height: 30px;
+    color: black
+
 }

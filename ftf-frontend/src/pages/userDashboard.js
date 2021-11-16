@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import {getAllTrucks, getRecommendedTrucks, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
+=======
+import {getAllTrucks, getUser, insertUserFoodRec} from '../API/apiCalls';
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -17,7 +21,10 @@ class UserDashboard extends Component{
             guest: 'true',
             showMap: 'false',
             role: '',
+<<<<<<< HEAD
             queryType: '',
+=======
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
@@ -39,6 +46,10 @@ class UserDashboard extends Component{
         }
         this.setState({userID: response.id});
         this.setState({role: response.role});
+<<<<<<< HEAD
+=======
+        console.log("ROLE = ", this.state.role);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         if (this.state.showMap === 'true'){
             try{
                 callMaps(map);
@@ -51,6 +62,7 @@ class UserDashboard extends Component{
             console.log(error.message);
         })
 
+<<<<<<< HEAD
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
         // response = await getAllTrucks().catch(error=>{
         //     console.log(error.message);
@@ -60,6 +72,16 @@ class UserDashboard extends Component{
         })
         console.log("Response = ", response);
 
+=======
+
+        //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
+        response = await getAllTrucks().catch(error=>{
+            console.log(error.message);
+        })
+        if (response == null){
+            response = "unable to retrieve";
+        }
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         //response should be an array
         for (let i =0; i < response.length;++i){
             let container = document.getElementById('recTrucksID');
@@ -88,6 +110,7 @@ class UserDashboard extends Component{
     handleChange(event){
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
+<<<<<<< HEAD
         if (event.target.id === 'searchOptionsID'){
             this.setState({queryType: value});
         }else{
@@ -105,6 +128,17 @@ class UserDashboard extends Component{
                     console.log(error.message);
                 })
             }
+=======
+        console.log("value = " + value);
+        this.setState({
+            searchQuery: value
+        });
+    }
+    handleSubmit(event){
+        event.preventDefault();
+        if (this.state.searchQuery !== ""){
+            console.log("search query = " + this.state.searchQuery);
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
             this.props.history.push({
                 pathname: '/SearchResult',
                 state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value} // your data array of objects
@@ -133,6 +167,10 @@ class UserDashboard extends Component{
                 btn.addEventListener("click", function(){
                     console.log("hey!");
                 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                 recItem.appendChild(btn);
                 truck.appendChild(recItem);
                 container.appendChild(truck);
@@ -143,18 +181,27 @@ class UserDashboard extends Component{
         }
     }
     render(){ 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
         return (
             <div>
                 <div className = {styles.navbar}>
                     <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
+<<<<<<< HEAD
                             {this.state.guest !=='true' && 
                                 <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
                             {this.state.guest !== 'true' && this.state.role === 'o' && 
                                 <Link to= {{ pathname: "/ManageFoodTrucks", state: {user: this.state.user, userID: this.state.userID, role: this.state.role}}}>Manage Food Trucks</Link>
                             }
 
+=======
+                        {this.state.guest !=='true' && 
+                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                         </div>
                     </div>
                     {this.state.guest ==='true' && <a href="/" className = {styles.logout}>EXIT</a>}
@@ -163,6 +210,7 @@ class UserDashboard extends Component{
                 {this.state.guest !== 'true' && <p>your user id = {this.state.userID}</p>}
                 {this.state.guest === 'true' && <p>your user id = guest</p>}
                 
+<<<<<<< HEAD
                 <form className={styles.searchForm} id = "searchFormID" onSubmit={this.handleSubmit}>
 
                     <div className={styles.searchSubDiv}>
@@ -190,6 +238,17 @@ class UserDashboard extends Component{
                     </div>
 
                     <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID' onChange = {this.handleChange}>
+=======
+                <form className={styles.searchForm} onSubmit={this.handleSubmit}>
+
+                    <div className={styles.searchSubDiv}>
+
+                        <input className={styles.searchField} type="text" placeholder="Search.." name="search" onChange={this.handleChange}/>
+                        <button  className={styles.searchBtn} type="submit">Submit</button>                            
+                    </div>
+
+                    <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID'>
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                         <option value="truck_name">Food Truck By Name</option>
                         <option value="truck price">Food Truck By Price</option>
                         <option value="food type">Food Truck By Food Type</option>
@@ -198,7 +257,11 @@ class UserDashboard extends Component{
                 </form>
                 <div className={styles.truckRecsContainer} id = "recTrucksID">
                     <div className={styles.truckRecTitle}>
+<<<<<<< HEAD
                         <p><b>Food Truck Recommendations</b></p>
+=======
+                        <p>Food Truck Recommendations</p>
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                     </div>
                     <div className={styles.textBar}>
                         <div className={styles.textBarText}>TRUCK NAME</div>
@@ -206,6 +269,10 @@ class UserDashboard extends Component{
                         <div className={styles.textBarText}>FOOD TYPE</div>
                         <div className={styles.textBarText}></div>
                     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 18eefb6d... Creating new Frontend folder
                 </div>
                 <div className = {styles.mapWrapper}>
                     { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
