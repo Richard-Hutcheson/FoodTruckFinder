@@ -237,6 +237,7 @@ public class RecommendationsService {
         List<FoodTruck> foodTrucksPrice = new ArrayList<>();
         HashMap<List<FoodTruck>,Boolean> m = new HashMap<>();
 
+        List<List<FoodTruck>> foodTruckLists = new ArrayList<>();
 
         if (!userPreferences.isPresent())
             throw new UserNotFoundException("User not found");
@@ -248,8 +249,9 @@ public class RecommendationsService {
             foodTypeTrucks = getRecommendedFoodType(userPreferences.get());
             m.put(foodTypeTrucks,new Boolean(true));
             System.out.println("TRUE FOR FOOD TYPE");
+            foodTruckLists.add(foodTypeTrucks);
         }else{
-            m.put(foodTypeTrucks,new Boolean(false));
+            //m.put(foodTypeTrucks,new Boolean(false));
             System.out.println("FALSE FOR FOOD TYPE");
         }
 
@@ -257,22 +259,24 @@ public class RecommendationsService {
             foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
             m.put(foodLocationTrucks,new Boolean(true));
             System.out.println("TRUE FOR CITY TYPE");
+            foodTruckLists.add(foodLocationTrucks);
         }else{
-            m.put(foodLocationTrucks,new Boolean(false));
+            //m.put(foodLocationTrucks,new Boolean(false));
             System.out.println("FALSE FOR CITY TYPE");
         }
 
         if(!Objects.equals(userPreferences.get().getMaxPricePref(), null) &&
             !Objects.equals(userPreferences.get().getMinPricePref(), null)){
             try {
-                foodTrucks = getRecommendedByPriceRange(userPreferences.get());
+                foodTrucksPrice = getRecommendedByPriceRange(userPreferences.get());
             } catch (Exception e) {
                 e.printStackTrace();
             }
             m.put(foodTrucksPrice,new Boolean(true));
             System.out.println("TRUE FOR PRICE RANGE TYPE");
+            foodTruckLists.add(foodTrucks);
         }else{
-            m.put(foodTrucksPrice,new Boolean(false));
+            //m.put(foodTrucksPrice,new Boolean(false));
             System.out.println("FALSE FOR PRICE RANGE TYPE");
         }
 
@@ -284,10 +288,14 @@ public class RecommendationsService {
             }
             m.put(foodRatingTrucks,new Boolean(true));
             System.out.println("TRUE FOR RATING TYPE");
+            foodTruckLists.add(foodRatingTrucks);
         }else{
-            m.put(foodRatingTrucks,new Boolean(false));
+            //m.put(foodRatingTrucks,new Boolean(false));
             System.out.println("FALSE FOR RATING TYPE");
         }
+
+
+        System.out.println("Size of the map: " + m.size());
 
         //This is the list that will contain the final trucks that will be
         //provided to the user, it will be used to convert it into a list
@@ -298,7 +306,9 @@ public class RecommendationsService {
         for(Map.Entry<List<FoodTruck>,Boolean> listEntry: m.entrySet()){
             //if it is true (i.e. a recommendation that fits the criteria
             //the user had
-            if(listEntry.getValue()){
+
+            System.out.println("BOOLEAN CONDITION: " + listEntry.getValue());
+            if(listEntry.getValue() == true){
                 //Iterate through the entire list for that key
 
                 for(FoodTruck truck : listEntry.getKey()){
