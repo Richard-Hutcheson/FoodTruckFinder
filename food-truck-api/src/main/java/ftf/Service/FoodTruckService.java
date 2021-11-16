@@ -139,7 +139,7 @@ public class FoodTruckService {
         Optional<User> user = userRepository.findByUsername(name);
 
         // check if the user is an owner
-        if (!user.get().getRole().equals("O"))
+        if (!user.get().getRole().equalsIgnoreCase("O"))
             throw new InvalidLoginException("User is not an authorized truck owner");
 
 
