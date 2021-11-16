@@ -1,0 +1,22 @@
+{
+  "name": "foodtruckfinder",
+  "version": "1.0.0",
+  "description": "**For Dev Team:**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Richard-Hutch/FoodTruckFinder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Richard-Hutch/FoodTruckFinder/issues"
+  },
+  "homepage": "https://github.com/Richard-Hutch/FoodTruckFinder#readme",
+  "dependencies": {
+    "next": "^12.0.4"
+  }
+}

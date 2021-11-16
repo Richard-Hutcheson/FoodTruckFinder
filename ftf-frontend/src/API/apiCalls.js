@@ -231,6 +231,43 @@ export async function deleteTruck(truckName){
     }
 }
 
+export async function addTruck(truckDataMap){
+    console.log("datamap = ", truckDataMap);
+    const requestOptions = {
+        method:"POST",
+
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify({
+            truckID: truckDataMap.get('truckID'),
+            truckName: truckDataMap.get('truckName'),
+            description: truckDataMap.get('description'),
+            minRange: truckDataMap.get('minRange'),
+            maxRange: truckDataMap.get('maxRange'),
+            foodType: truckDataMap.get('foodType'),
+            owner: truckDataMap.get('owner'),
+        })
+    };
+    const response = await fetch(`http://localhost:8080/createTruck`, requestOptions)
+        .catch(error =>{
+            window.confirm("Problem encountered with fetch operation: " + error.message);
+        });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        if (data != null){
+            console.log("data = ", data);
+            return data;
+        }else{
+            return "...unknown...";  
+        }
+    }
+}
+
 export async function insertUserFoodRec(username){
 
     const requestOptions = {
