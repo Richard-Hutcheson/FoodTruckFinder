@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -22,6 +22,7 @@ class SearchResult extends Component{
             minPrice: '',
             maxPrice: '',
             foodType: '',
+            truckID: '',
             truckOwner: '',
             menuURL: '',
             queryType: 'invalid',
@@ -44,6 +45,7 @@ class SearchResult extends Component{
             
             this.state.truckName = urlParams.get("query")
             this.state.queryType = urlParams.get("queryType");
+            this.state.user = urlParams.get("user");
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -90,7 +92,8 @@ class SearchResult extends Component{
                     minPrice: response.minRange,
                     foodType: response.foodType,
                     truckOwner: response.owner.username,
-                    menuURL: response.menuURL
+                    menuURL: response.menuURL,
+                    truckID: response.truckID,
 
                 })
             }
@@ -137,7 +140,7 @@ class SearchResult extends Component{
         console.log("value = " + value);
 
     }
-    handleSubmit(event){
+    async handleSubmit(event){
         event.preventDefault();
         if (event.target.id === "revRatBtn"){
 
@@ -148,10 +151,34 @@ class SearchResult extends Component{
             }
         }
         else if (event.target.id === "postReviewID"){
+
+            //get the user's object
+            let user = await getUser(this.state.user).catch(e =>{
+                console.log(e.message);
+            });
+            //get truck object
+            let truck = await getTruckByName(this.state.truckName).catch(e =>{
+                console.log(e.message);
+            });
+
+            let review = {
+                reviewID: 0,
+                rating: parseFloat(document.getElementById("ratingID").value),
+                description: document.getElementById("reviewTextID").value,
+                user: user,
+                truck: truck,
+            }
+            //post review
+            let response = await postReview(review).catch(e =>{
+                console.log(e.message);
+            })
+            console.log("post review: ", response);
+            if (response != null){
+                alert("REVIEW POSTED");
+            }
             if (this.state.writeReview == true){
                 this.setState({writeReview: false})
             }
-            console.log ("POST REVIEW AND RATING!");
         }
     }
 
@@ -159,14 +186,17 @@ class SearchResult extends Component{
         let loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque, lacus vitae molestie volutpat, leo risus congue justo, nec dignissim mauris ex eget arcu. Nunc fermentum scelerisque lorem vel convallis. Phasellus vel velit diam. Fusce pretium nisi nisl, at efficitur risus bibendum eu. Nulla faucibus faucibus leo eget scelerisque. In viverra tincidunt hendrerit. Nam quis malesuada nibh, ac egestas eros. Nulla non scelerisque lorem. Quisque non quam in sem consequat dignissim et vel quam.`
         let createReview = <div></div>;
         let revRatBtnTxt = "Rate and Review";
+        //POST REVIEW JSX
         if (this.state.writeReview == true){
             createReview =             
             <div className= {styles.newRateReview}>
-                <label>Review</label>
-                <textarea className = {styles.newReview}></textarea>
-                <label>Rating (1-10)</label>
-                <input className = {styles.newRating} type="number" min = "0" max = "10"></input>
-                <button type= "button" id = "postReviewID" className = {styles.saveReviewBtn} onClick={this.handleSubmit}>Post</button>
+                <form  id = "postReviewID" onSubmit = {this.handleSubmit}>
+                    <label>Review</label>
+                    <textarea className = {styles.newReview} id = "reviewTextID" required></textarea>
+                    <label>Rating (1-10)</label>
+                    <input className = {styles.newRating} type="number" min = "0" max = "10" id = "ratingID" required></input>
+                    <button type= "submit"  className = {styles.saveReviewBtn} >Post</button>
+                </form>
             </div>;
             revRatBtnTxt = "Cancel";
         }

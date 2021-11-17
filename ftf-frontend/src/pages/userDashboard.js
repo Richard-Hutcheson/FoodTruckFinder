@@ -38,6 +38,7 @@ class UserDashboard extends Component{
             response = "unable to retrieve";
         }
         this.setState({userID: response.id});
+        this.setState({user: response.username});
         this.setState({role: response.role});
         if (this.state.showMap === 'true'){
             try{
@@ -76,8 +77,9 @@ class UserDashboard extends Component{
                 <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                 <div class=${styles.truckFoodType}>${response[i].foodType}</div>
             `
+            let tempName = this.state.user;
             btn.onclick = function() {
-                document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${tempName}`;
             }
 
             recItem.appendChild(btn);

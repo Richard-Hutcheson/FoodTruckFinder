@@ -309,3 +309,27 @@ export async function getRecommendedTrucks(username){
     }else{
     }
 }
+
+export async function postReview(review){
+
+    const requestOptions = {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify(review)    
+    }
+    const response = await fetch(`http://localhost:8080/postReview`, requestOptions)
+    .catch(error =>{
+        window.confirm("Problem encountered with fetch operation: " + error.message);
+    });
+    if (response != null){
+        const data = await response.json().catch(error =>{
+            window.confirm("Problem encountered with JSON operation: " + error.message);
+        });
+        return data != null ? data : null;
+    }else{
+    }
+}
