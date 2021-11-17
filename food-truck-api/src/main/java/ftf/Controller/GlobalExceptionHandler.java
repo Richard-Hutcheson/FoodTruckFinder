@@ -49,4 +49,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(RouteNotFoundException.class)
+    public ResponseEntity<Object>handleTruckNameTakenException(RouteNotFoundException ex,
+                                                               WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
+    }
 }
