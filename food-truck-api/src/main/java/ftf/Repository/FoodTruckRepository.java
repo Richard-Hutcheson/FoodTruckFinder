@@ -15,4 +15,5 @@ public interface FoodTruckRepository extends JpaRepository<FoodTruck, Long> {
     List<FoodTruck> findFoodTrucksByFoodType(String foodType);
     List<FoodTruck> findByTruckNameContains(String name);
     List<FoodTruck> findByTruckNameLike(String name);
+    List<FoodTruck> findFoodTrucksByFoodTypeLike(String foodType);
 }
