@@ -21,9 +21,10 @@ public class SearchService {
         ArrayList<FoodTruck> foodTrucks = new ArrayList<>();
 
         for (String str : searchTrucksList) {
-            foodTrucks.retainAll(foodTruckRepository.findByTruckNameLike(searchTrucks));
-            foodTrucks.retainAll(foodTruckRepository.findByTruckNameContains(searchTrucks));
-            foodTrucks.retainAll(foodTruckRepository.findFoodTrucksByFoodType(searchTrucks.toUpperCase()));
+            foodTrucks.addAll(foodTruckRepository.findByTruckNameLike(str));
+            foodTrucks.addAll(foodTruckRepository.findByTruckNameContains(str));
+            foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodType(str));
+            foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodTypeContains(str));
         }
 
         return foodTrucks;
