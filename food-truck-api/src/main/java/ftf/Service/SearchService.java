@@ -35,6 +35,7 @@ public class SearchService {
             foodTrucks.addAll(foodTruckRepository.findByTruckNameContains(str));
             foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodType(str));
             foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodTypeContains(str));
+            foodTrucks.addAll(foodTruckRepository.findFoodTrucksByFoodTypeLike(str));
         }
 
         Set<FoodTruck> foodTruckSet = new HashSet<>(foodTrucks);
