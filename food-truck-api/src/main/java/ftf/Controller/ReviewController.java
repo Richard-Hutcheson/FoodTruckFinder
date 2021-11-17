@@ -49,9 +49,13 @@ public class ReviewController {
 
         return reviewService.findByUserId(userReview.get().getId());
     }
-    @PostMapping("/postReview")
-    public Review saveReview(@RequestBody Review review){
-        return reviewService.saveReview(review);
+
+    @PostMapping("/postReview/{username}/{truckName}/{rating}/{description}")
+    public Optional<Review> saveReview(@PathVariable String username,
+                             @PathVariable String truckName,
+                             @PathVariable double rating,
+                             @PathVariable String description){
+        return reviewService.saveReview(username, truckName, rating, description);
     }
 
     @GetMapping("/reviews/avgRating/{truckName}")
