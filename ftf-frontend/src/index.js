@@ -6,10 +6,11 @@ import UserDashboard from './pages/userDashboard.js'
 import CreateAccount from './pages/createAccount.js'
 import PageNotFound from './pages/pageNotFound.js'
 import UserManageAccount from './pages/userManageAccnt'
-// import TruckOwnerDashboard from './pages/truckOwnerDashboard.js';
+import TruckOwnerDashboard from './pages/truckOwnerDashboard.js';
 import ManageFoodTrucks from './pages/manageFoodTrucks.js';
 import SearchResult from './pages/searchResult.js';
 import EditTruck from './pages/editFoodTruck.js';
+import AddTruck from './pages/addFoodTruck.js';
 
 ReactDOM.render(
     
@@ -19,10 +20,11 @@ ReactDOM.render(
             <Route path="/UserDashboard" exact component={UserDashboard}/>
             <Route path = "/CreateAccount" exact component = {CreateAccount}/>
             <Route path = "/ManageAccount" exact component = {UserManageAccount}/>
-            {/* <Route path = "/TruckOwnerDashboard" exact component={TruckOwnerDashboard}/> */}
+            <Route path = "/TruckOwnerDashboard" exact component={TruckOwnerDashboard}/>
             <Route path = "/ManageFoodTrucks" exact component={ManageFoodTrucks}/>
             <Route path = "/SearchResult" exact component = {SearchResult}/>
             <Route path = "/EditTruck" exact component = {EditTruck}/>
+            <Route path = "/AddTruck" exact component = {AddTruck}/>
             <Route component={PageNotFound}/>
         </Switch>
     </Router>,

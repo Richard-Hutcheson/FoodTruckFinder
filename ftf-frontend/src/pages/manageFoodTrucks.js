@@ -81,7 +81,7 @@ class ManageFoodTrucks extends Component{
                     <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
-                            {/* <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>Dashboard</Link> */}
+                            <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>Dashboard</Link>
                             <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
                             <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.user}}}>Manage Food Trucks</Link>
                         </div>
@@ -102,10 +102,12 @@ class ManageFoodTrucks extends Component{
 
                     </div>
                 </div>
+                <div className = {styles.addTruckBtn}>
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {user: this.state.user, userID: this.state.userID}}}>ADD TRUCK</Link>}
+                </div>
                 <div className = {styles.backBtn}>
-                    <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>
-                        {/* {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
-                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>} */}
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
+                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
                 </div>
             </div>
         ); 
