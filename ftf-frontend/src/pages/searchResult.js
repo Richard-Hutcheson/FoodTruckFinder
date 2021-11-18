@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -30,6 +30,7 @@ class SearchResult extends Component{
             noResults: 'false',
             subscribed: false,
             writeReview: false,
+            reviewList: [<div key = "-1"></div>],
         }
         if (this.props.location.state != null){
             this.state.searchQuery = this.props.location.state.searchQuery;
@@ -110,8 +111,29 @@ class SearchResult extends Component{
                     }
                 }
             }
-            console.log("get subscriptions response = ", response);
-
+            
+            //GET TRUCK's RATINGS AND REVIEWS
+            response = await getReviews(this.state.truckName).catch(e=>{
+                console.log(e.message);
+            })
+            if (response != null && response.length != 0){
+                let newList = this.state.reviewList;
+                for (let i = 0; i < response.length; i++){
+                    let fragment = 
+                    <div key = {i} className = {styles.review}>
+                        <div className = {styles.txtRatingDiv}>
+                            <div>
+                                <p className = {styles.reviewUser}>{response[i].user.username}</p>
+                                <p className = {styles.userRating}>rating: {response[i].rating}/10</p>
+                            </div>
+                        </div>                                
+                        <p className= {styles.reviewText}>{response[i].description}</p>
+                    </div>
+                    newList.push(fragment);
+                }
+                this.setState({reviewList: newList});
+            }
+            console.log("all reviews = ", response);
         }
         //SEARCHING FOR TRUCKS BY FOOD TYPE
         else if (this.state.queryType === 'food type'){
@@ -145,9 +167,7 @@ class SearchResult extends Component{
                 }
                 
             }
-        }
-
-        
+        }        
     }
 
     async handleSubmit(event){
@@ -204,11 +224,12 @@ class SearchResult extends Component{
                 <form  id = "postReviewID" onSubmit = {this.handleSubmit}>
                     <label>Review</label>
                     <input type="text" id = "reviewTextID" className = {styles.newReview} maxLength = '254' required placeholder="254 character limit"></input>
-                    {/* <textarea className = {styles.newReview} id = "reviewTextID" required></textarea> */}
                     <label>Rating</label>
                     <input className = {styles.newRating} type="number" min = "0" max = "10" id = "ratingID" placeholder="1-10" required></input>
                     <button type= "submit"  className = {styles.saveReviewBtn} >Post</button>
                 </form>
+                <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>CANCEL</button>
+
             </div>;
             revRatBtnTxt = "Cancel";
         }
@@ -288,47 +309,18 @@ class SearchResult extends Component{
                     <div className= {styles.truckRevRat}>
                         <p className = {styles.revRatTitle}>Truck Reviews and Ratings Here</p>
                         <div className = {styles.revRatContent}>
-                            <div className = {styles.review}>
-                                <div className = {styles.txtRatingDiv}>
-                                    <div>
-                                        <p className = {styles.reviewUser}>Anon301</p>
-                                        <p className = {styles.userRating}>rating: x/10</p>
-                                    </div>
-                                </div>                                
-                                <p className= {styles.reviewText}>{loremIpsum}</p>
-                            </div>
-                            <div className = {styles.review}>
-                                <div className = {styles.txtRatingDiv}>
-                                    <div>
-                                        <p className = {styles.reviewUser}>Anon301</p>
-                                        <p className = {styles.userRating}>rating: x/10</p>
-                                    </div>
-                                </div>                                
-                                <p className= {styles.reviewText}>{loremIpsum}</p>
-                            </div>
-                            <div className = {styles.review}>
-                                <div className = {styles.txtRatingDiv}>
-                                    <div>
-                                        <p className = {styles.reviewUser}>Anon301</p>
-                                        <p className = {styles.userRating}>rating: x/10</p>
-                                    </div>
-                                </div>                                
-                                <p className= {styles.reviewText}>{loremIpsum}</p>
-                            </div>
-                            <div className = {styles.review}>
-                                <div className = {styles.txtRatingDiv}>
-                                    <div>
-                                        <p className = {styles.reviewUser}>Anon401</p>
-                                        <p className = {styles.userRating}>rating: x/10</p>
-                                    </div>
-                                </div>                                
-                                <p className= {styles.reviewText}>{loremIpsum}</p>
-                            </div>
+                            {this.state.reviewList}
                         </div>
-                        <div className={styles.ratrevBtnDiv}>
-                            <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>
-                        </div>
+
+                            <div className={styles.ratrevBtnDiv}>
+                            {this.state.writeReview == false && 
+                                <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>
+                            }
+                            </div>
                         {createReview}
+                        {/* {this.state.writeReview == true && 
+                            <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>
+                        } */}
                     </div>
                     {subscribeBtn}
                     <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>

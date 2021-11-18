@@ -152,15 +152,16 @@ span{
     left: 50%;
     transform: translateX(-50%);
 }
+
 .reviewUser{
     position: relative;
     display: inline;
-    
 }
 .reviewText{
     text-align:left;
     font-size: smaller;
     margin: .5rem;
+    background-color: rgb(238, 226, 220) ;
 }
 .userRating{
     position: absolute;
@@ -180,8 +181,9 @@ span{
 }
 .revRatBtn{
     position: absolute;
-    height: 99%;
-    bottom: 0;
+    /* height: 99%; */
+    /* bottom: 0; */
+    height: 30px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -198,4 +200,7 @@ span{
 }
 .saveReviewBtn{
     width: 65px;
+}
+.newRating{
+    width: 100px;
 }

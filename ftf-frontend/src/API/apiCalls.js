@@ -69,6 +69,14 @@ export async function getRecommendedTrucks(username){
     let url = `getRecommendedTrucks/${username}`;
     return await makeRequest("GET", url, '');
 }
+export async function getReviews(truckName){
+    let url = `/reviews/truck/name/${truckName}`;
+    return await makeRequest("GET", url, '');
+}
+export async function getRatings(truckName){
+    let url = `/reviews/truck/name/${truckName}`;
+    return await makeRequest("GET", url, '');
+}
 
 export async function postReview(review){
     let url = `postReview/${review.username}/${review.truckName}/${review.rating}/${review.description}/`;
