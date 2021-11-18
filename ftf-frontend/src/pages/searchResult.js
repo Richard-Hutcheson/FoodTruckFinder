@@ -144,11 +144,11 @@ class SearchResult extends Component{
                     }
                 }
             }
-            
             //GET TRUCK's RATINGS AND REVIEWS
             response = await getReviews(this.state.truckName).catch(e=>{
                 console.log(e.message);
             })
+            console.log("reviews ", response);
             if (response != null && response.length != 0){
                 let newList = this.state.reviewList;
                 for (let i = 0; i < response.length; i++){

@@ -200,8 +200,8 @@ class UserDashboard extends Component{
                     </div>
 
                     <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID' onChange = {this.handleChange}>
-                        <option value="truck_name">Food Truck By Name</option>
                         <option value="enhanced">Food Truck Search Enhanced</option>
+                        <option value="truck_name">Food Truck By Name</option>
                         <option value="nearby">Food Trucks Nearby</option>
                         <option value="truck price">Food Truck By Price</option>
                         <option value="food type">Food Truck By Food Type</option>

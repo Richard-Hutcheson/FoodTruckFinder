@@ -42,7 +42,6 @@ class AddTruck extends Component{
             this.props.history.goBack();
         }else if (event.target.id === "formID"){
             
-            
             this.setState({
                 truckName: document.getElementById("truckNameField").value,
                 foodType: document.getElementById("foodTypeField").value,
@@ -57,11 +56,10 @@ class AddTruck extends Component{
     async createTruck(){
         let user = await getUser(this.state.username);
         let truckData = {
-            truckID: this.state.truckID,
             truckName: this.state.truckName,
             owner: this.state.truckOwnerDetails,
             description: this.state.truckDesc,
-            foodType: this.state.foodType,
+            foodType: this.state.foodType.toUpperCase(),
             menuURL: this.state.menuURL,
             minRange: this.state.minPrice,
             maxRange: this.state.maxPrice,
