@@ -83,6 +83,14 @@ export async function subscribeToTruck(truckName, username){
 }
 export async function unsubscribeToTruck(truckName, username){
     let url = `unsubscribe/${truckName}/${username}`;
-    console.log('url = ', url);
     return await makeRequest('DELETE', url, '');
+}
+
+export async function addRoute(truckName, address, city, state){
+    let url = `routes/${truckName}/${address}/${city}/${state}`
+    return await makeRequest('POST', url, '');
+}
+export async function getRoutes(truckName){
+    let url = `routes/${truckName}`
+    return await makeRequest('GET', url, '');
 }

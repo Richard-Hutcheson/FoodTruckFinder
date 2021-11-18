@@ -18,18 +18,74 @@ h1{
     height: 100px;
 }
 
-.scheduleDiv, .routeDiv{
 
+.scheduleDiv, .routeDiv{
     position: relative;
-    background-color: gray;
-    height: 150px;
+    background-color: white;
+    height: auto;
     width: 80%;
     left: 50%;
     transform: translateX(-50%);
+    margin-top: 2rem;
 }
-.routeDiv{
+.routeTitle{
+    margin: 0;
+}
+.customBorder{
+    background-color: black;
+    width: 100%;
+    height: 1px;
+    margin: 0;
+}
+.weekDiv, .addressDiv{
+    width: 100%;
+    overflow: auto;
+    display: grid;
+}
+.weekDiv{
+    grid-template-columns: minmax(140px, auto) minmax(140px, auto) 
+        minmax(140px, auto) minmax(140px, auto) minmax(140px, auto)
+        minmax(140px, auto) minmax(140px, auto);
+    grid-template-rows: 30px 30px;
+}
+.weekDiv input{
+    width: 97%;
+    border-width: 1px;
+    text-align: center;
+}
 
+.weekDiv p, .addressDiv p{
+    margin: 0;
+    margin-top: 5px;
+}
+.routeContent{
+    min-height: 50px;
+    height: auto;    
+}
 
+.addressDiv, .newRouteDiv{
+    display: grid;
+    grid-template-columns: minmax(140px, auto) minmax(140px, auto) minmax(140px, auto);
+    grid-template-rows: 30px;
+}
+.addressDiv{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.newRouteDiv{
+    margin-bottom: .5rem;
+}
+.newRouteDiv input{
+    width: 98%;
+}
+.addRouteBtn{
+    position: relative;
+    height: 30px;
+    width: 150px;
+    /* left: 50%;
+    transform: translateX(-50%); */
+    bottom: 0;
+    text-align: center;
 }
 
 .editBtn{
@@ -37,6 +93,7 @@ h1{
     width: 150px;
     height: 30px;
 }
+
 .backBtn, .delTruck{
     display: block;
     position: relative;
@@ -45,14 +102,3 @@ h1{
     left: 50%;
     transform: translate(-50%);
 }
-/*
-.priceLabel{
-    width: 2px;
-    height: 20px;
-    position: relative;
-    left: 50%;
-    margin: 10px 0;
-    transform: translate(-50%);
-    display: block;
-}
-*/
