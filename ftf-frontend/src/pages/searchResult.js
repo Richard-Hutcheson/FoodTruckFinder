@@ -35,6 +35,8 @@ class SearchResult extends Component{
         if (this.props.location.state != null){
             this.state.searchQuery = this.props.location.state.searchQuery;
             this.state.queryType = this.props.location.state.queryType;
+            this.state.user = this.props.location.state.user;
+
             if (this.state.queryType === 'truck_name'){
                 this.state.truckName = this.props.location.state.searchQuery;
             }
@@ -103,7 +105,7 @@ class SearchResult extends Component{
             response = await getSubscriptions(this.state.user);
             if (response != null && response.length === 0){
                 this.setState({subscribed: false});
-            }else{
+            }else if (response != null && response.length > 0){
                 for (let i = 0; i < response.length; i++){
                     if (response[i].truck.truckName === this.state.truckName){
                         this.setState({subscribed: true});

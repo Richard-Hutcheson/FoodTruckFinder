@@ -123,7 +123,7 @@ class UserDashboard extends Component{
             }
             this.props.history.push({
                 pathname: '/SearchResult',
-                state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value} // your data array of objects
+                state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value, user: this.state.user} // your data array of objects
             })
         }else{
             alert("search field is empty");
