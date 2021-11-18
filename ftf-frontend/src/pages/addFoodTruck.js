@@ -82,7 +82,7 @@ class AddTruck extends Component{
             minRange: this.state.minPrice,
             maxRange: this.state.maxPrice
         }
-        
+
         await addTruck(userData);
     }
     resetFields(){
