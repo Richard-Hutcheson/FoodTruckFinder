@@ -1,12 +1,14 @@
 package ftf.classes;
 
 import lombok.Data;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = Review.TABLE_NAME)
+@CrossOrigin(origins = "*")
 public class Review {
     public static final String TABLE_NAME = "Review";
 

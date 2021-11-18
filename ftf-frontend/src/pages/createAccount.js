@@ -85,7 +85,7 @@ class CreateAccount extends Component{
                         </div>
                         <div className={styles.groupClass}>
                             <label htmlFor="password" id = {styles.password}>Password:</label>
-                            <input type="text" className={styles.inputClass} id={styles.passwordInput} name="password"  onChange={this.handleChange} required
+                            <input type="password" className={styles.inputClass} id={styles.passwordInput} name="password"  onChange={this.handleChange} required
                                  maxLength = "30" autoComplete = "off"></input>
                             
                         </div>
