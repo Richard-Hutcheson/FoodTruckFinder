@@ -6,7 +6,7 @@ export async function makeRequest(type, url, params){
         alert("invalid parameters to makeRequest");
         return null;
     }
-    let arrTypes = ['GET', 'POST', 'PATCH'];
+    let arrTypes = ['GET', 'POST', 'PATCH', 'DELETE'];
     if (!arrTypes.includes(type)){
         alert("invalid request type");
         return null;
