@@ -38,7 +38,7 @@ export async function makeRequest(type, url, params){
     });
     if (response != null){
         const data = await response.json().catch(error =>{
-            window.confirm("Problem encountered with JSON operation: " + error.message);
+            // window.confirm("Problem encountered with JSON operation: " + error.message);
         });
         if (data != null){
             return data;

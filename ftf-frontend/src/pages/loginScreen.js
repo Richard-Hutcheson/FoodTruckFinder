@@ -31,14 +31,14 @@ class LoginScreen extends Component{
         if (event.target.id === "enterGuest"){
             this.props.history.push({
                 pathname: '/UserDashboard',
-                state: {user: "guest", guest: "true"} // your data array of objects
+                state: {user: "guest", guest: true} // your data array of objects
             })
         }else{
             const response = await loginUser(this.state.username, this.state.password);
             if (response != null){
-                console.log("response in logScreen = ", response);
-                console.log("response.id = ", response.id);
-                console.log("response.role = ", response.role)
+                // console.log("response in logScreen = ", response);
+                // console.log("response.id = ", response.id);
+                // console.log("response.role = ", response.role)
 
                 if (response.status === "NOT_FOUND"){
                     window.confirm("Not a valid login. Please try again.");
@@ -47,7 +47,7 @@ class LoginScreen extends Component{
                     console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({
                         pathname: '/UserDashboard',
-                        state: {user: this.state.username, guest: 'false'} // your data array of objects
+                        state: {user: this.state.username, guest: false} // your data array of objects
                     })
                 }
             }else{

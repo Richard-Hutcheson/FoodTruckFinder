@@ -91,3 +91,8 @@ export async function subscribeToTruck(truckName, username){
     let url = `subscribe/${truckName}/${username}`;
     return await makeRequest('POST', url, '');
 }
+export async function unsubscribeToTruck(truckName, username){
+    let url = `unsubscribe/${truckName}/${username}`;
+    console.log('url = ', url);
+    return await makeRequest('DELETE', url, '');
+}

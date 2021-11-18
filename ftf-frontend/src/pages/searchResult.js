@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -133,7 +133,6 @@ class SearchResult extends Component{
                 }
                 this.setState({reviewList: newList});
             }
-            console.log("all reviews = ", response);
         }
         //SEARCHING FOR TRUCKS BY FOOD TYPE
         else if (this.state.queryType === 'food type'){
@@ -198,7 +197,7 @@ class SearchResult extends Component{
                 alert("REVIEW POSTED");
             }
             if (this.state.writeReview === true){
-                this.setState({writeReview: false})
+                this.setState({writeReview: false});
             }
         }
         //SUBSCRIBE TO TRUCK
@@ -208,8 +207,16 @@ class SearchResult extends Component{
                     console.log(e.message);
                 });
                 this.setState({subscribed: true});
-                console.log("subscribe to truck response = ", response);
             }
+        }
+        else if (event.target.id === "unsubscribeBtnID"){
+            if (this.state.subscribed === true){
+                let response = await unsubscribeToTruck(this.state.truckName, this.state.user).catch(e=>{
+                    console.log(e.message());
+                })
+                this.setState({subscribed: false});
+            }
+
         }
     }
 
@@ -243,7 +250,7 @@ class SearchResult extends Component{
         }else{
             subscribeBtn = 
             <div>
-                <button id = "subscribeBtnID" className={styles.subscribeBtn} onClick={this.handleSubmit} disabled>UNSUBSCRIBE</button>
+                <button id = "unsubscribeBtnID" className={styles.subscribeBtn} onClick={this.handleSubmit}>UNSUBSCRIBE</button>
             </div>;
         }
 
