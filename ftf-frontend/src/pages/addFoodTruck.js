@@ -48,11 +48,9 @@ class AddTruck extends Component{
                 foodType: document.getElementById("foodTypeField").value,
                 truckDesc: document.getElementById(styles.descID).value,
                 menuURL: document.getElementById("menuField").value,
-            });
-
-            this.setState({submitText: "SAVE", viewOnly: true});
-
-            let response = await this.createTruck().catch(error=>{console.log(error.message);})
+                submitText: "SAVE",
+                viewOnly: true,
+            }, ()=>{this.createTruck();});
         }
     }
 

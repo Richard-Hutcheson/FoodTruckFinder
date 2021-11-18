@@ -15,7 +15,7 @@ class UserDashboard extends Component{
             searchQuery: '',
             name: '<unknown>',
             guest: true,
-            showMap: 'false',
+            showMap: 'true',
             role: '',
             queryType: '',
             subscribedTrucksList: [<div key = "-1"></div>]
@@ -129,7 +129,7 @@ class UserDashboard extends Component{
     }
     async handleSubmit(event){
         event.preventDefault();
-        if (this.state.searchQuery !== "" && event.target.id === 'searchFormID'){
+        if ((this.state.searchQuery !== "" && event.target.id === 'searchFormID') || (this.state.queryType === 'nearby'&& event.target.id === 'searchFormID')){
             // //update user's food type preferences based on search history of food type
             if (this.state.queryType !== "user's username"){
                 this.setState({searchQuery: this.state.searchQuery.toUpperCase()})
@@ -146,7 +146,9 @@ class UserDashboard extends Component{
                 state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value, user: this.state.user} // your data array of objects
             })
         }else{
-            alert("search field is empty");
+            if (this.state.queryType !== "nearby"){
+                alert("search field is empty");
+            }
         }
     }
     special(event){
@@ -199,6 +201,8 @@ class UserDashboard extends Component{
 
                     <select name="searchOptions" className={styles.searchOptions} id = 'searchOptionsID' onChange = {this.handleChange}>
                         <option value="truck_name">Food Truck By Name</option>
+                        <option value="enhanced">Food Truck Search Enhanced</option>
+                        <option value="nearby">Food Trucks Nearby</option>
                         <option value="truck price">Food Truck By Price</option>
                         <option value="food type">Food Truck By Food Type</option>
                         <option value="user's username">User</option>
@@ -234,9 +238,9 @@ class UserDashboard extends Component{
                         <p>Map goes here. Status: disabled</p>
                     </div>
                 </div>
-                <div className={styles.dynamic}>
+                {/* <div className={styles.dynamic}>
                     <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
-                </div>
+                </div> */}
 
             </div>
         );
