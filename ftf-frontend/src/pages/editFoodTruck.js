@@ -46,13 +46,15 @@ class EditTruck extends Component{
             //user is editing
             if (this.state.submitText === "EDIT"){
                 this.setState({submitText: "SAVE", viewOnly: false});
-                
             }
             //user is saving
             else{
                 this.setState({submitText: "EDIT", viewOnly: true});
                 document.querySelectorAll('.field').forEach(x=>{
                     if (x.value !== ''){
+                        if (x.name === 'foodType'){
+                            x.value = x.value.toUpper();
+                        }
                         this.setState({[x.name]: x.value}, this.callFunction);
                     }
                 });
@@ -71,9 +73,7 @@ class EditTruck extends Component{
                 this.props.history.goBack();
                 
             }else{
-                console.log('no');
             }
-
         }
     }
     callFunction = ()=>{

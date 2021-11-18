@@ -196,7 +196,20 @@ body{
 	width: 100px;
 }
 
-
+.subscribedTrucksDiv{
+	width: 85%;
+	height: 200px;
+	position:relative;
+	left: 50%;
+	transform: translate(-50%);
+	border-style: solid;
+	border-color:rgb(18, 60, 105);
+	border-width: .5em;
+	margin-top: 2rem;
+}
+.subscribedTrucksDiv p{
+	text-align: center;
+}
 
 #map {
 	height: 100%;
@@ -208,8 +221,7 @@ body{
 	width: 85%;
 	height: 400px;
 	position:relative;
-	/* position: absolute;
-	*/
+
 	left: 50%;
 	transform: translate(-50%);
 	text-align: center;
@@ -247,7 +259,7 @@ body{
 	text-decoration: none;
 	border-style: solid;
 	padding-top: 4px;
-	border-color:rgb(226, 226, 226) ;
+	border-color:rgb(18, 60, 105) ;
 	background-color: rgb(226, 226, 226);
 	border-radius: .5em;
 }

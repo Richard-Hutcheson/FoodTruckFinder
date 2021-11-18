@@ -87,8 +87,7 @@ class ManageFoodTrucks extends Component{
                     </div>
                     <a href="/" className = {styles.logout}>logout</a>
                 </div>
-                <p>your user id = {this.state.userID}</p>
-
+                
                 <div className={styles.truckRecsContainer} id = "recTrucksID">
                     <div className={styles.truckRecTitle}>
                         <p>Your Food Trucks</p>
