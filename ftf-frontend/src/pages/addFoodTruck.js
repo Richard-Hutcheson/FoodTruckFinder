@@ -18,6 +18,13 @@ class AddTruck extends Component{
             viewOnly: false,
             submitText: "SAVE",
             truckOwnerDetails: {},
+            monday: '',
+            sunday: '',
+            saturday: '',
+            tuesday: '',
+            wednesday: '',
+            thursday: '',
+            friday: '',
             schedules: [<div key="-1"></div>],
             routes: [<div key = "-1"></div>],
         }
@@ -29,7 +36,6 @@ class AddTruck extends Component{
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);        
         this.state.truckName = urlParams.get("truck");
-        console.log(this.state.truckName);
     }
 
     async componentDidMount(){
@@ -42,41 +48,57 @@ class AddTruck extends Component{
         if (event.target.id === "backBtn"){
             this.props.history.goBack();
         }else if (event.target.id === "formID"){
-            //this.setState({submitText: "SAVE", viewOnly: true});
-            document.querySelectorAll('.field').forEach(x=>{
-                if (x.value !== ''){
-                    this.setState({[x.name]: x.value}, ()=>{
-                        this.addTruck();
-                    });
-                }
+            
+            
+            this.setState({
+                truckName: document.getElementById("truckNameField").value,
+                foodType: document.getElementById("foodTypeField").value,
+                truckDesc: document.getElementById(styles.descID).value,
+                menuURL: document.getElementById("menuField").value,
+                monday: document.getElementById("monday").value,
+                tuesday: document.getElementById("tuesday").value,
+                wednesday: document.getElementById("wednesday").value,
+                thursday: document.getElementById("thursday").value,
+                friday: document.getElementById("friday").value,
+                saturday: document.getElementById("saturday").value,
+                sunday: document.getElementById("sunday").value,
             });
+
+            //this.setState({submitText: "SAVE", viewOnly: true});
+            // document.querySelectorAll('.field').forEach(x=>{
+            //     if (x.value !== ''){
+            //         this.setState({[x.name]: x.value}, ()=>{
+            //             this.addTruck();
+            //         });
+            //     }
+            // });
         }
     }
 
     async addTruck(){
-        let user = await getUser(this.state.username);
-        console.log("USER: ", user);
-        console.log("USERNAME: ", this.state.username);
-        let userData = {
-            truckID: this.state.truckID,
-            truckName: this.state.truckName,
-            owner: this.state.truckOwnerDetails,
-            description: this.state.truckDesc,
-            foodType: this.state.foodType,
-            menuURL: this.state.menuURL,
-            minRange: this.state.minPrice,
-            maxRange: this.state.maxPrice,
-            owner: user,
-        }
+        // let user = await getUser(this.state.username);
+        // console.log("USER: ", user);
+        // console.log("USERNAME: ", this.state.username);
+        // let userData = {
+        //     truckID: this.state.truckID,
+        //     truckName: this.state.truckName,
+        //     owner: this.state.truckOwnerDetails,
+        //     description: this.state.truckDesc,
+        //     foodType: this.state.foodType,
+        //     menuURL: this.state.menuURL,
+        //     minRange: this.state.minPrice,
+        //     maxRange: this.state.maxPrice,
+        //     owner: user,
+        // }
 
-        let response = await addTruck(userData).catch(error =>{
-            console.log(error.message);
-        });
-        if(response != null) {
-            //alert("Food Truck Created");
-            this.props.history.goBack();
-            console.log(response);
-        }
+        // let response = await addTruck(userData).catch(error =>{
+        //     console.log(error.message);
+        // });
+        // if(response != null) {
+        //     //alert("Food Truck Created");
+        //     this.props.history.goBack();
+        //     console.log(response);
+        // }
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});
@@ -94,15 +116,14 @@ class AddTruck extends Component{
             <form onSubmit={this.handleSubmit} id = "formID" className = {styles.formClass}>
                 
                 <label htmlFor="truckNameField">Truck Name:</label><br/>
-                <input type="text" id="truckNameField" name = "truckName" className="field" placeholder={this.state.truckName} required/><br/>
+                <input type="text" id="truckNameField" name = "truckName" placeholder={this.state.truckName} required/><br/>
                 <label htmlFor="foodTypeField">Food Type:</label><br/>
-                
-                <input type="text" id="foodTypeField" name = "foodType" className="field" placeholder={this.state.foodType} required/><br/>
+                <input type="text" id="foodTypeField" name = "foodType" placeholder={this.state.foodType} required/><br/>
                 <label htmlFor="descID">Truck Description:</label><br/>
-                <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field" disabled = {this.state.viewOnly} id = {styles.descID} required></textarea><br/>
+                <textarea placeholder={this.state.truckDesc} name = "truckDesc"  disabled = {this.state.viewOnly} id = {styles.descID} required></textarea><br/>
                 
                 <label htmlFor="menuField">MENU</label><br/>
-                <input type="text" id="menuField" name = "menuField" className="field" placeholder={this.state.menuURL}/><br/>
+                <input type="text" id="menuField" name = "menuField" placeholder={this.state.menuURL}/><br/>
 
                 <div className={styles.scheduleDiv}>
                     <p className = {styles.scheduleTitle}>Truck Schedule</p>
@@ -122,7 +143,6 @@ class AddTruck extends Component{
                         <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "friday" required/>
                         <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "saturday" required/>
                         <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "sunday" required/>
-
                     </div>
 
                 </div>
