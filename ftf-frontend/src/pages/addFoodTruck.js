@@ -48,6 +48,8 @@ class AddTruck extends Component{
                 foodType: document.getElementById("foodTypeField").value,
                 truckDesc: document.getElementById(styles.descID).value,
                 menuURL: document.getElementById("menuField").value,
+                minPrice: document.getElementById("minPriceField").value,
+                maxPrice: document.getElementById("maxPriceField").value,
             });
 
             this.setState({submitText: "SAVE", viewOnly: true});
@@ -100,6 +102,11 @@ class AddTruck extends Component{
                 <input type="text" id="foodTypeField" name = "foodType" placeholder={this.state.foodType} required/><br/>
                 <label htmlFor="descID">Truck Description:</label><br/>
                 <textarea placeholder={this.state.truckDesc} name = "truckDesc"  disabled = {this.state.viewOnly} id = {styles.descID} required></textarea><br/>
+
+                <label htmlFor="minPriceField">Min Price: </label><br/>
+                <input min="0" type="number" id="minPriceField" name = "minPrice" className="field field2" placeholder={this.state.minPrice} disabled = {this.state.viewOnly}/><br/>
+                <label htmlFor="maxPriceField">Max Price: </label><br/>
+                <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
                 
                 <label htmlFor="menuField">MENU</label><br/>
                 <input type="text" id="menuField" name = "menuField" placeholder={this.state.menuURL}/><br/>

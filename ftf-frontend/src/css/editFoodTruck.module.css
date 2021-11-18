@@ -45,14 +45,3 @@ h1{
     left: 50%;
     transform: translate(-50%);
 }
-/*
-.priceLabel{
-    width: 2px;
-    height: 20px;
-    position: relative;
-    left: 50%;
-    margin: 10px 0;
-    transform: translate(-50%);
-    display: block;
-}
-*/
