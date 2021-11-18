@@ -33,4 +33,6 @@ public class RouteController {
 
         return routeService.setRouteByTruckName(truckName, address, city, state);
     }
+
+
 }

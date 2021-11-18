@@ -33,4 +33,9 @@ public class ScheduleController {
     public void deleteSchedule( @PathVariable String ftName) {
         scheduleService.deleteSchedule(ftName);
     }
+
+    @GetMapping("/get/schedule/{ftName}")
+    public Schedule getSchedule(@PathVariable String truckName){
+        return scheduleService.getSchedule(truckName);
+    }
 }

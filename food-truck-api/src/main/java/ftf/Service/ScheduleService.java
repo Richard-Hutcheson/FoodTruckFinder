@@ -69,4 +69,16 @@ public class ScheduleService {
         scheduleRepository.delete(scheduleToDelete.get());
 
     }
+
+    public Schedule getSchedule(String truckName) {
+        Optional<FoodTruck> foodTruck = foodTruckRepository.findFoodTruckByTruckName(truckName);
+        if(!foodTruck.isPresent()) {
+            throw new FoodTruckNotFoundException("Food truck not found");
+        }
+        Optional<Schedule> schedule = scheduleRepository.findScheduleByTruck(foodTruck.get());
+        if(!schedule.isPresent()){
+            throw new RuntimeException("Schedule not found");
+        }
+        return schedule.get();
+    }
 }
