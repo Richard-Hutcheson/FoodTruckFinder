@@ -1,0 +1,50 @@
+.bodyContainer{
+    height: 100%;
+}
+h1{
+    text-align: center;
+}
+.formClass{
+    position: relative;
+    display: block;
+    text-align: center;
+}
+.formClass input{
+    width: 40%;
+
+}
+
+#descID{
+    width: 40%;
+    height: 100px;
+}
+
+.scheduleDiv, .routeDiv{
+
+    position: relative;
+    background-color: gray;
+    height: 150px;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.routeDiv{
+
+
+}
+
+.editBtn{
+    margin-top: 2rem;
+    width: 150px;
+    height: 30px;
+}
+.backBtn, .delTruck{
+    display: block;
+    position: relative;
+    width: 150px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 10px 0;
+}
+
