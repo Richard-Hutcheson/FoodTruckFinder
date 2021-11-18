@@ -139,8 +139,9 @@ class SearchResult extends Component{
                     <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                     <div class=${styles.truckFoodType}>${response[i].foodType}</div>
                 `
+                let username = this.state.user;
                 btn.onclick = function() {
-                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${this.state.user}`;
+                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${username}`;
                 }
                 recItem.appendChild(btn);
                 truck.appendChild(recItem);
@@ -230,8 +231,9 @@ class SearchResult extends Component{
                         <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                         <div class=${styles.truckFoodType}>${response[i].foodType}</div>
                     `
+                    let username = this.state.user;
                     btn.onclick = function() {
-                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${this.state.user}`;
+                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${username}`;
                     }
                     recItem.appendChild(btn);
                     truck.appendChild(recItem);
@@ -280,6 +282,7 @@ class SearchResult extends Component{
                     console.log(e.message);
                 });
                 this.setState({subscribed: true});
+                console.log(response);
             }
         }
         else if (event.target.id === "unsubscribeBtnID"){
