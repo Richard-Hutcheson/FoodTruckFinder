@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from "../css/addFoodTruck.module.css"
+import styles from "../css/editFoodTruck.module.css"
 import {getTruckByName, editTruck, deleteTruck, addTruck} from "../API/apiCalls.js"
 
 class AddTruck extends Component{
@@ -14,6 +14,7 @@ class AddTruck extends Component{
             maxPrice: '',
             foodType: '',
             truckOwner: '',
+            menuURL: '',
             viewOnly: false,
             submitText: "SAVE",
             truckOwnerDetails: {},
@@ -26,9 +27,16 @@ class AddTruck extends Component{
     }
 
     async componentDidMount(){
+        
         let response = await getTruckByName(this.state.truckName).catch(error =>{
             console.log(error.message);
         });
+        console.log(response);
+        /*
+        this.setState({truckID: response.truckID, truckDesc: response.description, 
+            minPrice: response.minRange, maxPrice: response.maxRange,
+            foodType: response.foodType, truckOwner: response.owner.username, truckOwnerDetails: response.owner, menuURL: response.menuURL});
+            */
     }
 
     async handleSubmit(event){
@@ -37,34 +45,12 @@ class AddTruck extends Component{
         if (event.target.id === "backBtn"){
             this.props.history.goBack();
         }else if (event.target.id === "formID"){
-            //await addTruck(this.state);
-/*
-            let udm = new Map();
-
-            udm.set('truckName', this.state.truckName);
-            udm.set('foodType', this.state.foodType);
-            udm.set('description', this.state.truckDesc);
-            udm.set('owner', this.state.truckOwnerDetails);
-            udm.set('maxRange', this.state.maxPrice);
-            udm.set('minRange', this.state.minPrice);
-            udm.set('truckID', this.state.truckID);
-
-            await addTruck(udm);
-
-            this.props.history.goBack();
-*/
-            if (this.state.submitText === "EDIT"){
-                this.setState({submitText: "SAVE", viewOnly: false});
-                
-            }else{
-                this.setState({submitText: "EDIT", viewOnly: true});
-                document.querySelectorAll('.field').forEach(x=>{
-                    if (x.value !== ''){
-                        this.setState({[x.name]: x.value}, this.callFunction);
-                    }
-                });
-            }
-
+            //this.setState({submitText: "SAVE", viewOnly: true});
+            document.querySelectorAll('.field').forEach(x=>{
+                if (x.value !== ''){
+                    this.setState({[x.name]: x.value}, this.callFunction);
+                }
+            });
         }
         /*
         else if (event.target.id === 'delTruck'){
@@ -86,17 +72,18 @@ class AddTruck extends Component{
         this.saveTruck();        
     }
     async saveTruck(){
-        let udm = new Map();
-
-        console.log('state = ', this.state.foodType);
-        udm.set('truckName', this.state.truckName);
-        udm.set('foodType', this.state.foodType);
-        udm.set('description', this.state.truckDesc);
-        udm.set('owner', this.state.truckOwnerDetails);
-        udm.set('maxRange', this.state.maxPrice);
-        udm.set('minRange', this.state.minPrice);
-        udm.set('truckID', this.state.truckID);
-        await addTruck(udm);
+        let userData = {
+            truckID: this.state.truckID,
+            truckName: this.state.truckName,
+            owner: this.state.truckOwnerDetails,
+            description: this.state.truckDesc,
+            foodType: this.state.foodType,
+            menuURL: this.state.menuURL,
+            minRange: this.state.minPrice,
+            maxRange: this.state.maxPrice
+        }
+        
+        await addTruck(userData);
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});
@@ -111,20 +98,25 @@ class AddTruck extends Component{
             
         <div className={styles.bodyContainer}>
             <h1>Add Truck</h1>
-            <form onSubmit={this.handleSubmit} id = "formID">
+            <form onSubmit={this.handleSubmit} id = "formID" className = {styles.formClass}>
                 
                 <label htmlFor="truckNameField">Truck Name:</label><br/>
                 <input type="text" id="truckNameField" name = "truckName" className="field" placeholder={this.state.truckName} disabled = {this.state.viewOnly}/><br/>
                 <label htmlFor="foodTypeField">Food Type:</label><br/>
                 <input type="text" id="foodTypeField" name = "foodType" className="field" placeholder={this.state.foodType} disabled = {this.state.viewOnly}/><br/>
                 <label htmlFor="descID">Truck Description:</label><br/>
-                <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field" disabled = {this.state.viewOnly} id = "descID"></textarea>
-                <div className={styles.menuDiv}><p>MENU</p></div>
-                <div className={styles.scheduleDiv}><p>SCHEDULE</p></div>
-                <div className={styles.routeDiv}><p>ROUTE</p></div>
-                <input type="submit" value={this.state.submitText}/>
+                <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field" disabled = {this.state.viewOnly} id = {styles.descID}></textarea><br/>
+                
+                <label htmlFor="menuField">MENU</label><br/>
+                <input type="text" id="menuField" name = "menuField" className="field" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/><br/>
+                <p>SCHEDULE</p>
+                <div className={styles.scheduleDiv}></div>
+                <p>ROUTE</p>
+                <div className={styles.routeDiv}></div>
+                <button id = "editBtn" className = {styles.editBtn} type="submit" value={this.state.submitText}>{this.state.submitText}</button>
             </form>
-            <button id = "backBtn" onClick={this.handleSubmit}>BACK</button>
+                {/*<button id = "delTruck" className = {styles.delTruck} onClick = {this.handleSubmit}>DELETE TRUCK</button>*/}
+            <button id = "backBtn"  className = {styles.backBtn} onClick={this.handleSubmit}>BACK</button>
 
         </div>
         );
