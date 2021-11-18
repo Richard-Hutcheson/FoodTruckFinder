@@ -67,8 +67,6 @@ class UserDashboard extends Component{
         }
         //response should be an array
         for (let i =0; i < listLength; ++i){
-            console.log("response: ", response[i].truckName);
-
             let container = document.getElementById('recTrucksID');
             let truck = document.createElement('div');
             let recItem = document.createElement('div');
@@ -96,10 +94,27 @@ class UserDashboard extends Component{
         //GET SUBSCRIBED TRUCKS
         response = await getSubscriptions(this.state.user).catch(error=>{console.log(error.message);})
         if (response!= null){
-            
+            let arr = []; 
+            for (let i =0; i < response.length; i++){
+                let tempName = this.state.user;
+                let truckName = response[i].truck.truckName;
+                let temp = 
+                <div key = {i}>
+                    <div className = {styles.recItem}>
+                        <div className = {styles.truckName}>{response[i].truck.truckName}</div>
+                        <div className ={styles.truckPrice}>${response[i].truck.minRange}-${response[i].truck.maxRange}</div>
+                        <div className ={styles.truckFoodType}>{response[i].truck.foodType}</div>
+                        <button type = "submit" className = {styles.truckBtn} id = {response[i].truck.truckName} onClick= {()=>{
+                            document.location.href = `http://localhost:3000/SearchResult?query=${truckName}&queryType=truck_name&user=${tempName}`;
+                        }}>VIEW</button>
+                    </div>
+                </div>
+                arr.push(temp);
+            }
+            if (arr.length > 0){
+                this.setState({subscribedTrucksList: arr});
+            }
         }
-        console.log("get subs = ", response);
-       
     }
     handleChange(event){
         const target = event.target;
@@ -116,7 +131,12 @@ class UserDashboard extends Component{
         event.preventDefault();
         if (this.state.searchQuery !== "" && event.target.id === 'searchFormID'){
             // //update user's food type preferences based on search history of food type
+            if (this.state.queryType !== "user's username"){
+                this.setState({searchQuery: this.state.searchQuery.toUpperCase()})
+            }
+
             if (this.state.queryType === 'food type'){
+
                 let response = await updateFoodTypeRec(this.state.user, this.state.searchQuery).catch(error=>{
                     console.log(error.message);
                 })
@@ -197,6 +217,14 @@ class UserDashboard extends Component{
                 </div>
                 
                 <div className = {styles.subscribedTrucksDiv}>
+                    <div className={styles.truckRecTitle}>
+                            <p><b>Food Truck Subscriptions</b></p>
+                    </div>                    <div className={styles.textBar}>
+                        <div className={styles.textBarText}>TRUCK NAME</div>
+                        <div className={styles.textBarText}>PRICE</div>
+                        <div className={styles.textBarText}>FOOD TYPE</div>
+                        <div className={styles.textBarText}></div>
+                    </div>
                     {this.state.subscribedTrucksList}
                 </div>
 
