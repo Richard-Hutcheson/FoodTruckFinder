@@ -18,6 +18,15 @@ class EditTruck extends Component{
             viewOnly: true,
             submitText: "EDIT",
             truckOwnerDetails: {},
+            monday: '',
+            sunday: '',
+            saturday: '',
+            tuesday: '',
+            wednesday: '',
+            thursday: '',
+            friday: '',
+            schedules: [<div key="-1"></div>],
+            routes: [<div key = "-1"></div>],
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         const queryString = window.location.search;
@@ -76,6 +85,27 @@ class EditTruck extends Component{
             }
         }
     }
+
+    /*
+
+this.setState({
+                truckName: document.getElementById("truckNameField").value,
+                foodType: document.getElementById("foodTypeField").value,
+                truckDesc: document.getElementById(styles.descID).value,
+                menuURL: document.getElementById("menuField").value,
+                monday: document.getElementById("monday").value,
+                tuesday: document.getElementById("tuesday").value,
+                wednesday: document.getElementById("wednesday").value,
+                thursday: document.getElementById("thursday").value,
+                friday: document.getElementById("friday").value,
+                saturday: document.getElementById("saturday").value,
+                sunday: document.getElementById("sunday").value,
+            });
+
+            
+
+
+    */
     callFunction = ()=>{
         this.saveTruck();        
     }
@@ -128,10 +158,41 @@ class EditTruck extends Component{
                     <input type="text" id="menuField" name = "menuField" className="field field2" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/>
                 }
                 <br/>
-                <p>SCHEDULE</p>
-                <div className={styles.scheduleDiv}></div>
-                <p>ROUTE</p>
-                <div className={styles.routeDiv}></div>
+                <div className={styles.scheduleDiv}>
+                    <p className = {styles.scheduleTitle}>Truck Schedule</p>
+                    <div className = {styles.customBorder}></div>
+                    <div className={styles.weekDiv}>
+                        <p>MON</p>
+                        <p>TUES</p>
+                        <p>WED</p>
+                        <p>THURS</p>
+                        <p>FRI</p>
+                        <p>SAT</p>
+                        <p>SUN</p>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "monday" required/>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "tuesday" required/>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "wednesday" required/>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "thursday" required/>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "friday" required/>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "saturday" required/>
+                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "sunday" required/>
+
+                    </div>
+
+                </div>
+                <div className = {styles.routeDiv}>
+                    <p className = {styles.routeTitle}>Truck Route</p>
+                    <div className = {styles.customBorder}></div>
+                    <div className={styles.addressDiv}>
+                        <p>ADDRESS</p>
+                        <p>CITY</p>
+                        <p>STATE</p>
+                    </div>
+                    <div className = {styles.routeContent}>
+                        {this.state.routes}
+                    </div>
+                    <button className = {styles.addRouteBtn}>ADD ROUTE</button>
+                </div>
                 <button id = "editBtn" className = {styles.editBtn} type= "submit" value={this.state.submitText}>{this.state.submitText}</button>
             </form>
             <button id = "delTruck" className = {styles.delTruck} onClick = {this.handleSubmit}>DELETE TRUCK</button>

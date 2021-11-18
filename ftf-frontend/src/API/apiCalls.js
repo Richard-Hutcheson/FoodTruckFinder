@@ -40,9 +40,9 @@ export async function deleteTruck(truckName){
     return await makeRequest("DELETE", url, '');
 }
 
-export async function addTruck(userData){    
+export async function addTruck(truckData){    
     let url = `createTruck`;
-    return await makeRequest("POST", url, userData);
+    return await makeRequest("POST", url, truckData);
 }
 
 export async function insertUserFoodRec(username){

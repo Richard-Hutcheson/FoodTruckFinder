@@ -40,7 +40,6 @@ h1{
 .weekDiv, .addressDiv{
     width: 99%;
     overflow: auto;
-
     display: grid;
     /* height: 0px;     */
 }
@@ -75,7 +74,6 @@ h1{
     transform: translateX(-50%);
     bottom: 0;
 }
-
 .editBtn{
     margin-top: 2rem;
     width: 150px;
