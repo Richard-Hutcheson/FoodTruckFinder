@@ -26,6 +26,12 @@ public class SubscriptionController {
         return subServ.subscribe(username,ftName);
     }
 
+
+    @DeleteMapping("/unsubscribe/{ftName}/{username")
+    public void unsubscribe(@PathVariable String username, @PathVariable String ftName) {
+        subServ.unsubscribe(username,ftName);
+    }
+
     //get all subscriptions by user
     @GetMapping("/{username}/subscriptions")
     public List<Subscription> subscriptions(@PathVariable String username){

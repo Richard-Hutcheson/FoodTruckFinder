@@ -54,4 +54,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                WebRequest request){
         return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(SubscriptionDoesntExist.class)
+    public ResponseEntity<Object>handleSubscriptionDoesntExist(SubscriptionDoesntExist ex,
+                                                               WebRequest request){
+        return new ResponseEntity<>(new ApiError(ex.getMessage(),HttpStatus.NOT_FOUND,LocalDateTime.now()),HttpStatus.NOT_FOUND);
+    }
+
+
 }
