@@ -1,16 +1,14 @@
 package ftf.classes;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = Review.TABLE_NAME)
-@CrossOrigin(origins = "*")
-public class Review {
-    public static final String TABLE_NAME = "Review";
+@Table(name = Subscription.TABLE_NAME)
+public class Subscription {
+    public static final String TABLE_NAME = "Subscription";
 
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
@@ -18,18 +16,13 @@ public class Review {
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
     )
-    @Column(name = "reviewID")
-    Long reviewID;
 
-    @Column(name = "rating")
-    double rating;
+    @Column(name = "subscribeID")
+    Long subscribeID;
 
     @JoinColumn(name = "truckID")
     @ManyToOne
     FoodTruck truck;
-
-    @Column(name = "description")
-    String description;
 
     @JoinColumn(name = "userID")
     @ManyToOne

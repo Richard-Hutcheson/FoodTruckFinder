@@ -67,7 +67,10 @@
 #addressInput{
     width: 300px;
 }
-
+.ownerClass{
+    margin-top: 2rem;
+    text-align: center;
+}
 #createBtn{
     margin: 30px;
     margin-bottom: 15px;

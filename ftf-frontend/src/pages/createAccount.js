@@ -41,16 +41,16 @@ class CreateAccount extends Component{
     }
     async handleSubmit(event){
         event.preventDefault();
-        let userData = new Map();
-        userData.set('userID', '-1');
-        userData.set('username', this.state.username);
-        userData.set('password', this.state.password);
-        userData.set('name', this.state.name);
-        userData.set('email', this.state.email);
-        userData.set('address', this.state.address);
-        userData.set('state', this.state.state);
-        userData.set('city', this.state.city);
-        userData.set('role', this.state.role);
+        let userData = {
+            username: this.state.username,
+            password: this.state.password,
+            name: this.state.name,
+            email: this.state.email,
+            address: this.state.address,
+            state: this.state.state,
+            city: this.state.city,
+            role: this.state.role,
+        }
 
         const response = await saveUser(userData).catch(error=>{
             console.log(error.message);
@@ -85,7 +85,7 @@ class CreateAccount extends Component{
                         </div>
                         <div className={styles.groupClass}>
                             <label htmlFor="password" id = {styles.password}>Password:</label>
-                            <input type="text" className={styles.inputClass} id={styles.passwordInput} name="password"  onChange={this.handleChange} required
+                            <input type="password" className={styles.inputClass} id={styles.passwordInput} name="password"  onChange={this.handleChange} required
                                  maxLength = "30" autoComplete = "off"></input>
                             
                         </div>
@@ -108,7 +108,7 @@ class CreateAccount extends Component{
 
                             <label htmlFor="state" id = {styles.state}>  State:</label>
                             <input type="text"  className={styles.inputClass} id={styles.stateInput} name="state" onChange={this.handleChange} required 
-                                maxLength = "2" minlength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]"></input>
+                                maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]"></input>
                         </div>
 
                         <div className={styles.ownerClass}>

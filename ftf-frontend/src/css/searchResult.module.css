@@ -1,8 +1,10 @@
 .header{
     text-align: center;
+    color: rgb(18, 60, 105);
+    text-decoration: underline;
 }
 span{
-    color: green;
+    color: rgb(172, 59, 97);
 }
 .userInfo, .truckInfo{
     width: 800px;
@@ -17,34 +19,48 @@ span{
     justify-items: center;
     align-content: space-evenly;
     align-items: center;
+    color: rgb(18, 60, 105);
+}
+.truckNameDiv{
+    width: 220px;
 }
 .userRevRat, .truckRevRat, .truckSchedule, .truckRoute, .truckMenu{
     margin-top: 2em;
     position:relative;
-    background-color: gray;
+    background-color: white;
     width: 800px;
     height: 200px;
     text-align: center;
     left: 50%;
     transform: translateX(-50%);
+    color: rgb(18, 60, 105);
 }
 .truckSchedule, .truckRoute{
     height: 80px;
 }
 .truckDesc{
     text-align: center;
+    color: rgb(18, 60, 105);
+
 }
 .listTrucks{
     text-align: center;
 }
 .owner{
     text-align: center;
+    color: rgb(18, 60, 105);
+
 }
 .backBtn{
+    margin-bottom: 1rem;
+    margin-top: .5rem;
+}
+.subscribeBtn{
+    margin-top: 1rem;
+}
+.backBtn, .subscribeBtn{
     position: relative;
-    margin-top: 3em;
-    margin-bottom: 3em;
-    width: 90px;
+    width: 120px;
     height: 30px;
     left: 50%;
     transform: translateX(-50%);
@@ -59,7 +75,7 @@ span{
     transform: translateX(-50%);
     margin-top: 25px;
     border-style: solid;
-    border-color:#4CAF50;
+    border-color:rgb(18, 60, 105);
     border-width: .5em;
     border-radius: .5em;
     overflow-y: scroll;
@@ -68,9 +84,10 @@ span{
     text-align: center;
     border-bottom-style: solid;
     border-top-style: solid;
-    border-color: #4CAF50;
+    border-color: rgb(18, 60, 105);
     height: 3em;
 }
+
 .recItem{
     height: 50px;
     border-bottom-style: solid;
@@ -80,10 +97,20 @@ span{
 }
 .textBar{
     border-bottom-style: solid;
-    border-bottom-color: #4CAF50;
+    border-bottom-color: rgb(18, 60, 105);
     display:grid;
     grid-template-columns: auto auto auto 100px;
 
+}
+.truckMenu{
+    overflow:auto;
+    height: auto;
+    width: 80%;
+    max-width: 800px;
+    max-height: 500px;
+}
+.truckMenu p{
+    text-decoration: underline;
 }
 .truckName, .truckPrice, .truckFoodType, .truckBtn{
     display: inline-block;
@@ -94,5 +121,86 @@ span{
 }
 .truckBtn{
     height: 30px;
+    width: 100px;
+}
+.truckRevRat{
+    height: auto;
+    min-height: 200px;
+    max-height: 830px;
+    border-style: solid;
+    border-color: rgb(18, 60, 105);
+}
+.revRatTitle{
+    /* border-bottom-style: solid;
+    border-color: rgb(18, 60, 105);
+    */
+    font-weight: bold;
+    font-size: larger;
+}
+.revRatContent{
+    overflow-y: auto;
+    height: 500px;
+}
+.txtRatingDiv{
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-color: rgb(18, 60, 105);
+}
+.txtRatingDiv div{
+    width: 400px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.reviewUser{
+    position: relative;
+    display: inline;
+}
+.reviewText{
+    text-align:left;
+    font-size: smaller;
+    margin: .5rem;
+    background-color: rgb(238, 226, 220) ;
+}
+.userRating{
+    position: absolute;
+    display: inline;
+    width: auto;
+    right: 0;
+    margin: 0;
+    font-size: small;
+}
+.ratrevBtnDiv{
+    position: relative;
+    display: block;
+    height: 30px;
+    margin-top: .5rem;
+    border-top-style: solid;
+    border-color: rgb(18, 60, 105);
+}
+.revRatBtn{
+    position: absolute;
+    /* height: 99%; */
+    /* bottom: 0; */
+    height: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.newRateReview *{
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: .5rem 0 .5rem 0;
+}
+.newReview{
+    width: 98%;
+    height: 30px;
+}
+.saveReviewBtn{
+    width: 65px;
+}
+.newRating{
     width: 100px;
 }

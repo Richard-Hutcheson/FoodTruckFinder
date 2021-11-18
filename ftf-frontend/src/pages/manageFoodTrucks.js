@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import styles from '../css/manageFoodTrucks.module.css';
+import styles from '../css/userDashboard.module.css';
 import {getAllTrucks} from '../API/apiCalls';
 
 
@@ -39,7 +39,6 @@ class ManageFoodTrucks extends Component{
         }
         //response should be an array
         for (let i = 0; i < response.length;++i){
-            console.log("->", response[i].owner.id, " ->", this.state.userID);
             if (response[i].owner.id === this.state.userID){
                 let container = document.getElementById('recTrucksID');
                 let truck = document.createElement('div');
@@ -82,7 +81,6 @@ class ManageFoodTrucks extends Component{
                     <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
-                            <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>Dashboard</Link>
                             <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
                             <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.user}}}>Manage Food Trucks</Link>
                         </div>
@@ -107,8 +105,7 @@ class ManageFoodTrucks extends Component{
                         {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {user: this.state.user, userID: this.state.userID}}}>ADD TRUCK</Link>}
                 </div>
                 <div className = {styles.backBtn}>
-                        {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
-                        {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>}
+                    <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>                
                 </div>
             </div>
         ); 

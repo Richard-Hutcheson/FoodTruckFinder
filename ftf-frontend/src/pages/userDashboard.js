@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getRecommendedTrucks, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
+import {getAllTrucks, getRecommendedTrucks, getSubscriptions, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -14,10 +14,11 @@ class UserDashboard extends Component{
             userID: 'fetching...',
             searchQuery: '',
             name: '<unknown>',
-            guest: 'true',
+            guest: true,
             showMap: 'false',
             role: '',
             queryType: '',
+            subscribedTrucksList: [<div key = "-1"></div>]
         }
         if (this.props.location.state != null){
             this.state.user = this.props.location.state.user;
@@ -38,6 +39,7 @@ class UserDashboard extends Component{
             response = "unable to retrieve";
         }
         this.setState({userID: response.id});
+        this.setState({user: response.username});
         this.setState({role: response.role});
         if (this.state.showMap === 'true'){
             try{
@@ -46,22 +48,25 @@ class UserDashboard extends Component{
                 console.log("error in calling gMaps = ", error);
             }
         }
-        //INSERT USER INTO FOOD TRUCK REC TABLE
-        response = await insertUserFoodRec(this.state.user).catch(error=>{
-            console.log(error.message);
-        })
-
+        let listLength = 0;
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
-        // response = await getAllTrucks().catch(error=>{
-        //     console.log(error.message);
-        // })
-        response = await getRecommendedTrucks(this.state.user).catch(error=>{
-            console.log(error.message);
-        })
-        console.log("Response = ", response);
-
+        if (this.state.guest === false){
+            //INSERT USER INTO FOOD TRUCK REC TABLE
+            response = await insertUserFoodRec(this.state.user).catch(error=>{
+                console.log(error.message);
+            })
+            response = await getRecommendedTrucks(this.state.user).catch(error=>{
+                console.log(error.message);
+            });
+            listLength = response.length;
+        }else{
+            response = await getAllTrucks().catch(error=>{console.log(error.message);});
+            listLength = response.length <= 5 ? response.length : 5;
+        }
         //response should be an array
-        for (let i =0; i < response.length;++i){
+        for (let i =0; i < listLength; ++i){
+            console.log("response: ", response[i].truckName);
+
             let container = document.getElementById('recTrucksID');
             let truck = document.createElement('div');
             let recItem = document.createElement('div');
@@ -76,14 +81,23 @@ class UserDashboard extends Component{
                 <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                 <div class=${styles.truckFoodType}>${response[i].foodType}</div>
             `
+            let tempName = this.state.user;
+            let truckName = response[i].truckName;
             btn.onclick = function() {
-                document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                document.location.href = `http://localhost:3000/SearchResult?query=${truckName}&queryType=truck_name&user=${tempName}`;
             }
-
             recItem.appendChild(btn);
             truck.appendChild(recItem);
             container.appendChild(truck);
         }
+
+        //GET SUBSCRIBED TRUCKS
+        response = await getSubscriptions(this.state.user).catch(error=>{console.log(error.message);})
+        if (response!= null){
+            
+        }
+        console.log("get subs = ", response);
+       
     }
     handleChange(event){
         const target = event.target;
@@ -114,39 +128,14 @@ class UserDashboard extends Component{
         }
     }
     special(event){
-        let val = event.target.innerHTML;
-        if (val === 'ADD TRUCKS'){
-            for (let i = 4; i < 10; ++i){
-                let container = document.getElementById('recTrucksID');
-                let truck = document.createElement('div');
-                let recItem = document.createElement('div');
-                recItem.setAttribute("class", styles.recItem);
-                let btn = document.createElement('button');
-                btn.setAttribute('type', 'submit');
-                btn.setAttribute('class', styles.truckBtn);
-                btn.innerText = "VIEW";
-                recItem.innerHTML = `
-                    <div class=${styles.truckName}>truck${Math.floor(Math.random() * 100 + 1)}</div>
-                    <div class=${styles.truckPrice}>$x.xx</div>
-                    <div class=${styles.truckFoodType}>food_type</div>
-                `
-                btn.addEventListener("click", function(){
-                    console.log("hey!");
-                });
-                recItem.appendChild(btn);
-                truck.appendChild(recItem);
-                container.appendChild(truck);
-            }
-        }else{
-                callMaps(map);
-                this.setState({showMap: 'true'});
-        }
+        callMaps(map);
+        this.setState({showMap: 'true'});
     }
     render(){ 
         return (
             <div>
                 <div className = {styles.navbar}>
-                    <div className={styles.dropdownDiv}>
+                    {this.state.guest === false && <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
                             {this.state.guest !=='true' && 
@@ -154,14 +143,11 @@ class UserDashboard extends Component{
                             {this.state.guest !== 'true' && this.state.role === 'o' && 
                                 <Link to= {{ pathname: "/ManageFoodTrucks", state: {user: this.state.user, userID: this.state.userID, role: this.state.role}}}>Manage Food Trucks</Link>
                             }
-
                         </div>
-                    </div>
-                    {this.state.guest ==='true' && <a href="/" className = {styles.logout}>EXIT</a>}
-                    {this.state.guest !=='true' &&<a href="/" className = {styles.logout}>logout</a>}
+                    </div>}
+                    {this.state.guest ===true && <a href="/" className = {styles.logout}>EXIT</a>}
+                    {this.state.guest !== true &&<a href="/" className = {styles.logout}>logout</a>}
                 </div>
-                {this.state.guest !== 'true' && <p>your user id = {this.state.userID}</p>}
-                {this.state.guest === 'true' && <p>your user id = guest</p>}
                 
                 <form className={styles.searchForm} id = "searchFormID" onSubmit={this.handleSubmit}>
 
@@ -207,6 +193,11 @@ class UserDashboard extends Component{
                         <div className={styles.textBarText}></div>
                     </div>
                 </div>
+                
+                <div className = {styles.subscribedTrucksDiv}>
+                    {this.state.subscribedTrucksList}
+                </div>
+
                 <div className = {styles.mapWrapper}>
                     { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
                     <div className={styles.map} id="map">
@@ -214,7 +205,6 @@ class UserDashboard extends Component{
                     </div>
                 </div>
                 <div className={styles.dynamic}>
-                    <button className = {styles.s} type="submit" onClick={this.special}>ADD TRUCKS</button>
                     <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
                 </div>
 

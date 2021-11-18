@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -22,10 +22,15 @@ class SearchResult extends Component{
             minPrice: '',
             maxPrice: '',
             foodType: '',
+            truckID: '',
             truckOwner: '',
+            menuURL: '',
             queryType: 'invalid',
             searchQuery: '',
-            noResults: 'false'
+            noResults: 'false',
+            subscribed: false,
+            writeReview: false,
+            reviewList: [<div key = "-1"></div>],
         }
         if (this.props.location.state != null){
             this.state.searchQuery = this.props.location.state.searchQuery;
@@ -42,16 +47,14 @@ class SearchResult extends Component{
             
             this.state.truckName = urlParams.get("query")
             this.state.queryType = urlParams.get("queryType");
+            this.state.user = urlParams.get("user");
         }
-
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount(){
         let response = '...unknown...';
-        console.log("-< ", this.state.queryType);
-
+        //WHEN SEARCHING FOR USER, GET THAT USER's INFO
         if (this.state.queryType === 'user\'s username'){
             console.log(this.state.searchQuery)
             response = await getUser(this.state.searchQuery).catch(error =>{
@@ -74,7 +77,9 @@ class SearchResult extends Component{
                     name: response.name,
                 })
             }
-        }else if ( this.state.queryType === 'truck_name'){
+        }
+        //SEARCHING FOR TRUCK BY NAME, GET TRUCK INFO
+        else if ( this.state.queryType === 'truck_name'){
             response = await getTruckByName(this.state.truckName).catch(error =>{
                 console.log(error.message);
             })
@@ -89,16 +94,52 @@ class SearchResult extends Component{
                     minPrice: response.minRange,
                     foodType: response.foodType,
                     truckOwner: response.owner.username,
+                    menuURL: response.menuURL,
+                    truckID: response.truckID,
 
                 })
             }
-
-        }else if (this.state.queryType === 'food type'){
+            //GET SUBSCRIBED TRUCKS AND SEE IF THIS TRUCK IS IN SUBSCRIBED LIST
+            response = await getSubscriptions(this.state.user);
+            if (response != null && response.length === 0){
+                this.setState({subscribed: false});
+            }else{
+                for (let i = 0; i < response.length; i++){
+                    if (response[i].truck.truckName === this.state.truckName){
+                        this.setState({subscribed: true});
+                        break;
+                    }
+                }
+            }
+            
+            //GET TRUCK's RATINGS AND REVIEWS
+            response = await getReviews(this.state.truckName).catch(e=>{
+                console.log(e.message);
+            })
+            if (response != null && response.length != 0){
+                let newList = this.state.reviewList;
+                for (let i = 0; i < response.length; i++){
+                    let fragment = 
+                    <div key = {i} className = {styles.review}>
+                        <div className = {styles.txtRatingDiv}>
+                            <div>
+                                <p className = {styles.reviewUser}>{response[i].user.username}</p>
+                                <p className = {styles.userRating}>rating: {response[i].rating}/10</p>
+                            </div>
+                        </div>                                
+                        <p className= {styles.reviewText}>{response[i].description}</p>
+                    </div>
+                    newList.push(fragment);
+                }
+                this.setState({reviewList: newList});
+            }
+        }
+        //SEARCHING FOR TRUCKS BY FOOD TYPE
+        else if (this.state.queryType === 'food type'){
              //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
             response = await getAllTrucks().catch(error=>{
                 console.log(error.message);
             })
-
             //response should be an array
             for (let i =0; i < response.length;++i){
                 if (response[i].foodType === this.state.searchQuery){
@@ -125,22 +166,95 @@ class SearchResult extends Component{
                 }
                 
             }
-        }
-
-        
+        }        
     }
 
-    handleChange(event){
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        console.log("value = " + value);
-
-    }
-    handleSubmit(event){
+    async handleSubmit(event){
         event.preventDefault();
+        if (event.target.id === "revRatBtn"){
+
+            if (this.state.writeReview){
+                this.setState({writeReview: false});
+            }else{
+                this.setState({writeReview: true});
+            }
+        }
+        //POST REVIEW
+        else if (event.target.id === "postReviewID"){
+
+            let review = {
+                rating: parseFloat(document.getElementById("ratingID").value),
+                description: document.getElementById("reviewTextID").value,
+                username: this.state.user,
+                truckName: this.state.truckName,
+            }
+            //POST REVIEW
+            let response = await postReview(review).catch(e =>{
+                console.log(e.message);
+            })
+            console.log("post review: ", response);
+            if (response != null){
+                alert("REVIEW POSTED");
+            }
+            if (this.state.writeReview === true){
+                this.setState({writeReview: false});
+            }
+        }
+        //SUBSCRIBE TO TRUCK
+        else if (event.target.id === "subscribeBtnID"){
+            if (this.state.subscribed === false){
+                let response = await subscribeToTruck(this.state.truckName, this.state.user).catch(e=>{
+                    console.log(e.message);
+                });
+                this.setState({subscribed: true});
+            }
+        }
+        else if (event.target.id === "unsubscribeBtnID"){
+            if (this.state.subscribed === true){
+                let response = await unsubscribeToTruck(this.state.truckName, this.state.user).catch(e=>{
+                    console.log(e.message());
+                })
+                this.setState({subscribed: false});
+            }
+
+        }
     }
 
     render(){ 
+        let loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque, lacus vitae molestie volutpat, leo risus congue justo, nec dignissim mauris ex eget arcu. Nunc fermentum scelerisque lorem vel convallis. Phasellus vel velit diam. Fusce pretium nisi nisl, at efficitur risus bibendum eu. Nulla faucibus faucibus leo eget scelerisque. In viverra tincidunt hendrerit. Nam quis malesuada nibh, ac egestas eros. Nulla non scelerisque lorem. Quisque non quam in sem consequat dignissim et vel quam.`
+        let createReview = <div></div>;
+        let revRatBtnTxt = "Rate and Review";
+        //POST REVIEW JSX
+        if (this.state.writeReview == true){
+            createReview =             
+            <div className= {styles.newRateReview}>
+                <form  id = "postReviewID" onSubmit = {this.handleSubmit}>
+                    <label>Review</label>
+                    <input type="text" id = "reviewTextID" className = {styles.newReview} maxLength = '254' required placeholder="254 character limit"></input>
+                    <label>Rating</label>
+                    <input className = {styles.newRating} type="number" min = "0" max = "10" id = "ratingID" placeholder="1-10" required></input>
+                    <button type= "submit"  className = {styles.saveReviewBtn} >Post</button>
+                </form>
+                <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>CANCEL</button>
+
+            </div>;
+            revRatBtnTxt = "Cancel";
+        }
+        //SUBSCRIBE BTN
+        let subscribeBtn;
+        if (this.state.subscribed === false){
+            subscribeBtn = 
+                <div>
+                    <button id = "subscribeBtnID" className={styles.subscribeBtn} onClick={this.handleSubmit}>SUBSCRIBE</button>
+                </div>;
+        }else{
+            subscribeBtn = 
+            <div>
+                <button id = "unsubscribeBtnID" className={styles.subscribeBtn} onClick={this.handleSubmit}>UNSUBSCRIBE</button>
+            </div>;
+        }
+
+        
         //USER QUERY
         if (this.state.queryType === 'user\'s username'){
             return (
@@ -160,17 +274,20 @@ class SearchResult extends Component{
                     <div className= {styles.userRevRat}>
                         <p>Reviews and Ratings Here</p>
                     </div>
-                    <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
+                    <button className={styles.backBtn} id = "postReviewID" onClick={()=>{this.props.history.goBack();}}>BACK</button>
                 </div>
             );
         }
-
+        //TRUCK NAME
         else if (this.state.queryType === "truck_name"){
             return(
                 <div>
-                    <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
+
+                    {this.state.searchQuery !== '' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
+                    {this.state.searchQuery === '' && <h1 className = {styles.header}>TRUCK DETAILS</h1>}
+
                     <div className = {styles.truckInfo}>
-                        <div>
+                        <div className= {styles.truckNameDiv}>
                             Food Truck: <span>{this.state.truckName}</span>
                         </div>
                         <div>
@@ -181,10 +298,10 @@ class SearchResult extends Component{
                         </div>
                     </div>
                     <div className={styles.owner}>
-                        <p>Truck Owner Username: {this.state.truckOwner}</p>
+                        <p>Truck Owner Username: <span>{this.state.truckOwner}</span></p>
                     </div>
                     <div className={styles.truckDesc}>
-                        <p>Description: "{this.state.truckDesc}"</p>
+                        <p>Description: "<span>{this.state.truckDesc}</span>"</p>
                     </div>
                     <div className= {styles.truckSchedule}>
                         <p>Truck Schedule</p>
@@ -194,17 +311,30 @@ class SearchResult extends Component{
                     </div>
                     <div className= {styles.truckMenu}>
                         <p>Truck Menu</p>
+                        {this.state.menuURL !== '' && <img src={this.state.menuURL} alt="menu" border="0"/>}
                     </div>
                     <div className= {styles.truckRevRat}>
-                        <p>Truck Reviews and Ratings Here</p>
+                        <p className = {styles.revRatTitle}>Truck Reviews and Ratings Here</p>
+                        <div className = {styles.revRatContent}>
+                            {this.state.reviewList}
+                        </div>
+
+                            <div className={styles.ratrevBtnDiv}>
+                            {this.state.writeReview == false && 
+                                <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>
+                            }
+                            </div>
+                        {createReview}
+                        {/* {this.state.writeReview == true && 
+                            <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>
+                        } */}
                     </div>
+                    {subscribeBtn}
                     <button className={styles.backBtn} onClick={()=>{this.props.history.goBack();}}>BACK</button>
                 </div>
                 
             );
         }
-
-
         //FOOD TRUCK RELATED QUERY
         else{
             return (
