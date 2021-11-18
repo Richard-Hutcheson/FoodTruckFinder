@@ -111,11 +111,6 @@ public class FoodTruckService {
         if (!updateTruck.isPresent())
             throw new FoodTruckNotFoundException("Food Truck Not Found");
 
-        Optional<FoodTruck> checkTruck = foodTruckRepository.findFoodTruckByTruckName(ft.getTruckName());
-
-        if (checkTruck.isPresent())
-            throw new TruckNameTakenException("Food truck name already taken");
-
         FoodTruck up = updateTruck.get();
 
         up.setOwner(ft.getOwner());
@@ -126,6 +121,11 @@ public class FoodTruckService {
         up.setMinRange(ft.getMinRange());
         up.setDescription(ft.getDescription());
         up.setMenuURL(ft.getMenuURL());
+
+        Optional<FoodTruck> checkTruck = foodTruckRepository.findFoodTruckByTruckName(up.getTruckName());
+
+        if (checkTruck.isPresent())
+            throw new TruckNameTakenException("Food truck name already taken");
 
         return foodTruckRepository.save(up);
 
