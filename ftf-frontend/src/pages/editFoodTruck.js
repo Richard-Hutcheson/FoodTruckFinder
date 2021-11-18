@@ -27,6 +27,7 @@ class EditTruck extends Component{
             friday: '',
             schedules: [<div key="-1"></div>],
             routes: [],
+            pendingRoutes: [],
             keyCount: 0,
             stopCount: 0,
         }
@@ -47,7 +48,6 @@ class EditTruck extends Component{
         //get routes from truck
         response = await getRoutes(this.state.truckName).catch(error=>{console.log(error.message);});
         if (response != null){
-            console.log("resp = ", response);
             let arr = this.state.routes;
             for (let i = 0; i < response.length; i++){
                 let x =                 
@@ -59,9 +59,9 @@ class EditTruck extends Component{
                 arr.push(x);
                 this.setState({keyCount: this.state.keyCount += 1});
             }
-            this.setState({routes: arr, stopCount: this.state.keyCount});
-
+            this.setState({pendingRoutes: arr, stopCount: this.state.keyCount});
         }
+
     }
 
     async handleSubmit(event){
@@ -117,6 +117,10 @@ class EditTruck extends Component{
                         this.setState({[x.name]: x.value}, this.saveTruck);
                     }
                 });
+                //THERE ARE ROUTES TO ADD
+                if (this.state.pendingRoutes.length > 0){
+                    this.saveTruck();
+                }
             }
         }
         else if (event.target.id === "addRouteBtn"){
@@ -124,11 +128,12 @@ class EditTruck extends Component{
                 <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
                     <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled = {this.state.viewOnly}/>
                     <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
-                    <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} required disabled = {this.state.viewOnly}/>
+                    <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
+                    maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
                 </div>;
-            let arr = this.state.routes;
+            let arr = [];
             arr.push(newRoute);
-            this.setState({keyCount: this.state.keyCount += 1, routes: arr});
+            this.setState({keyCount: this.state.keyCount += 1, pendingRoutes: arr});
         }
         else if (event.target.id === 'delTruck'){
             if (window.confirm("Are you sure you want to delete this truck?")){
@@ -142,12 +147,20 @@ class EditTruck extends Component{
 
     async saveTruck(){
         //ALSO HANDLE CREATING SCHEDULES HERE AND ADDING ROUTES
-        // for (let i = this.state.stopCount; i < this.state.routes.length; i++){
-        //     let address = document.getElementById("address"+i).value;
-        //     let city = document.getElementById("city"+i).value;
-        //     let state = document.getElementById("state"+i).value;
-        //     await addRoute(this.state.truckName, address, city, state).catch(error =>{console.log(error.message);});
-        // }
+        for (let i = 0; i < this.state.pendingRoutes.length; i++){
+            let address = document.getElementById("address"+i).value;
+            let city = document.getElementById("city"+i).value;
+            let state = document.getElementById("state"+i).value;
+            let r = await addRoute(this.state.truckName, address, city, state).catch(error =>{console.log(error.message);});
+            console.log(r);
+        }
+        //update routes and clear pending routes
+        let arr = this.state.routes;
+        for (let i = 0; i < this.state.pendingRoutes.length; ++i){
+            arr.push(this.state.pendingRoutes[i]);
+        }
+        this.setState({routes: arr, pendingRoutes: []});
+        
 
         let truckData = {
             truckID: this.state.truckID,
@@ -169,6 +182,7 @@ class EditTruck extends Component{
         console.log("truck data = ", truckData );
         let x = await editTruck(truckData).catch(error=>{console.log(error.message);});
         console.log(x);
+        
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});
@@ -245,6 +259,7 @@ class EditTruck extends Component{
                             <input type = "text" className = {styles.routeState} required disabled = {this.state.viewOnly}/>
                         </div> */}
                         {this.state.routes}
+                        {this.state.pendingRoutes}
                     </div>
                     <button id = "addRouteBtn" onClick = {this.handleSubmit} className = {styles.addRouteBtn} disabled = {this.state.viewOnly}>ADD ROUTE</button>
                 </div>
