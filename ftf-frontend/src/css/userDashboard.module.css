@@ -273,3 +273,31 @@ body{
 	height: 30px;
 	color: black
 }
+
+.addTruckBtn{
+	display: block;
+	position: relative;
+	width: 100px;
+	height: 30px;
+	left: 50%;
+	transform: translate(-50%);
+	margin-top: 2em;
+	text-align: center;
+	text-decoration: none;
+	border-style: solid;
+	padding-top: 4px;
+	border-color:rgb(18, 60, 105) ;
+	background-color: rgb(226, 226, 226);
+	border-radius: .5em;
+}
+.addTruckBtn:hover{
+	opacity: 50%;
+}
+.addTruckBtn a{
+	position: relative;
+	text-decoration: none;
+	width: 100px;
+	display: block;
+	height: 30px;
+	color: black
+}

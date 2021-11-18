@@ -94,3 +94,28 @@
     color: black
 
 }
+
+.addTruckBtn{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 30px 0;
+    text-align: center;
+    text-decoration: none;
+}
+
+.addTruckBtn:hover{
+    opacity: 60%;
+}
+
+.addTruckBtn a{
+    position: relative;
+    width: 100px;
+    display: block;
+    height: 30px;
+    color: black
+
+}
