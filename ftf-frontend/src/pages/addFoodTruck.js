@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
-import {getTruckByName, editTruck, deleteTruck, addTruck} from "../API/apiCalls.js"
+import {getTruckByName, editTruck, deleteTruck, addTruck, getUser} from "../API/apiCalls.js"
 
 class AddTruck extends Component{
     constructor(props){
@@ -19,6 +19,10 @@ class AddTruck extends Component{
             submitText: "SAVE",
             truckOwnerDetails: {},
         }
+        if(this.props.location.state != null) {
+            this.state.username = this.props.location.state.username;
+
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);        
@@ -27,7 +31,7 @@ class AddTruck extends Component{
     }
 
     async componentDidMount(){
-        
+        /*
         let response = await getTruckByName(this.state.truckName).catch(error =>{
             console.log(error.message);
         });
@@ -72,6 +76,9 @@ class AddTruck extends Component{
         this.saveTruck();        
     }
     async saveTruck(){
+        let user = await getUser(this.state.username);
+        console.log("USER: ", user);
+        console.log("USERNAME: ", this.state.username);
         let userData = {
             truckID: this.state.truckID,
             truckName: this.state.truckName,
@@ -80,10 +87,21 @@ class AddTruck extends Component{
             foodType: this.state.foodType,
             menuURL: this.state.menuURL,
             minRange: this.state.minPrice,
-            maxRange: this.state.maxPrice
+            maxRange: this.state.maxPrice,
+            owner: user
         }
 
-        await addTruck(userData);
+        console.log(userData);
+
+
+        let response = await addTruck(userData).catch(error =>{
+            console.log(error.message);
+        });
+        if(response != null) {
+            //alert("Food Truck Created");
+            this.props.history.goBack();
+            console.log(response);
+        }
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});

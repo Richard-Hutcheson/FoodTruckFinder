@@ -37,6 +37,7 @@ class ManageFoodTrucks extends Component{
         if (response == null){
             response = "unable to retrieve";
         }
+        console.log("RESPONSE: ", response);
         //response should be an array
         for (let i = 0; i < response.length;++i){
             if (response[i].owner.id === this.state.userID){
@@ -101,7 +102,7 @@ class ManageFoodTrucks extends Component{
                     </div>
                 </div>
                 <div className = {styles.addTruckBtn}>
-                        {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {user: this.state.user, userID: this.state.userID}}}>ADD TRUCK</Link>}
+                        {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {username: this.state.user, userID: this.state.userID}}}>ADD TRUCK</Link>}
                 </div>
                 <div className = {styles.backBtn}>
                     <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>                

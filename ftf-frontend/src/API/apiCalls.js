@@ -40,17 +40,7 @@ export async function deleteTruck(truckName){
     return await makeRequest("DELETE", url, '');
 }
 
-export async function addTruck(truckDataMap){
-    
-    let userData = JSON.stringify({
-        truckID: truckDataMap.get('truckID'),
-        truckName: truckDataMap.get('truckName'),
-        description: truckDataMap.get('description'),
-        minRange: truckDataMap.get('minRange'),
-        maxRange: truckDataMap.get('maxRange'),
-        foodType: truckDataMap.get('foodType'),
-        owner: truckDataMap.get('owner'),
-    });
+export async function addTruck(userData){    
     let url = `createTruck`;
     return await makeRequest("POST", url, userData);
 }
