@@ -1,13 +1,5 @@
-/*
-        body: JSON.stringify({
-            userID: 1,
-            username: un,
-            password: pw,
-            role: "a"
-        })
-                    "Content-Type": "application/json",
-            "Accept": "application/json",
-*/
+import { makeRequest } from "./requestTemplate";
+
 export async function noahCall(){
     const response = await fetch('http://localhost:8080/noah', {
         method: "GET",
@@ -356,9 +348,8 @@ export async function postReview(review){
             "Accept": "application/json",
             "Access-Control-Allow-Origin": "*"
         },
-        body: JSON.stringify(review)    
     }
-    const response = await fetch(`http://localhost:8080/postReview`, requestOptions)
+    const response = await fetch(`http://localhost:8080/postReview/${review.username}/${review.truckName}/${review.rating}/${review.description}/`, requestOptions)
     .catch(error =>{
         window.confirm("Problem encountered with fetch operation: " + error.message);
     });
@@ -369,4 +360,13 @@ export async function postReview(review){
         return data != null ? data : null;
     }else{
     }
+}
+
+export async function getSubscriptions(username){
+    let url = `${username}/subscriptions`;
+    return await makeRequest("GET", url, '');
+} 
+export async function subscribeToTruck(truckName, username){
+    let url = `subscribe/${truckName}/${username}`;
+    return await makeRequest('POST', url, '');
 }

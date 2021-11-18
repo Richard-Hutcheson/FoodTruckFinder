@@ -1,211 +1,238 @@
-    * {
-    font-family: 'Noto Sans Mono', monospace;
-    }
-    .navbar{
-        background-color: rgb(85, 85, 85);
-        height: 3em;
+* {
+font-family: 'Noto Sans Mono', monospace;
+}
+/*
 
-    }
-    .userHeader{
-        position: absolute;
-        display: inline;
-        margin: 0;
-        left: 1em;
-        top: .5em;
-        border-style: solid;
-        padding-left: .5em;
-        padding-right: .5em;
-        width: auto;
-        height: 1.8em;
-    }
-    .userHeaderText{
-        display: inline;
-        margin: 0;
-        }
-        .logout{
-        position: absolute;
-        display: inline;
-        right: 3em;
-        top: 1em;
-        text-decoration: none;
-        color: #4CAF50;
-    }
-    .logout:hover{color: #ffffff;}
+rgb(237, 199, 183) peach
+rgb(238, 226, 220) tan
+rgb(186, 178, 181) gray
+rgb(18, 60, 105) blue
+rgb(172, 59, 97) light red
+*/
+body{
+    background-color: rgb(238, 226, 220);
+}
+.navbar{
+    background-color: rgb(18, 60, 105);
+    height: 3em;
 
-    .dropbtn {
-        position: relative;
-        background-color: #4CAF50;
-        color: white;
-        /* padding: 16px; */
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-        height: inherit;
-        min-width: 90px;
-        padding: 0;
-    }
+}
+.userHeader{
+    position: absolute;
+    display: inline;
+    margin: 0;
+    left: 1em;
+    top: .5em;
+    border-style: solid;
+    padding-left: .5em;
+    padding-right: .5em;
+    width: auto;
+    height: 1.8em;
+}
+.userHeaderText{
+    display: inline;
+    margin: 0;
+}
+.logout{
+    position: absolute;
+    display: inline;
+    right: 3em;
+    top: 1em;
+    text-decoration: none;
+    color: rgb(241, 241, 241);
+}
+.logout:hover{color: rgb(237, 199, 183);}
 
-    .dropdownDiv {
-        position: relative;
-        display: inline-block;
-        height: inherit;
-    }
+.dropbtn {
+    position: relative;
+    background-color: rgb(241, 241, 241);
+    color: black;
+    /* padding: 16px; */
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    min-width: 90px;
+    padding: 0;
+}
 
-    .dropdownContent {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 220px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        font-size: 1em;
-    }
+.dropdownDiv {
+    position: relative;
+    display: inline-block;
+    height: inherit;
+}
 
-    .dropdownContent a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+.dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 1em;
+}
 
-    .dropdownContent a:hover {background-color: #92c4eb}
+.dropdownContent a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
-    .dropdownDiv:hover .dropdownContent {display: block;}
+.dropdownContent a:hover {background-color: rgb(237, 199, 183)}
 
-    .dropdownDiv:hover .dropbtn {background-color: #3e8e41;}
+.dropdownDiv:hover .dropdownContent {display: block;}
 
-    .searchForm{
+.dropdownDiv:hover .dropbtn {background-color: rgb(237, 199, 183);}
 
-
-    }
-    .searchSubDiv{
-        position: relative;
-        width: 620px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+.searchForm{
 
 
-    .searchField{
-        position: relative;
-        width: 380px;
-        height: 23px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-bottom: .5em;
-        border-style: solid;
-        border-radius: 1em;
-        border-width: .6em;
-    }
-    .searchBtn{
-        position: relative;
-        border-style: solid;
-        border-radius: .5em;
-        border-color: rgb(228, 228, 228);
-        width: 100px;
-        height: 30px;
-        float: right; 
-        margin-top: 5px;
-        
-        
-    }
-    .searchBtn:hover{
-        background-color: rgb(204, 203, 203);
-    }
-    .searchOptions{
-        position:relative;
-        display: block;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    .truckRecsContainer{
-        position: relative;
-        display: block;
-        width: 720px;
-        height: 300px;
-        background-color: rgb(163, 163, 163);
-        left: 50%;
-        transform: translateX(-50%);
-        margin-top: 25px;
-        border-style: solid;
-        border-color:#4CAF50;
-        border-width: .5em;
-        border-radius: .5em;
-        overflow-y: scroll;
-    }
-    .truckRecTitle{
-        text-align: center;
-        border-bottom-style: solid;
-        border-top-style: solid;
-        border-color: #4CAF50;
-        height: 2.2em;
-    }
-    .truckRecTitle p{
-        margin: .4em 0;
-    }
-    .textBar{
-        border-bottom-style: solid;
-        border-bottom-color: #4CAF50;
-        display:grid;
-        grid-template-columns: auto auto auto 100px;
+}
+.searchSubDiv{
+    position: relative;
+    width: 620px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-    }
-    .textBarText{
-        /* display: inline-block; */
 
-    }
-    .recItem{
-        height: 50px;
-        border-bottom-style: solid;
-        border-color: black;
-        display: grid;
-        grid-template-columns: 218px 175px 200px 100px;
-    }
-    .truckName, .truckPrice, .truckFoodType, .truckBtn{
-        display: inline-block;
-        position: relative;
-        height: 25px;
-        top:50%;
-        transform: translateY(-50%);
-    }
-    .truckName{
+.searchField{
+    position: relative;
+    width: 380px;
+    height: 23px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: .5em;
+    border-style: solid;
+    border-color: rgb(18, 60, 105);
+    border-radius: 1em;
+    border-width: .6em;
+}
+.searchBtn{
+    position: relative;
+    border-style: solid;
+    border-radius: .5em;
+    border-color: rgb(18, 60, 105);
+    width: 100px;
+    height: 30px;
+    float: right; 
+    margin-top: 5px;
+    
+    
+}
+.searchBtn:hover{
+    background-color: rgb(237, 199, 183);
+}
+.searchOptions{
+    position:relative;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-color: rgb(18, 60, 105);
+    border-radius: 1em;
+    border-width: .6em;
+}
 
-    }
-    .truckPrice{
+.truckRecsContainer{
+    position: relative;
+    display: block;
+    width: 85%;
+    min-width: 720px;
+    height: 300px;
+    background-color: rgb(238, 226, 220);
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 25px;
+    border-style: solid;
+    border-color:rgb(18, 60, 105);
+    border-width: .5em;
+    /* border-radius: 1.8rem; */
+    overflow-y: scroll;
+}
 
-    }
-    .truckFoodType{
+.truckRecTitle{
+    text-align: center;
+    border-bottom-style: solid;
+    border-color: rgb(237, 199, 183);
+    height: 2.2em;
+}
+.truckRecTitle p{
+    margin: .4em 0;
+}
+.textBar, .recItem{
+    grid-template-columns: minmax(298px, auto) minmax(130px, auto) minmax(160px, auto) minmax(150px, auto);
 
-    }
-    .truckBtn{
-        height: 30px;
-        width: 100px;
-    }
-    #map {
-        height: 100%;
-    }
+}
+.textBar{
+    border-bottom-style: solid;
+    border-bottom-color: rgb(237, 199, 183);
+    display:grid;
+    font-weight: bold;
+    padding-left: .5rem;
 
-    .map{
-        margin-top: 2em;
-        margin-bottom: 2em;
-        background-color: gray;
-        width: 720px;
-        height: 400px;
-        position:relative;
-        /* position: absolute; */
-        left: 50%;
-        transform: translate(-50%);
-        text-align: center;
-        /* bottom: 20px; */
-        
-        border-style: solid;
-        border-color:#4CAF50;
-        border-width: .5em;
-        border-radius: .5em;
-    }
-    .mapInputBar{
-        width: 350px;
-    }
+}
+.textBarText{
+    /* display: inline-block; */
+
+}
+.recItem{
+    height: 50px;
+    border-bottom-style: solid;
+    border-color: rgb(237, 199, 183);
+    display: grid;
+    padding-left: .5rem;
+}
+.recItem button{
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.truckName, .truckPrice, .truckFoodType, .truckBtn{
+    display: inline-block;
+    position: relative;
+    height: 25px;
+    top:50%;
+    transform: translateY(-50%);
+}
+.truckName{
+
+}
+.truckPrice{
+
+}
+.truckFoodType{
+
+}
+.truckBtn{
+    height: 30px;
+    width: 100px;
+}
+#map {
+    height: 100%;
+}
+.map{
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: rgb(238, 226, 220);
+    width: 85%;
+    height: 400px;
+    position:relative;
+    /* position: absolute; */
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    /* bottom: 20px; */
+    
+    border-style: solid;
+    border-color:rgb(18, 60, 105);
+    border-width: .5em;
+    /* border-radius: 2rem; */
+}
+.mapInputBar{
+    width: 350px;
+}
 
 .dynamic{
     position: relative;
@@ -217,4 +244,32 @@
 }
 .s{
     width: 100px;
+}
+    
+.backBtn{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    margin-top: 2em;
+    text-align: center;
+    text-decoration: none;
+    border-style: solid;
+    padding-top: 4px;
+    border-color:rgb(226, 226, 226) ;
+    background-color: rgb(226, 226, 226);
+    border-radius: .5em;
+}
+.backBtn:hover{
+    opacity: 50%;
+}
+.backBtn a{
+    position: relative;
+    width: 100px;
+    display: block;
+    height: 30px;
+    color: black
+
 }

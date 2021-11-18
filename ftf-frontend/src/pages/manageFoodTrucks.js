@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from "react-router-dom";
-import styles from '../css/manageFoodTrucks.module.css';
+import styles from '../css/userDashboard.module.css';
 import {getAllTrucks} from '../API/apiCalls';
 
 
