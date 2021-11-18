@@ -94,3 +94,11 @@ export async function getRoutes(truckName){
     let url = `routes/${truckName}`
     return await makeRequest('GET', url, '');
 }
+export async function enhancedSearch(query){
+    let url =  `/searchTruck/${query}`;
+    return await makeRequest('GET', url, '');
+}
+export async function searchNearby(cityPref){
+    let url = `/searchTruck/nearby/${cityPref}`;
+    return await makeRequest('GET', url, '');
+}

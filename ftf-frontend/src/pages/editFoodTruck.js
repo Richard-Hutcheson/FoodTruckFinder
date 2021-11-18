@@ -149,7 +149,6 @@ class EditTruck extends Component{
         //     await addRoute(this.state.truckName, address, city, state).catch(error =>{console.log(error.message);});
         // }
 
-
         let truckData = {
             truckID: this.state.truckID,
             truckName: this.state.truckName,

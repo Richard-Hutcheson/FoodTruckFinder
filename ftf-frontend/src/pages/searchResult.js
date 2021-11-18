@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -36,7 +36,6 @@ class SearchResult extends Component{
             this.state.searchQuery = this.props.location.state.searchQuery;
             this.state.queryType = this.props.location.state.queryType;
             this.state.user = this.props.location.state.user;
-
             if (this.state.queryType === 'truck_name'){
                 this.state.truckName = this.props.location.state.searchQuery;
             }
@@ -46,7 +45,6 @@ class SearchResult extends Component{
         else{
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
-            
             this.state.truckName = urlParams.get("query")
             this.state.queryType = urlParams.get("queryType");
             this.state.user = urlParams.get("user");
@@ -79,15 +77,48 @@ class SearchResult extends Component{
                     name: response.name,
                 })
             }
+        }else if (this.state.queryType === 'enhanced'){
+            response = await enhancedSearch(this.state.searchQuery).catch(error =>{
+                console.log(error.message);
+            });
+            console.log(response);
+            if (response == null || response.status === "NOT_FOUND"){
+                window.confirm("NO RESULTS FOUND");
+                this.props.history.goBack();
+            }
+            //response should be an array
+            for (let i = 0; i < response.length;++i){
+                let container = document.getElementById('recTrucksID');
+                let truck = document.createElement('div');
+                let recItem = document.createElement('div');
+                recItem.setAttribute("class", styles.recItem);
+                let btn = document.createElement('button');
+                btn.setAttribute('type', 'submit');
+                btn.setAttribute('class', styles.truckBtn);
+                btn.setAttribute('id', response[i].truckName);
+                btn.innerText = "VIEW";
+                recItem.innerHTML = `
+                    <div class=${styles.truckName}>${response[i].truckName}</div>
+                    <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
+                    <div class=${styles.truckFoodType}>${response[i].foodType}</div>
+                `
+                btn.onclick = function() {
+                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                }
+                recItem.appendChild(btn);
+                truck.appendChild(recItem);
+                container.appendChild(truck);
+            }
         }
         //SEARCHING FOR TRUCK BY NAME, GET TRUCK INFO
         else if ( this.state.queryType === 'truck_name'){
             response = await getTruckByName(this.state.truckName).catch(error =>{
                 console.log(error.message);
-            })
-            if (response.status === 'NOT_FOUND'){
+            });
+            console.log(response);
+            if (response == null || response.status === "NOT_FOUND"){
                 window.confirm("NO RESULTS FOUND");
-            
+                this.props.history.goBack();
             }else{
                 this.setState({
                     truckName: response.truckName,
@@ -142,6 +173,10 @@ class SearchResult extends Component{
             response = await getAllTrucks().catch(error=>{
                 console.log(error.message);
             })
+            if (response == null){
+                window.confirm("NO RESULTS FOUND");
+                this.props.history.goBack();
+            }
             //response should be an array
             for (let i =0; i < response.length;++i){
                 if (response[i].foodType === this.state.searchQuery){
@@ -168,7 +203,7 @@ class SearchResult extends Component{
                 }
                 
             }
-        }        
+        }      
     }
 
     async handleSubmit(event){
@@ -320,7 +355,6 @@ class SearchResult extends Component{
                         <div className = {styles.revRatContent}>
                             {this.state.reviewList}
                         </div>
-
                             <div className={styles.ratrevBtnDiv}>
                             {this.state.writeReview == false && 
                                 <button type = "button" id = "revRatBtn" className={styles.revRatBtn} onClick={this.handleSubmit}>{revRatBtnTxt}</button>

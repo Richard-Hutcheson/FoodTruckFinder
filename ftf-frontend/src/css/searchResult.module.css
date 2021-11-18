@@ -70,7 +70,7 @@ span{
     display: block;
     width: 720px;
     height: 300px;
-    background-color: rgb(163, 163, 163);
+    background-color: rgb(238, 226, 220);
     left: 50%;
     transform: translateX(-50%);
     margin-top: 25px;
@@ -91,7 +91,7 @@ span{
 .recItem{
     height: 50px;
     border-bottom-style: solid;
-    border-color: black;
+    border-color: rgb(237, 199, 183);
     display: grid;
     grid-template-columns: 218px 175px 200px 100px;
 }
