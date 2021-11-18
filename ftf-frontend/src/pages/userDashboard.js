@@ -37,6 +37,8 @@ class UserDashboard extends Component{
         });
         if (response == null){
             response = "unable to retrieve";
+        }else{
+            this.setState({guest: false});
         }
         this.setState({userID: response.id});
         this.setState({user: response.username});
