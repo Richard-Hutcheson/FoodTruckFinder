@@ -21,7 +21,7 @@ class EditTruck extends Component{
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);        
+        const urlParams = new URLSearchParams(queryString);
         this.state.truckName = urlParams.get("truck");
     }
 
@@ -87,6 +87,8 @@ class EditTruck extends Component{
             description: this.state.truckDesc,
             foodType: this.state.foodType,
             menuURL: this.state.menuURL,
+            minRange: this.state.minPrice,
+            maxRange: this.state.maxPrice,
         }
         
         await editTruck(userData);
@@ -113,6 +115,11 @@ class EditTruck extends Component{
                 <label htmlFor="descID">Truck Description:</label><br/>
                 <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field field2" disabled = {this.state.viewOnly} id = {styles.descID}></textarea><br/>
                 
+                <label htmlFor="minPriceField">Min Price: </label><br/>
+                <input min="0" type="number" id="minPriceField" name = "minPrice" className="field field2" placeholder={this.state.minPrice} disabled = {this.state.viewOnly}/><br/>
+                <label htmlFor="maxPriceField">Max Price: </label><br/>
+                <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
+
                 <label htmlFor="menuField">MENU</label><br/>
                 {this.state.menuURL == null && 
                     <input type="text" id="menuField" name = "menuField" className="field field2" placeholder="url here" disabled = {this.state.viewOnly}/>
