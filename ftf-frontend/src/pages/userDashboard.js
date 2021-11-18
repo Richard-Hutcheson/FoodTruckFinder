@@ -138,9 +138,9 @@ class UserDashboard extends Component{
                     {this.state.guest === false && <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.user}</button>
                         <div className={styles.dropdownContent}>
-                            {this.state.guest !=='true' && 
+                            {this.state.guest !== true && 
                                 <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
-                            {this.state.guest !== 'true' && this.state.role === 'o' && 
+                            {this.state.guest !== true && this.state.role === 'o' && 
                                 <Link to= {{ pathname: "/ManageFoodTrucks", state: {user: this.state.user, userID: this.state.userID, role: this.state.role}}}>Manage Food Trucks</Link>
                             }
                         </div>
