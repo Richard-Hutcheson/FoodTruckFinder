@@ -21,7 +21,7 @@ RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 
 # Add app
-COPY . ./
+COPY . .
 
 # Defines a base image, sets the path for COPY
 # COPY is executed and copies the files from
