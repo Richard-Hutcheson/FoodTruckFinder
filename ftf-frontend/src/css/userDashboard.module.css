@@ -1,5 +1,7 @@
 * {
-font-family: 'Noto Sans Mono', monospace;
+/* font-family: 'Noto Sans Mono', monospace; */
+	font-family: 'Magra', sans-serif;
+
 }
 /*
 
@@ -271,7 +273,9 @@ body{
 	width: 100px;
 	display: block;
 	height: 30px;
-	color: black
+	color: black;
+	text-decoration: none;
+	line-height: 25px;
 }
 
 .addTruckBtn{
@@ -299,5 +303,6 @@ body{
 	width: 100px;
 	display: block;
 	height: 30px;
-	color: black
+	color: black;
+	line-height: 25px;
 }

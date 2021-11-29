@@ -61,7 +61,9 @@ class LoginScreen extends Component{
             <div className = {styles.loginBody}>
 
                 <div className = {styles.loginHeader}>
-                    <h1 className = {styles.ftfHeader}>FOOD TRUCK FINDER</h1>
+                    <h1 className = {styles.ftfHeader}>EARN</h1>
+                    <h3 className = {styles.ftfSubHeader}>a food truck finding app</h3>
+
                 </div>
 
                 <form className = {styles.loginForm} onSubmit={this.handleSubmit}>
