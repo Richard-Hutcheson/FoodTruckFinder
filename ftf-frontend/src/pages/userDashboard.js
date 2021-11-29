@@ -10,18 +10,18 @@ class UserDashboard extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user: '<unknown>',
+            username: '<unknown>',
             userID: 'fetching...',
             searchQuery: '',
             name: '<unknown>',
             guest: true,
-            showMap: 'true',
+            showMap: 'false',
             role: '',
             queryType: '',
             subscribedTrucksList: [<div key = "-1"></div>]
         }
         if (this.props.location.state != null){
-            this.state.user = this.props.location.state.user;
+            this.state.username = this.props.location.state.username;
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
         }
@@ -31,8 +31,8 @@ class UserDashboard extends Component{
     }
 
     async componentDidMount(props){
-        //GET USER
-        let response = await getUser(this.state.user).catch(error=>{
+        //GET username
+        let response = await getUser(this.state.username).catch(error=>{
             console.log(error.message);
         });
         if (response == null){
@@ -41,7 +41,7 @@ class UserDashboard extends Component{
             this.setState({guest: false});
         }
         this.setState({userID: response.id});
-        this.setState({user: response.username});
+        this.setState({username: response.username});
         this.setState({role: response.role});
         if (this.state.showMap === 'true'){
             try{
@@ -54,10 +54,10 @@ class UserDashboard extends Component{
         //GET ALL FOOD TRUCKS FOR FOOD TRUCK RECOMMENDATIONS
         if (this.state.guest === false){
             //INSERT USER INTO FOOD TRUCK REC TABLE
-            response = await insertUserFoodRec(this.state.user).catch(error=>{
+            response = await insertUserFoodRec(this.state.username).catch(error=>{
                 console.log(error.message);
             })
-            response = await getRecommendedTrucks(this.state.user).catch(error=>{
+            response = await getRecommendedTrucks(this.state.username).catch(error=>{
                 console.log(error.message);
             });
             listLength = response.length;
@@ -81,7 +81,7 @@ class UserDashboard extends Component{
                 <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                 <div class=${styles.truckFoodType}>${response[i].foodType}</div>
             `
-            let tempName = this.state.user;
+            let tempName = this.state.username;
             let truckName = response[i].truckName;
             btn.onclick = function() {
                 document.location.href = `http://localhost:3000/SearchResult?query=${truckName}&queryType=truck_name&user=${tempName}`;
@@ -92,11 +92,11 @@ class UserDashboard extends Component{
         }
 
         //GET SUBSCRIBED TRUCKS
-        response = await getSubscriptions(this.state.user).catch(error=>{console.log(error.message);})
+        response = await getSubscriptions(this.state.username).catch(error=>{console.log(error.message);})
         if (response!= null){
             let arr = []; 
             for (let i =0; i < response.length; i++){
-                let tempName = this.state.user;
+                let tempName = this.state.username;
                 let truckName = response[i].truck.truckName;
                 let temp = 
                 <div key = {i}>
@@ -137,13 +137,13 @@ class UserDashboard extends Component{
 
             if (this.state.queryType === 'food type'){
 
-                let response = await updateFoodTypeRec(this.state.user, this.state.searchQuery).catch(error=>{
+                let response = await updateFoodTypeRec(this.state.username, this.state.searchQuery).catch(error=>{
                     console.log(error.message);
                 })
             }
             this.props.history.push({
                 pathname: '/SearchResult',
-                state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value, user: this.state.user} // your data array of objects
+                state: {searchQuery: this.state.searchQuery, queryType: document.getElementById('searchOptionsID').value, username: this.state.username} // your data array of objects
             })
         }else{
             if (this.state.queryType !== "nearby"){
@@ -160,12 +160,12 @@ class UserDashboard extends Component{
             <div>
                 <div className = {styles.navbar}>
                     {this.state.guest === false && <div className={styles.dropdownDiv}>
-                        <button className={styles.dropbtn}>{this.state.user}</button>
+                        <button className={styles.dropbtn}>{this.state.username}</button>
                         <div className={styles.dropdownContent}>
                             {this.state.guest !== true && 
-                                <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user, role: this.state.role}}}>Manage Account</Link>}
+                                <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.username, role: this.state.role}}}>Manage Account</Link>}
                             {this.state.guest !== true && this.state.role === 'o' && 
-                                <Link to= {{ pathname: "/ManageFoodTrucks", state: {user: this.state.user, userID: this.state.userID, role: this.state.role}}}>Manage Food Trucks</Link>
+                                <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.username, userID: this.state.userID, role: this.state.role}}}>Manage Food Trucks</Link>
                             }
                         </div>
                     </div>}

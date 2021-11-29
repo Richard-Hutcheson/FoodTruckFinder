@@ -7,6 +7,7 @@ class EditTruck extends Component{
         super(props);
         this.state = {
             username: '',
+            userID: '',
             truckID: '',
             truckName: '',
             truckDesc: '',
@@ -26,8 +27,6 @@ class EditTruck extends Component{
             thursday: '',
             friday: '',
             schedules: [<div key="-1"></div>],
-            routes: [],
-            pendingRoutes: [],
             keyCount: 0,
             stopCount: 0,
         }
@@ -44,23 +43,8 @@ class EditTruck extends Component{
         });
         this.setState({truckID: response.truckID, truckDesc: response.description, 
             minPrice: response.minRange, maxPrice: response.maxRange,
-            foodType: response.foodType, truckOwner: response.owner.username, truckOwnerDetails: response.owner, menuURL: response.menuURL});
+            foodType: response.foodType, username: response.owner.username, truckOwner: response.owner.username, truckOwnerDetails: response.owner, menuURL: response.menuURL});
         //get routes from truck
-        response = await getRoutes(this.state.truckName).catch(error=>{console.log(error.message);});
-        if (response != null){
-            let arr = this.state.routes;
-            for (let i = 0; i < response.length; i++){
-                let x =                 
-                <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
-                    <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled = {this.state.viewOnly} value = {response[i].address}/>
-                    <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly} value = {response[i].city}/>
-                    <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} required disabled = {this.state.viewOnly} value = {response[i].state}/>
-                </div>;
-                arr.push(x);
-                this.setState({keyCount: this.state.keyCount += 1});
-            }
-            this.setState({pendingRoutes: arr, stopCount: this.state.keyCount});
-        }
 
     }
 
@@ -78,89 +62,33 @@ class EditTruck extends Component{
             }
             //user is saving
             else{
-                // let na =  document.getElementById("truckNameField").value != '' ?  document.getElementById("truckNameField").value : this.state.truckName;
-                // let ft =  document.getElementById("foodTypeField").value != '' ?  document.getElementById("foodTypeField").value : this.state.foodType;
-                // let td =  document.getElementById(styles.descID).value != '' ?  document.getElementById(styles.descID).value : this.state.truckDesc;
-                // let mu =  document.getElementById("menuField").value != '' ?  document.getElementById("menuField").value : this.state.menuURL;
-                // let mi =  document.getElementById("minPriceField").value != '' ?  document.getElementById("minPriceField").value : this.state.minPrice;
-                // let ma =  document.getElementById("maxPriceField").value != '' ?  document.getElementById("maxPriceField").value : this.state.maxPrice;
-                
-                // this.setState({
-                //     submitText: "EDIT", viewOnly: true,
-                //     truckName: na,
-                //     foodType: ft,
-                //     truckDesc: td,
-                //     menuURL: mu,
-                //     minPrice: mi,
-                //     maxPrice: ma,
-                // }, ()=>{this.saveTruck();});
-                // this.setState({
-                //     truckName: document.getElementById("truckNameField").value,
-                //     foodType: document.getElementById("foodTypeField").value.toUpperCase(),
-                //     truckDesc: document.getElementById(styles.descID).value,
-                //     menuURL: document.getElementById("menuField").value,
-                //     monday: document.getElementById("monday").value,
-                //     tuesday: document.getElementById("tuesday").value,
-                //     wednesday: document.getElementById("wednesday").value,
-                //     thursday: document.getElementById("thursday").value,
-                //     friday: document.getElementById("friday").value,
-                //     saturday: document.getElementById("saturday").value,
-                //     sunday: document.getElementById("sunday").value,
-                // });
+    
                 this.setState({submitText: "EDIT", viewOnly: true});
-                document.querySelectorAll('.field').forEach(x=>{
-                    if (x.value !== ''){
-                        if (x.name === 'foodType'){
-                            x.value = x.value.toUpperCase();
-                        }
-                        console.log(x.name, " = ", x.value);
-                        this.setState({[x.name]: x.value}, this.saveTruck);
-                    }
-                });
-                //THERE ARE ROUTES TO ADD
-                if (this.state.pendingRoutes.length > 0){
-                    this.saveTruck();
-                }
+                let form = event.target;
+                
+                this.setState({
+                    truckName: form.truckName.value !== ''? form.truckName.value : this.state.truckName,
+                    foodType: form.foodType.value !== ''? form.foodType.value.toUpperCase() : this.state.foodType.toUpperCase(),
+                    truckDesc: form.truckDesc.value !== ''? form.truckDesc.value : this.state.truckDesc,
+                    minPrice: form.minPrice.value !== ''? form.minPrice.value : this.state.minPrice,
+                    maxPrice: form.maxPrice.value !== ''? form.maxPrice.value : this.state.maxPrice,
+                    menuURL: form.menuURL.value !== ''? form.menuURL.value : this.state.menuURL,
+                }, this.saveTruck);
             }
-        }
-        else if (event.target.id === "addRouteBtn"){
-            let newRoute=
-                <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
-                    <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled = {this.state.viewOnly}/>
-                    <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
-                    <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
-                    maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
-                </div>;
-            let arr = [];
-            arr.push(newRoute);
-            this.setState({keyCount: this.state.keyCount += 1, pendingRoutes: arr});
         }
         else if (event.target.id === 'delTruck'){
             if (window.confirm("Are you sure you want to delete this truck?")){
-                await deleteTruck(this.state.truckName);
+                let response = await deleteTruck(this.state.truckName).catch(e=>{console.log(e.message);});
                 window.confirm("Truck Deleted");
-                this.props.history.goBack();
+                this.props.history.push('/ManageFoodTrucks',
+                    {username: this.state.username, userID: this.state.truckOwnerDetails['id']
+                })
             }else{
             }
         }
     }
 
     async saveTruck(){
-        //ALSO HANDLE CREATING SCHEDULES HERE AND ADDING ROUTES
-        for (let i = 0; i < this.state.pendingRoutes.length; i++){
-            let address = document.getElementById("address"+i).value;
-            let city = document.getElementById("city"+i).value;
-            let state = document.getElementById("state"+i).value;
-            let r = await addRoute(this.state.truckName, address, city, state).catch(error =>{console.log(error.message);});
-            console.log(r);
-        }
-        //update routes and clear pending routes
-        let arr = this.state.routes;
-        for (let i = 0; i < this.state.pendingRoutes.length; ++i){
-            arr.push(this.state.pendingRoutes[i]);
-        }
-        this.setState({routes: arr, pendingRoutes: []});
-        
 
         let truckData = {
             truckID: this.state.truckID,
@@ -211,7 +139,7 @@ class EditTruck extends Component{
                 <label htmlFor="maxPriceField">Max Price: </label><br/>
                 <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
 
-                <label htmlFor="menuField">MENU</label><br/>
+                <label htmlFor="menuField">Menu URL</label><br/>
                 {this.state.menuURL == null && 
                     <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder="url here" disabled = {this.state.viewOnly}/>
                 }
