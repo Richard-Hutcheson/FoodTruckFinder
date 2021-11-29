@@ -169,6 +169,7 @@ class UserDashboard extends Component{
                             }
                         </div>
                     </div>}
+                    <p className = {styles.siteTitle}>EARN</p>
                     {this.state.guest ===true && <a href="/" className = {styles.logout}>EXIT</a>}
                     {this.state.guest !== true &&<a href="/" className = {styles.logout}>logout</a>}
                 </div>

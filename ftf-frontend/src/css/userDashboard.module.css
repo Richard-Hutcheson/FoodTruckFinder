@@ -34,6 +34,20 @@ body{
 	display: inline;
 	margin: 0;
 }
+.siteTitle{
+	margin: .4em 0 0 0;
+	display: inline;
+	position: absolute;
+	width: 100px;
+	height: auto;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	color: white;
+	font-size: x-large;
+	font-weight: bold;
+    letter-spacing: .2em;
+}
 .logout{
 	position: absolute;
 	display: inline;
@@ -57,6 +71,7 @@ body{
 	height: 100%;
 	min-width: 90px;
 	padding: 0;
+	font-size: large;
 }
 .dropdownDiv {
 	position: relative;
@@ -180,6 +195,9 @@ body{
 	display: grid;
 	padding-left: .5rem;
 }
+.recItem:hover{
+	background-color: rgba(237, 199, 183, 0.788);
+}
 .recItem button{
 	top: 20%;
 	left: 50%;
@@ -196,6 +214,10 @@ body{
 .truckBtn{
 	height: 30px;
 	width: 100px;
+}
+.truckBtn:hover{
+	border-style: solid;
+	background-color: rgb(237, 199, 183);
 }
 
 .subscribedTrucksDiv{
