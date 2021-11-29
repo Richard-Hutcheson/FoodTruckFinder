@@ -21,7 +21,7 @@
 }
 
 .ftfHeader{
-    color: rgb(238, 226, 220);
+    color: white;
     text-align: center;
     margin: 0;
     font-size: 3em;
@@ -101,8 +101,8 @@ input, button{
     border-style: solid;
     border-radius: .55em;
     border-width: .3em;
-    background-color: rgb(238, 226, 220);
-    border-color: rgb(238, 226, 220);
+    background-color: white;
+    border-color: white;
     display: block;
     width: 150px;
     text-decoration: none;
@@ -135,8 +135,8 @@ input, button{
     border-style: solid;
     border-radius: .55em;
     border-width: .3em;
-    background-color: rgb(238, 226, 220);
-    border-color: rgb(238, 226, 220);
+    background-color: white;
+    border-color: white;
     display: block;
     width: 150px;
     text-decoration: none;
@@ -162,8 +162,8 @@ input, button{
     border-style: solid;
     border-radius: .55em;
     border-width: .3em;
-    background-color: rgb(238, 226, 220);
-    border-color: rgb(238, 226, 220);
+    background-color: white;
+    border-color: white;
     display: block;
     width: 150px;
     text-decoration: none;

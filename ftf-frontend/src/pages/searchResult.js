@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch, searchNearby} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -28,6 +28,7 @@ class SearchResult extends Component{
             queryType: 'invalid',
             searchQuery: '',
             noResults: 'false',
+            userCity: '',
             subscribed: false,
             writeReview: false,
             reviewList: [<div key = "-1"></div>],
@@ -36,6 +37,7 @@ class SearchResult extends Component{
             this.state.searchQuery = this.props.location.state.searchQuery;
             this.state.queryType = this.props.location.state.queryType;
             this.state.user = this.props.location.state.user;
+            console.log("user = ", this.state.user);
             if (this.state.queryType === 'truck_name'){
                 this.state.truckName = this.props.location.state.searchQuery;
             }
@@ -77,7 +79,42 @@ class SearchResult extends Component{
                     name: response.name,
                 })
             }
-        }else if (this.state.queryType === 'enhanced'){
+        }
+        else if (this.state.queryType === 'nearby'){
+            response = await getUser(this.state.user).catch(error =>{
+                console.log(error.message);
+            });
+            let city = response.city;
+            let username = response.username;
+            this.setState({userCity: city});
+            response = await searchNearby(city).catch(error =>{
+                console.log(error.message);
+            });
+             //response should be an array
+             for (let i = 0; i < response.length;++i){
+                let container = document.getElementById('recTrucksID');
+                let truck = document.createElement('div');
+                let recItem = document.createElement('div');
+                recItem.setAttribute("class", styles.recItem);
+                let btn = document.createElement('button');
+                btn.setAttribute('type', 'submit');
+                btn.setAttribute('class', styles.truckBtn);
+                btn.setAttribute('id', response[i].truck.truckName);
+                btn.innerText = "VIEW";
+                recItem.innerHTML = `
+                    <div class=${styles.truckName}>${response[i].truck.truckName}</div>
+                    <div class=${styles.truckPrice}>$${response[i].truck.minRange}-$${response[i].truck.maxRange}</div>
+                    <div class=${styles.truckFoodType}>${response[i].truck.foodType}</div>
+                `
+                btn.onclick = function() {
+                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truck.truckName}&queryType=truck_name&user=${username}`;
+                }
+                recItem.appendChild(btn);
+                truck.appendChild(recItem);
+                container.appendChild(truck);
+            }
+        }
+        else if (this.state.queryType === 'enhanced'){
             response = await enhancedSearch(this.state.searchQuery).catch(error =>{
                 console.log(error.message);
             });
@@ -102,8 +139,9 @@ class SearchResult extends Component{
                     <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                     <div class=${styles.truckFoodType}>${response[i].foodType}</div>
                 `
+                let username = this.state.user;
                 btn.onclick = function() {
-                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${username}`;
                 }
                 recItem.appendChild(btn);
                 truck.appendChild(recItem);
@@ -129,7 +167,6 @@ class SearchResult extends Component{
                     truckOwner: response.owner.username,
                     menuURL: response.menuURL,
                     truckID: response.truckID,
-
                 })
             }
             //GET SUBSCRIBED TRUCKS AND SEE IF THIS TRUCK IS IN SUBSCRIBED LIST
@@ -194,8 +231,9 @@ class SearchResult extends Component{
                         <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                         <div class=${styles.truckFoodType}>${response[i].foodType}</div>
                     `
+                    let username = this.state.user;
                     btn.onclick = function() {
-                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${username}`;
                     }
                     recItem.appendChild(btn);
                     truck.appendChild(recItem);
@@ -244,6 +282,7 @@ class SearchResult extends Component{
                     console.log(e.message);
                 });
                 this.setState({subscribed: true});
+                console.log(response);
             }
         }
         else if (event.target.id === "unsubscribeBtnID"){
@@ -375,7 +414,8 @@ class SearchResult extends Component{
         else{
             return (
                 <div>
-                    <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
+                    {this.state.queryType !== 'nearby' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
+                    {this.state.queryType === 'nearby' && <h1 className = {styles.header}>SEARCHING FOR TRUCKS IN YOUR CITY</h1>}
                     <p  className = {styles.listTrucks}>TRUCK RESULTS HERE</p>
                     <div className={styles.truckRecsContainer} id = "recTrucksID">
                         <div className={styles.truckRecTitle}>

@@ -199,6 +199,7 @@ body{
 }
 
 .subscribedTrucksDiv{
+	overflow-y: auto;
 	width: 85%;
 	height: 200px;
 	position:relative;
