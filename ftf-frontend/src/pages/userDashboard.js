@@ -242,6 +242,14 @@ class UserDashboard extends Component{
                 {/* <div className={styles.dynamic}>
                     <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
                 </div> */}
+                {/* .default is required because of a bug in react scripts v4.0 solution found on https://www.youtube.com/watch?v=ay6id01369s */}
+                <div className = {styles.footerImageDiv}>
+                    <img src={require('../assets/justTruck.png').default} className={styles.truckImg} alt="TRUCK IMAGE"/>
+                    <p className = {styles.footerTextHead}>EARN</p>
+                    <p className = {styles.footerText}>A FOOD TRUCK FINDING APP</p>
+                    <p className = {styles.footerTextFooter}>Richard Hutcheson, Noah Lambaria, Austin Blanchard, Ethan Robinson</p>
+
+                </div>
 
             </div>
         );

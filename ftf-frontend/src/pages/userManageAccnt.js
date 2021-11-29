@@ -234,7 +234,7 @@ class UserManageAccount extends Component{
     
     render(){ 
         return (
-            <div>
+            <div className = {styles.container}>
                 <h1 className={styles.header}>MANAGE ACCOUNT</h1>
                 <div className={styles.formContainer}>
                     <div className = {styles.userForm}>

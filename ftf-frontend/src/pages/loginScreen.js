@@ -62,7 +62,7 @@ class LoginScreen extends Component{
 
                 <div className = {styles.loginHeader}>
                     <h1 className = {styles.ftfHeader}>EARN</h1>
-                    <h3 className = {styles.ftfSubHeader}>a food truck finding app</h3>
+                    <h3 className = {styles.ftfSubHeader}>A FOOD TRUCK FINDING APP</h3>
 
                 </div>
 

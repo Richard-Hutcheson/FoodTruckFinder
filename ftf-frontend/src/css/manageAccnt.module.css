@@ -1,3 +1,6 @@
+.container{
+
+}
 .formContainer{
     display: block;
     position: relative;
@@ -19,7 +22,12 @@
     height: 30px;
     left: 50%;
     transform: translate(-50%);
+    border-style: none;
+    background-color: white;
 
+}
+.editSaveBtn:hover{
+    opacity: 75%;
 }
 .header, .preferencesHeader{
     display: block;
@@ -60,6 +68,12 @@
     height: 30px;
     left: 50%;
     transform: translate(-50%);
+    border-style: none;
+    background-color: white;
+
+}
+.formSaveBtn:hover{
+    opacity: 75%;
 }
 .foodTypeDiv select{
     display: block;
@@ -71,7 +85,7 @@
 .backBtn, .cancelBtn{
     display: block;
     position: relative;
-    width: 100px;
+    width: 150px;
     height: 30px;
     left: 50%;
     transform: translate(-50%);
@@ -83,15 +97,19 @@
     margin: 10px 0;
 }
 .backBtn:hover{
-    opacity: 60%;
+    opacity: 75%;
 }
 
 .backBtn a{
     position: relative;
-    width: 100px;
+    width: 150px;
     display: block;
     height: 30px;
-    color: black
+    color: black;
+    background-color: white;
+    text-decoration: none;
+    line-height: 2.1em;
+    font-size: .9em;
 
 }
 
