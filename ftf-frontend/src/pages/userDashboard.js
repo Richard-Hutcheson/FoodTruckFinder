@@ -206,7 +206,7 @@ class UserDashboard extends Component{
                         <option value="nearby">Food Trucks Nearby</option>
                         <option value="truck price">Food Truck By Price</option>
                         <option value="food type">Food Truck By Food Type</option>
-                        <option value="user's username">User</option>
+                        {/* <option value="user's username">User</option> */}
                     </select>
                 </form>
                 <div className={styles.truckRecsContainer} id = "recTrucksID">

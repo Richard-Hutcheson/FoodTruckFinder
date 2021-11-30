@@ -26,11 +26,13 @@ class EditTruck extends Component{
             wednesday: '',
             thursday: '',
             friday: '',
-            schedules: [<div key="-1"></div>],
+            routes: [],
+            schedules: [],
             keyCount: 0,
             stopCount: 0,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDel = this.handleDel.bind(this);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         this.state.truckName = urlParams.get("truck");
@@ -45,12 +47,11 @@ class EditTruck extends Component{
             minPrice: response.minRange, maxPrice: response.maxRange,
             foodType: response.foodType, username: response.owner.username, truckOwner: response.owner.username, truckOwnerDetails: response.owner, menuURL: response.menuURL});
         //get routes from truck
-
+        //make sure to append routes to routes and to increment keyCount
     }
 
     async handleSubmit(event){
         event.preventDefault();
-
         if (event.target.id === "backBtn"){
             this.props.history.goBack();
         }
@@ -65,7 +66,6 @@ class EditTruck extends Component{
     
                 this.setState({submitText: "EDIT", viewOnly: true});
                 let form = event.target;
-                
                 this.setState({
                     truckName: form.truckName.value !== ''? form.truckName.value : this.state.truckName,
                     foodType: form.foodType.value !== ''? form.foodType.value.toUpperCase() : this.state.foodType.toUpperCase(),
@@ -86,6 +86,34 @@ class EditTruck extends Component{
             }else{
             }
         }
+        else if (event.target.id === 'addRouteBtn'){
+            let newRoute=
+            <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
+                <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled = {this.state.viewOnly}/>
+                <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
+                <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
+                maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
+                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel}>X</button>
+            </div>;
+            let tempRoutes = this.state.routes;
+            tempRoutes.push(newRoute);
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+=1});
+        }
+    }
+
+    handleDel(event){
+        console.log("event id = ", event.target.id);
+        let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
+        let tempRoutes = this.state.routes;
+        tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
+        for (let i = 0; i < tempRoutes.length; i++){
+            if (ndx === tempRoutes[i].key){
+                tempRoutes.splice(i, 1);
+                break;
+            }
+        }
+        this.setState({routes: tempRoutes});
+        //CALL DELETE ROUTE END POINT HERE
     }
 
     async saveTruck(){
@@ -176,25 +204,14 @@ class EditTruck extends Component{
                         <p>STATE</p>
                     </div>
                     <div className = {styles.routeContent}>
-                        {/* <div className = {styles.newRouteDiv}>
-                            <input type = "text" className = {styles.routeAddress} required disabled = {this.state.viewOnly}/>
-                            <input type = "text" className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
-                            <input type = "text" className = {styles.routeState} required disabled = {this.state.viewOnly}/>
-                        </div>
-                        <div className = {styles.newRouteDiv}>
-                            <input type = "text" className = {styles.routeAddress} required disabled = {this.state.viewOnly}/>
-                            <input type = "text" className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
-                            <input type = "text" className = {styles.routeState} required disabled = {this.state.viewOnly}/>
-                        </div> */}
                         {this.state.routes}
-                        {this.state.pendingRoutes}
                     </div>
-                    <button id = "addRouteBtn" onClick = {this.handleSubmit} className = {styles.addRouteBtn} disabled = {this.state.viewOnly}>ADD ROUTE</button>
+                    <button id = "addRouteBtn" onClick = {this.handleSubmit} type = "button" className = {styles.addRouteBtn} disabled = {this.state.viewOnly}>ADD ROUTE</button>
                 </div>
                 <button id = "editBtn" className = {styles.editBtn} type= "submit" value={this.state.submitText}>{this.state.submitText}</button>
             </form>
-            <button id = "delTruck" className = {styles.delTruck} onClick = {this.handleSubmit}>DELETE TRUCK</button>
-            <button id = "backBtn"  className = {styles.backBtn} onClick={this.handleSubmit}>BACK</button>
+            <button id = "delTruck" type = "button" className = {styles.delTruck} onClick = {this.handleSubmit}>DELETE TRUCK</button>
+            <button id = "backBtn"  type = "button" className = {styles.backBtn} onClick={this.handleSubmit}>BACK</button>
             {/* <a href="https://ibb.co/qptvrQ9"><img src="https://i.ibb.co/FzSFDTJ/test-menu.jpg" alt="test-menu" border="0"/></a> */}
         </div>
         );
