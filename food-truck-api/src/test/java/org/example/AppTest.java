@@ -1,22 +1,26 @@
 package org.example;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import ftf.Repository.FoodTruckRepository;
 import ftf.Service.FoodTruckService;
 import ftf.classes.FoodTruck;
-import org.json.JSONException;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Unit test for simple App.
  */
-@SpringBootTest(classes = FoodTruckService.class)
+//@RunWith(SpringRunner.class)
+@WebAppConfiguration
+@SpringJUnitConfig
 public class AppTest 
 {
 
@@ -32,6 +36,6 @@ public class AppTest
         saveFT.setTruckName("Junit Test Truck");
 
         when(foodTruckService.createNewTruck(saveFT)).thenReturn(saveFT);
-        assertSame(saveFT, foodTruckService.createNewTruck(saveFT));
+        assertEquals(saveFT, foodTruckService.createNewTruck(saveFT));
     }
 }
