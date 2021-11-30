@@ -14,4 +14,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     Optional<Route> findRouteByRouteID(Long routeID);
     List<Route> findByTruck(FoodTruck truck);
     List<Route> findRoutesByCity(String city);
+    Optional<Route> findRouteByAddressAndCityAndStateAndTruck(String address, String city, String state,FoodTruck truck);
 }
