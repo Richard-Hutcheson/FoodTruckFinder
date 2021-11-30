@@ -234,7 +234,7 @@ class UserManageAccount extends Component{
     
     render(){ 
         return (
-            <div>
+            <div className = {styles.container}>
                 <h1 className={styles.header}>MANAGE ACCOUNT</h1>
                 <div className={styles.formContainer}>
                     <div className = {styles.userForm}>
@@ -289,7 +289,7 @@ class UserManageAccount extends Component{
                         <button className={styles.formSaveBtn} type="submit">SAVE PREFERENCES</button>
                     </form>
                     <div className = {styles.backBtn}>
-                        <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>
+                        <Link to= {{ pathname: "/UserDashboard", state: {username: this.state.username, userID: this.state.userID}}}>BACK</Link>
                         {/* {this.state.role === 'o' && <Link to= {{ pathname: "/TruckOwnerDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>} */}
                         {/* {this.state.role !== 'o' && <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.username, userID: this.state.userID}}}>BACK</Link>} */}
 

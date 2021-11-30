@@ -1,5 +1,7 @@
 * {
-font-family: 'Noto Sans Mono', monospace;
+/* font-family: 'Noto Sans Mono', monospace; */
+	font-family: 'Magra', sans-serif;
+
 }
 /*
 
@@ -11,6 +13,10 @@ rgb(172, 59, 97) light red
 */
 body{
 	background-color: rgb(238, 226, 220);
+	background-image: url("../assets/foodtruck.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 .navbar{
 	background-color: rgb(18, 60, 105);
@@ -31,6 +37,20 @@ body{
 .userHeaderText{
 	display: inline;
 	margin: 0;
+}
+.siteTitle{
+	margin: .2em 0 0 0;
+	display: inline;
+	position: absolute;
+	width: 100px;
+	height: auto;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	color: white;
+	font-size: xx-large;
+	font-weight: bold;
+    letter-spacing: .2em;
 }
 .logout{
 	position: absolute;
@@ -55,6 +75,7 @@ body{
 	height: 100%;
 	min-width: 90px;
 	padding: 0;
+	font-size: large;
 }
 .dropdownDiv {
 	position: relative;
@@ -178,6 +199,9 @@ body{
 	display: grid;
 	padding-left: .5rem;
 }
+.recItem:hover{
+	background-color: rgba(237, 199, 183, 0.788);
+}
 .recItem button{
 	top: 20%;
 	left: 50%;
@@ -195,8 +219,13 @@ body{
 	height: 30px;
 	width: 100px;
 }
+.truckBtn:hover{
+	border-style: solid;
+	background-color: rgb(237, 199, 183);
+}
 
 .subscribedTrucksDiv{
+	overflow-y: auto;
 	width: 85%;
 	height: 200px;
 	position:relative;
@@ -210,7 +239,9 @@ body{
 .subscribedTrucksDiv p{
 	text-align: center;
 }
-
+.mapWrapper{
+	margin-bottom: 2em;
+}
 #map {
 	height: 100%;
 }
@@ -271,7 +302,9 @@ body{
 	width: 100px;
 	display: block;
 	height: 30px;
-	color: black
+	color: black;
+	text-decoration: none;
+	line-height: 25px;
 }
 
 .addTruckBtn{
@@ -299,5 +332,53 @@ body{
 	width: 100px;
 	display: block;
 	height: 30px;
-	color: black
+	color: black;
+	line-height: 25px;
+}
+
+.truckImg{
+	position: relative;
+	left: 50%;
+	/* -100% because of scale 50% and -50% Y because scale*/
+	/* transform: scale(50%) translateX(-100%) translateY(-50%); */
+	transform: translateX(-50%);
+	width: 220px;
+	height: auto;
+	margin: 0;
+
+}
+.footerTextHead{
+	margin: 0;
+	text-align: center;
+	/* text-decoration: underline; */
+	letter-spacing: .1em;
+	font-size: x-large;
+	background-color: rgba(255, 255, 255, 0.39);
+	border-style: solid;
+	border-radius: 1em;
+	border-color: rgb(18, 60, 105);
+	width: 200px;
+	position: relative;
+
+	left: 50%;
+	transform: translateX(-50%);
+}
+.footerText{
+	margin: 0;
+	text-align: center;
+	color: rgb(43, 43, 43);
+	margin-bottom: 1em;
+}
+.footerTextFooter{
+	margin: 0;
+	width: 500px;
+	position: relative;
+
+	left: 50%;
+	transform: translateX(-50%);
+	color: rgba(43, 43, 43, 0.452);
+
+}
+.footerImageDiv{
+
 }

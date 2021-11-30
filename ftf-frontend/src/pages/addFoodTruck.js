@@ -65,14 +65,17 @@ class AddTruck extends Component{
             maxRange: this.state.maxPrice,
             owner: user,
         }
-        console.log(truckData);
+        console.log("truck data = ", truckData);
         let response = await addTruck(truckData).catch(error =>{
             console.log(error.message);
         });
         if(response != null) {
             //alert("Food Truck Created");
-            this.props.history.goBack();
-            console.log(response);
+            console.log("add truck response = ", response);
+            if (response.status === 'CONFLICT'){
+                alert("Truck Name Already Exists");
+            }
+            this.props.history.goBack();            
         }
     }
     resetFields(){

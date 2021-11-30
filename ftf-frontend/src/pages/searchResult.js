@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch, searchNearby} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -8,7 +8,7 @@ class SearchResult extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user: '',
+            username: '',
             userID: '',
             password: '',
             email: '',
@@ -28,6 +28,7 @@ class SearchResult extends Component{
             queryType: 'invalid',
             searchQuery: '',
             noResults: 'false',
+            userCity: '',
             subscribed: false,
             writeReview: false,
             reviewList: [<div key = "-1"></div>],
@@ -35,7 +36,8 @@ class SearchResult extends Component{
         if (this.props.location.state != null){
             this.state.searchQuery = this.props.location.state.searchQuery;
             this.state.queryType = this.props.location.state.queryType;
-            this.state.user = this.props.location.state.user;
+            this.state.username = this.props.location.state.username;
+            console.log("username = ", this.state.username);
             if (this.state.queryType === 'truck_name'){
                 this.state.truckName = this.props.location.state.searchQuery;
             }
@@ -47,7 +49,7 @@ class SearchResult extends Component{
             const urlParams = new URLSearchParams(queryString);
             this.state.truckName = urlParams.get("query")
             this.state.queryType = urlParams.get("queryType");
-            this.state.user = urlParams.get("user");
+            this.state.username = urlParams.get("user");
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -66,7 +68,7 @@ class SearchResult extends Component{
             }
             else if(response != null && response !== '...unknown...'){
                 this.setState({
-                    user: response.username,
+                    username: response.username,
                     userID: response.id,
                     password: response.password,
                     email: response.email,
@@ -77,17 +79,19 @@ class SearchResult extends Component{
                     name: response.name,
                 })
             }
-        }else if (this.state.queryType === 'enhanced'){
-            response = await enhancedSearch(this.state.searchQuery).catch(error =>{
+        }
+        else if (this.state.queryType === 'nearby'){
+            response = await getUser(this.state.username).catch(error =>{
                 console.log(error.message);
             });
-            console.log(response);
-            if (response == null || response.status === "NOT_FOUND"){
-                window.confirm("NO RESULTS FOUND");
-                this.props.history.goBack();
-            }
-            //response should be an array
-            for (let i = 0; i < response.length;++i){
+            let city = response.city;
+            let username = response.username;
+            this.setState({userCity: city});
+            response = await searchNearby(city).catch(error =>{
+                console.log(error.message);
+            });
+             //response should be an array
+             for (let i = 0; i < response.length;++i){
                 let container = document.getElementById('recTrucksID');
                 let truck = document.createElement('div');
                 let recItem = document.createElement('div');
@@ -95,20 +99,57 @@ class SearchResult extends Component{
                 let btn = document.createElement('button');
                 btn.setAttribute('type', 'submit');
                 btn.setAttribute('class', styles.truckBtn);
-                btn.setAttribute('id', response[i].truckName);
+                btn.setAttribute('id', response[i].truck.truckName);
                 btn.innerText = "VIEW";
                 recItem.innerHTML = `
-                    <div class=${styles.truckName}>${response[i].truckName}</div>
-                    <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
-                    <div class=${styles.truckFoodType}>${response[i].foodType}</div>
+                    <div class=${styles.truckName}>${response[i].truck.truckName}</div>
+                    <div class=${styles.truckPrice}>$${response[i].truck.minRange}-$${response[i].truck.maxRange}</div>
+                    <div class=${styles.truckFoodType}>${response[i].truck.foodType}</div>
                 `
                 btn.onclick = function() {
-                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                    document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truck.truckName}&queryType=truck_name&user=${username}`;
                 }
                 recItem.appendChild(btn);
                 truck.appendChild(recItem);
                 container.appendChild(truck);
             }
+        }
+        else if (this.state.queryType === 'enhanced'){
+            console.log("search query = " + this.state.searchQuery);
+            response = await enhancedSearch(this.state.searchQuery).catch(error =>{
+                console.log(error.message);
+            });
+            console.log(response);
+            if (!response || response == null || response.status === "NOT_FOUND"){
+                window.confirm("NO RESULTS FOUND");
+                // this.props.history.goBack();
+            }else{
+                //response should be an array
+                for (let i = 0; i < response.length;++i){
+                    let container = document.getElementById('recTrucksID');
+                    let truck = document.createElement('div');
+                    let recItem = document.createElement('div');
+                    recItem.setAttribute("class", styles.recItem);
+                    let btn = document.createElement('button');
+                    btn.setAttribute('type', 'submit');
+                    btn.setAttribute('class', styles.truckBtn);
+                    btn.setAttribute('id', response[i].truckName);
+                    btn.innerText = "VIEW";
+                    recItem.innerHTML = `
+                        <div class=${styles.truckName}>${response[i].truckName}</div>
+                        <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
+                        <div class=${styles.truckFoodType}>${response[i].foodType}</div>
+                    `
+                    let username = this.state.username;
+                    btn.onclick = function() {
+                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${username}`;
+                    }
+                    recItem.appendChild(btn);
+                    truck.appendChild(recItem);
+                    container.appendChild(truck);
+                }
+            }
+            
         }
         //SEARCHING FOR TRUCK BY NAME, GET TRUCK INFO
         else if ( this.state.queryType === 'truck_name'){
@@ -129,11 +170,10 @@ class SearchResult extends Component{
                     truckOwner: response.owner.username,
                     menuURL: response.menuURL,
                     truckID: response.truckID,
-
                 })
             }
             //GET SUBSCRIBED TRUCKS AND SEE IF THIS TRUCK IS IN SUBSCRIBED LIST
-            response = await getSubscriptions(this.state.user);
+            response = await getSubscriptions(this.state.username);
             if (response != null && response.length === 0){
                 this.setState({subscribed: false});
             }else if (response != null && response.length > 0){
@@ -156,7 +196,7 @@ class SearchResult extends Component{
                     <div key = {i} className = {styles.review}>
                         <div className = {styles.txtRatingDiv}>
                             <div>
-                                <p className = {styles.reviewUser}>{response[i].user.username}</p>
+                                <p className = {styles.reviewUser}>{response[i].username.username}</p>
                                 <p className = {styles.userRating}>rating: {response[i].rating}/10</p>
                             </div>
                         </div>                                
@@ -194,8 +234,9 @@ class SearchResult extends Component{
                         <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>
                         <div class=${styles.truckFoodType}>${response[i].foodType}</div>
                     `
+                    let username = this.state.username;
                     btn.onclick = function() {
-                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name`;
+                        document.location.href = `http://localhost:3000/SearchResult?query=${response[i].truckName}&queryType=truck_name&user=${username}`;
                     }
                     recItem.appendChild(btn);
                     truck.appendChild(recItem);
@@ -222,7 +263,7 @@ class SearchResult extends Component{
             let review = {
                 rating: parseFloat(document.getElementById("ratingID").value),
                 description: document.getElementById("reviewTextID").value,
-                username: this.state.user,
+                username: this.state.username,
                 truckName: this.state.truckName,
             }
             //POST REVIEW
@@ -240,15 +281,16 @@ class SearchResult extends Component{
         //SUBSCRIBE TO TRUCK
         else if (event.target.id === "subscribeBtnID"){
             if (this.state.subscribed === false){
-                let response = await subscribeToTruck(this.state.truckName, this.state.user).catch(e=>{
+                let response = await subscribeToTruck(this.state.truckName, this.state.username).catch(e=>{
                     console.log(e.message);
                 });
                 this.setState({subscribed: true});
+                console.log(response);
             }
         }
         else if (event.target.id === "unsubscribeBtnID"){
             if (this.state.subscribed === true){
-                let response = await unsubscribeToTruck(this.state.truckName, this.state.user).catch(e=>{
+                let response = await unsubscribeToTruck(this.state.truckName, this.state.username).catch(e=>{
                     console.log(e.message());
                 })
                 this.setState({subscribed: false});
@@ -302,7 +344,7 @@ class SearchResult extends Component{
                             Name: <span>{this.state.name}</span>
                         </div>
                         <div>
-                            Username: <span>{this.state.user}</span>
+                            Username: <span>{this.state.username}</span>
                         </div>
                         <div>
                             Email: <span>{this.state.email}</span>
@@ -375,7 +417,8 @@ class SearchResult extends Component{
         else{
             return (
                 <div>
-                    <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>
+                    {this.state.queryType !== 'nearby' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
+                    {this.state.queryType === 'nearby' && <h1 className = {styles.header}>SEARCHING FOR TRUCKS IN YOUR CITY</h1>}
                     <p  className = {styles.listTrucks}>TRUCK RESULTS HERE</p>
                     <div className={styles.truckRecsContainer} id = "recTrucksID">
                         <div className={styles.truckRecTitle}>

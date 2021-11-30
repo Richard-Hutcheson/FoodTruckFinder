@@ -31,7 +31,7 @@ class LoginScreen extends Component{
         if (event.target.id === "enterGuest"){
             this.props.history.push({
                 pathname: '/UserDashboard',
-                state: {user: "guest", guest: true} // your data array of objects
+                state: {username: "guest", guest: true} // your data array of objects
             })
         }else{
             const response = await loginUser(this.state.username, this.state.password);
@@ -47,7 +47,7 @@ class LoginScreen extends Component{
                     console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({
                         pathname: '/UserDashboard',
-                        state: {user: this.state.username, guest: false} // your data array of objects
+                        state: {username: this.state.username, guest: false} // your data array of objects
                     })
                 }
             }else{
@@ -61,7 +61,9 @@ class LoginScreen extends Component{
             <div className = {styles.loginBody}>
 
                 <div className = {styles.loginHeader}>
-                    <h1 className = {styles.ftfHeader}>FOOD TRUCK FINDER</h1>
+                    <h1 className = {styles.ftfHeader}>EARN</h1>
+                    <h3 className = {styles.ftfSubHeader}>A FOOD TRUCK FINDING APP</h3>
+
                 </div>
 
                 <form className = {styles.loginForm} onSubmit={this.handleSubmit}>

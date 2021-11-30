@@ -9,20 +9,16 @@ class ManageFoodTrucks extends Component{
     constructor(props){
         super(props);
         this.state = {
-            user: '<unknown>',
+            username: '<unknown>',
             userID: 'fetching...',
             searchQuery: '',
-            name: '<unknown>',
-            guest: 'true',
-            showMap: 'false',
             role: '',
         }
         if (this.props.location.state != null){
-            this.state.user = this.props.location.state.user;
-            this.state.guest = this.props.location.state.guest;
-            this.state.name = this.props.location.state.name;
+            this.state.username = this.props.location.state.username;
             this.state.userID = this.props.location.state.userID;
             this.state.role = this.props.location.state.role;
+            console.log(this.state);
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -37,7 +33,6 @@ class ManageFoodTrucks extends Component{
         if (response == null){
             response = "unable to retrieve";
         }
-        console.log("RESPONSE: ", response);
         //response should be an array
         for (let i = 0; i < response.length;++i){
             if (response[i].owner.id === this.state.userID){
@@ -80,10 +75,10 @@ class ManageFoodTrucks extends Component{
             <div>
                 <div className = {styles.navbar}>
                     <div className={styles.dropdownDiv}>
-                        <button className={styles.dropbtn}>{this.state.user}</button>
+                        <button className={styles.dropbtn}>{this.state.username}</button>
                         <div className={styles.dropdownContent}>
-                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.user}}}>Manage Account</Link>
-                            <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.user}}}>Manage Food Trucks</Link>
+                            <Link to= {{ pathname: "/ManageAccount", state: {username: this.state.username}}}>Manage Account</Link>
+                            <Link to= {{ pathname: "/ManageFoodTrucks", state: {username: this.state.username}}}>Manage Food Trucks</Link>
                         </div>
                     </div>
                     <a href="/" className = {styles.logout}>logout</a>
@@ -102,10 +97,12 @@ class ManageFoodTrucks extends Component{
                     </div>
                 </div>
                 <div className = {styles.addTruckBtn}>
-                        {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {username: this.state.user, userID: this.state.userID}}}>ADD TRUCK</Link>}
+                        <Link to= {{ pathname: "/AddTruck", state: {username: this.state.username, userID: this.state.userID}}}>ADD TRUCK</Link>
+                        {/* {this.state.role === 'o' && <Link to= {{ pathname: "/AddTruck", state: {username: this.state.username, userID: this.state.userID}}}>ADD TRUCK</Link>} */}
+
                 </div>
                 <div className = {styles.backBtn}>
-                    <Link to= {{ pathname: "/UserDashboard", state: {user: this.state.user, userID: this.state.userID}}}>BACK</Link>                
+                    <Link to= {{ pathname: "/UserDashboard", state: {username: this.state.username, userID: this.state.userID}}}>BACK</Link>                
                 </div>
             </div>
         ); 
