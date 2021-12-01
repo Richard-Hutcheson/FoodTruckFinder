@@ -96,7 +96,8 @@ export async function getRoutes(truckName){
 }
 
 export async function deleteRoute(truckName, address, city, state){
-
+    let url = `delete/route/${truckName}/${address}/${city}/${state}`;
+    return await makeRequest('DELETE', url, '')
 }
 
 export async function enhancedSearch(query){

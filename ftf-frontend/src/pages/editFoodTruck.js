@@ -64,7 +64,7 @@ class EditTruck extends Component{
             </div>;
             let tempRoutes = this.state.routes;
             tempRoutes.push(newRoute);
-            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+=1});
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1});
 
         }
 
@@ -116,43 +116,49 @@ class EditTruck extends Component{
                 <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleRemove}>X</button>
             </div>;
             let tempRoutes = this.state.routes;
+            let tempPendingRoutes = this.state.pendingRoutes;
             tempRoutes.push(newRoute);
-            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+=1, pendingRoutes: tempRoutes});
+            tempPendingRoutes.push(newRoute);
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1, pendingRoutes: tempPendingRoutes});
         }
     }
 
     handleRemove(event){
-        console.log("event id = ", event.target.id);
         let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
         let tempRoutes = this.state.routes;
-        tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
+        let tempPendRoutes = this.state.pendingRoutes;
+        // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
         for (let i = 0; i < tempRoutes.length; i++){
             if (ndx === tempRoutes[i].key){
                 tempRoutes.splice(i, 1);
                 break;
             }
         }
-        this.setState({routes: tempRoutes});
-        //CALL DELETE ROUTE END POINT HERE
+        for (let i = 0; i < tempPendRoutes.length; i++){
+            if (ndx === tempPendRoutes[i].key){
+                tempPendRoutes.splice(i, 1);
+                break;
+            }
+        }
+        this.setState({routes: tempRoutes, pendingRoutes: tempPendRoutes});
     }
     async handleDel(event){
-        console.log("event id = ", event.target.id);
         let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
         let tempRoutes = this.state.routes;
         // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
         let address = '', city = '', state ='';
         for (let i = 0; i < tempRoutes.length; i++){
             if (ndx === tempRoutes[i].key){
-                // tempRoutes.splice(i, 1);
-                
                 address = (tempRoutes[i].props.children[0].props.value);
                 city = (tempRoutes[i].props.children[1].props.value);
                 state = (tempRoutes[i].props.children[2].props.value);
+                tempRoutes.splice(i, 1);                
                 break;
             }
         }
         let response = await deleteRoute(this.state.truckName, address, city, state);
-        // this.setState({routes: tempRoutes});
+        this.setState({routes: tempRoutes});
+
     }
 
     async saveTruck(){
@@ -167,7 +173,7 @@ class EditTruck extends Component{
             minRange: this.state.minPrice,
             maxRange: this.state.maxPrice,
         }
-        console.log("truck data = ", truckData );
+        console.log("pending routes = ", this.state.pendingRoutes);
         for (let i = 0; i < this.state.pendingRoutes.length; i++){
             //address
             let tempAddress = document.getElementById(this.state.pendingRoutes[i].props.children[0].props.id).value
@@ -182,9 +188,9 @@ class EditTruck extends Component{
             // console.log(response);
         }
         //clear pendingRoutes
-        this.setState({pendingRoutes: []})
-        // await editTruck(truckData).catch(error=>{console.log(error.message);});
-        
+        this.setState({pendingRoutes: []});
+        await editTruck(truckData).catch(error=>{console.log(error.message);});
+        window.location.reload(false);
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});
