@@ -51,4 +51,25 @@ public class RouteService {
         return Optional.of(routeRepository.save(route));
     }
 
+    public void deleteRoute(String truckName, String address, String city, String state) {
+        Optional<FoodTruck> findTruck = ftService.getTruckDetailsByName(truckName);
+
+        if (!findTruck.isPresent())
+            throw new FoodTruckNotFoundException("Food Truck is Not Found");
+
+        Optional<Route> routeToDelete = routeRepository
+                .findRouteByAddressAndCityAndStateAndTruck(address, city, state, findTruck.get());
+
+        if (!routeToDelete.isPresent()){
+            try {
+                throw new Exception("Route not found");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        routeRepository.delete(routeToDelete.get());
+
+
+    }
 }

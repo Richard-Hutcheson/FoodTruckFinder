@@ -33,6 +33,13 @@ public class RouteController {
         return routeService.setRouteByTruckName(truckName, address, city, state);
     }
 
+    @DeleteMapping("/delete/route/{ftName}")
+    public void deleteRoute( @PathVariable String truckName,
+                             @PathVariable String address,
+                             @PathVariable String city,
+                             @PathVariable String state) {
+        routeService.deleteRoute(truckName,address,city,state);
+    }
 
 
 }
