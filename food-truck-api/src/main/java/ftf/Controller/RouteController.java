@@ -19,7 +19,6 @@ public class RouteController {
     @Autowired
     RouteService routeService;
 
-
     @GetMapping("/routes/{truckName}")
     public List<Route> getRoutesByTruckName(@PathVariable String truckName) {
         return routeService.getRoutesByTruckName(truckName);
