@@ -1,12 +1,19 @@
-FROM node:14-alpine AS development
-ENV NODE_ENV development
-WORKDIR /app
-COPY package.json .
-COPY yarn.lock .
-RUN npm install
-RUN npm run build
+FROM node:12
+
+WORKDIR /ftf-frontend
+
 COPY . .
-FROM nginx:1.17.1-alpine as dev
-ENV npm dev
-EXPOSE 3000
-CMD ["npm", "start"]
+
+RUN yarn install
+
+RUN yarn run build
+
+WORKDIR /ftf-frontend/node_modules/.bin
+
+RUN yarn add env-cmd
+
+WORKDIR /ftf-frontend
+
+RUN chmod +x ./frontend-entrypoint.sh
+
+ENTRYPOINT ./frontend-entrypoint.sh
