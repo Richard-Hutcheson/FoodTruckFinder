@@ -224,7 +224,8 @@ class UserDashboard extends Component{
                 <div className = {styles.subscribedTrucksDiv}>
                     <div className={styles.truckRecTitle}>
                             <p><b>Food Truck Subscriptions</b></p>
-                    </div>                    <div className={styles.textBar}>
+                    </div>                    
+                    <div className={styles.textBar}>
                         <div className={styles.textBarText}>TRUCK NAME</div>
                         <div className={styles.textBarText}>PRICE</div>
                         <div className={styles.textBarText}>FOOD TYPE</div>
@@ -245,8 +246,8 @@ class UserDashboard extends Component{
                 {/* .default is required because of a bug in react scripts v4.0 solution found on https://www.youtube.com/watch?v=ay6id01369s */}
                 <div className = {styles.footerImageDiv}>
                     <img src={require('../assets/justTruck.png').default} className={styles.truckImg} alt="TRUCK IMAGE"/>
-                    <p className = {styles.footerTextHead}>EARN</p>
-                    <p className = {styles.footerText}>A FOOD TRUCK FINDING APP</p>
+                    {/* <p className = {styles.footerTextHead}>EARN</p> */}
+                    {/* <p className = {styles.footerText}>A FOOD TRUCK FINDING APP</p> */}
                     <p className = {styles.footerTextFooter}>Richard Hutcheson, Noah Lambaria, Austin Blanchard, Ethan Robinson</p>
 
                 </div>

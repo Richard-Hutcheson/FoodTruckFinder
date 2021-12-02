@@ -94,6 +94,12 @@ export async function getRoutes(truckName){
     let url = `routes/${truckName}`
     return await makeRequest('GET', url, '');
 }
+
+export async function deleteRoute(truckName, address, city, state){
+    let url = `delete/route/${truckName}/${address}/${city}/${state}`;
+    return await makeRequest('DELETE', url, '')
+}
+
 export async function enhancedSearch(query){
     let url =  `searchTruck/${query}`;
     return await makeRequest('GET', url, '');

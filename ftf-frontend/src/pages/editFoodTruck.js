@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
-import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes} from "../API/apiCalls.js"
+import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute} from "../API/apiCalls.js"
 
 class EditTruck extends Component{
     constructor(props){
@@ -27,12 +27,15 @@ class EditTruck extends Component{
             thursday: '',
             friday: '',
             routes: [],
+            pendingRoutes: [],
             schedules: [],
             keyCount: 0,
             stopCount: 0,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDel = this.handleDel.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
+
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         this.state.truckName = urlParams.get("truck");
@@ -48,6 +51,23 @@ class EditTruck extends Component{
             foodType: response.foodType, username: response.owner.username, truckOwner: response.owner.username, truckOwnerDetails: response.owner, menuURL: response.menuURL});
         //get routes from truck
         //make sure to append routes to routes and to increment keyCount
+        response = await getRoutes(this.state.truckName).catch(error=>{console.log(error.message)});
+        console.log("routes: ", response);
+        for (let i = 0; i < response.length; i++){
+            let newRoute=
+            <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
+                <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled = {this.state.viewOnly} value = {response[i].address}/>
+                <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly} value = {response[i].city}/>
+                <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} value = {response[i].state}
+                maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
+                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel}>X</button>
+            </div>;
+            let tempRoutes = this.state.routes;
+            tempRoutes.push(newRoute);
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1});
+
+        }
+
     }
 
     async handleSubmit(event){
@@ -93,27 +113,52 @@ class EditTruck extends Component{
                 <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
                 <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
                 maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
-                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel}>X</button>
+                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleRemove}>X</button>
             </div>;
             let tempRoutes = this.state.routes;
+            let tempPendingRoutes = this.state.pendingRoutes;
             tempRoutes.push(newRoute);
-            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+=1});
+            tempPendingRoutes.push(newRoute);
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1, pendingRoutes: tempPendingRoutes});
         }
     }
 
-    handleDel(event){
-        console.log("event id = ", event.target.id);
+    handleRemove(event){
         let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
         let tempRoutes = this.state.routes;
-        tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
+        let tempPendRoutes = this.state.pendingRoutes;
+        // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
         for (let i = 0; i < tempRoutes.length; i++){
             if (ndx === tempRoutes[i].key){
                 tempRoutes.splice(i, 1);
                 break;
             }
         }
+        for (let i = 0; i < tempPendRoutes.length; i++){
+            if (ndx === tempPendRoutes[i].key){
+                tempPendRoutes.splice(i, 1);
+                break;
+            }
+        }
+        this.setState({routes: tempRoutes, pendingRoutes: tempPendRoutes});
+    }
+    async handleDel(event){
+        let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
+        let tempRoutes = this.state.routes;
+        // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
+        let address = '', city = '', state ='';
+        for (let i = 0; i < tempRoutes.length; i++){
+            if (ndx === tempRoutes[i].key){
+                address = (tempRoutes[i].props.children[0].props.value);
+                city = (tempRoutes[i].props.children[1].props.value);
+                state = (tempRoutes[i].props.children[2].props.value);
+                tempRoutes.splice(i, 1);                
+                break;
+            }
+        }
+        let response = await deleteRoute(this.state.truckName, address, city, state);
         this.setState({routes: tempRoutes});
-        //CALL DELETE ROUTE END POINT HERE
+
     }
 
     async saveTruck(){
@@ -128,17 +173,24 @@ class EditTruck extends Component{
             minRange: this.state.minPrice,
             maxRange: this.state.maxPrice,
         }
-            // monday: this.state.monday,
-            // tuesday: this.state.tuesday,
-            // wednesday: this.state.wednesday,
-            // thursday: this.state.thursday,
-            // friday: this.state.friday,
-            // saturday: this.state.saturday,
-            // sunday: this.state.sunday,
-        console.log("truck data = ", truckData );
-        let x = await editTruck(truckData).catch(error=>{console.log(error.message);});
-        console.log(x);
-        
+        console.log("pending routes = ", this.state.pendingRoutes);
+        for (let i = 0; i < this.state.pendingRoutes.length; i++){
+            //address
+            let tempAddress = document.getElementById(this.state.pendingRoutes[i].props.children[0].props.id).value
+            //city
+            let tempCity = document.getElementById(this.state.pendingRoutes[i].props.children[1].props.id).value;
+            //state
+            let tempState = document.getElementById(this.state.pendingRoutes[i].props.children[2].props.id).value;
+            //add route
+            let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState).catch(error=>{
+                console.log(error.message);
+            });
+            // console.log(response);
+        }
+        //clear pendingRoutes
+        this.setState({pendingRoutes: []});
+        await editTruck(truckData).catch(error=>{console.log(error.message);});
+        window.location.reload(false);
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});

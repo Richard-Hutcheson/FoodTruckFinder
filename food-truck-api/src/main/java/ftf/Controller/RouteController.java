@@ -19,7 +19,6 @@ public class RouteController {
     @Autowired
     RouteService routeService;
 
-
     @GetMapping("/routes/{truckName}")
     public List<Route> getRoutesByTruckName(@PathVariable String truckName) {
         return routeService.getRoutesByTruckName(truckName);
@@ -35,7 +34,7 @@ public class RouteController {
         return routeService.setRouteByTruckName(truckName, address, city, state,schedule);
     }
 
-    @DeleteMapping("/delete/route/{ftName}")
+    @DeleteMapping("/delete/route/{truckName}/{address}/{city}/{state}")
     public void deleteRoute( @PathVariable String truckName,
                              @PathVariable String address,
                              @PathVariable String city,
