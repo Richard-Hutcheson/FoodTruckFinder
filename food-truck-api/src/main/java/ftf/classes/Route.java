@@ -39,4 +39,8 @@ public class Route {
 
     @Column(name = "state")
     String state;
+
+    @Lob
+    @Column(name = "schedule", columnDefinition="VARCHAR(1000)")
+    String schedule;
 }
