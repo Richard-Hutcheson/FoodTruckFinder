@@ -76,4 +76,12 @@ public class SubscriptionService {
         subRepo.delete(subscription.get());
 
     }
+
+    public List<Subscription> findSubscriptionsByTruck(String truckName){
+        Optional<FoodTruck> foodTruck = foodTruckService.findFoodTruckByTruckName(truckName);
+        if(!foodTruck.isPresent()){
+            throw new FoodTruckNotFoundException("Food truck not found");
+        }
+        return subRepo.findByTruck(foodTruck.get());
+    }
 }
