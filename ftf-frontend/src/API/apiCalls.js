@@ -86,8 +86,8 @@ export async function unsubscribeToTruck(truckName, username){
     return await makeRequest('DELETE', url, '');
 }
 
-export async function addRoute(truckName, address, city, state){
-    let url = `routes/${truckName}/${address}/${city}/${state}`
+export async function addRoute(truckName, address, city, state, schedule){
+    let url = `routes/${truckName}/${address}/${city}/${state}/${schedule}`
     return await makeRequest('POST', url, '');
 }
 export async function getRoutes(truckName){
@@ -96,7 +96,7 @@ export async function getRoutes(truckName){
 }
 
 export async function deleteRoute(truckName, address, city, state){
-    let url = `delete/route/${truckName}/${address}/${city}/${state}`;
+    let url = `delete/route/${truckName}/${address}/${city}/${state}/`;
     return await makeRequest('DELETE', url, '')
 }
 

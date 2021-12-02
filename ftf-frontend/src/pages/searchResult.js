@@ -216,6 +216,7 @@ class SearchResult extends Component{
                     <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled value = {response[i].city}/>
                     <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} value = {response[i].state}
                         maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled/>
+                    <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled value = {response[i].schedule}/>
                 </div>;
                 let tempRoutes = this.state.routes;
                 tempRoutes.push(newRoute);
@@ -407,6 +408,7 @@ class SearchResult extends Component{
                             <p>ADDRESS</p>
                             <p>CITY</p>
                             <p>STATE</p>
+                            <p>SCHEDULE</p>
                         </div>
                         <div className = {styles.routeContent}>
                             {this.state.routes}

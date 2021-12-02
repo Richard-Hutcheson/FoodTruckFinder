@@ -60,6 +60,7 @@ class EditTruck extends Component{
                 <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly} value = {response[i].city}/>
                 <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} value = {response[i].state}
                 maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
+                <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled = {this.state.viewOnly} value = {response[i].schedule}/>
                 <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel}>X</button>
             </div>;
             let tempRoutes = this.state.routes;
@@ -113,6 +114,7 @@ class EditTruck extends Component{
                 <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
                 <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
                 maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
+                <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled = {this.state.viewOnly}/>
                 <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleRemove}>X</button>
             </div>;
             let tempRoutes = this.state.routes;
@@ -146,12 +148,16 @@ class EditTruck extends Component{
         let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
         let tempRoutes = this.state.routes;
         // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
-        let address = '', city = '', state ='';
+        let address = '', city = '', state ='', schedule = '';
+        
         for (let i = 0; i < tempRoutes.length; i++){
             if (ndx === tempRoutes[i].key){
+                console.log(tempRoutes[i].props)
                 address = (tempRoutes[i].props.children[0].props.value);
                 city = (tempRoutes[i].props.children[1].props.value);
                 state = (tempRoutes[i].props.children[2].props.value);
+                // schedule = (tempRoutes[i].props.children[3].props.value);
+                console.log("sched = ", schedule);
                 tempRoutes.splice(i, 1);                
                 break;
             }
@@ -181,8 +187,10 @@ class EditTruck extends Component{
             let tempCity = document.getElementById(this.state.pendingRoutes[i].props.children[1].props.id).value;
             //state
             let tempState = document.getElementById(this.state.pendingRoutes[i].props.children[2].props.id).value;
+            //schedule
+            let tempSchedule = document.getElementById(this.state.pendingRoutes[i].props.children[3].props.id).value;
             //add route
-            let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState).catch(error=>{
+            let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState, tempSchedule).catch(error=>{
                 console.log(error.message);
             });
             // console.log(response);
@@ -254,6 +262,7 @@ class EditTruck extends Component{
                         <p>ADDRESS</p>
                         <p>CITY</p>
                         <p>STATE</p>
+                        <p>SCHEDULE</p>
                     </div>
                     <div className = {styles.routeContent}>
                         {this.state.routes}
