@@ -19,13 +19,7 @@ class EditTruck extends Component{
             viewOnly: true,
             submitText: "EDIT",
             truckOwnerDetails: {},
-            monday: '',
-            sunday: '',
-            saturday: '',
-            tuesday: '',
-            wednesday: '',
-            thursday: '',
-            friday: '',
+            subbedUsers: [],
             routes: [],
             pendingRoutes: [],
             schedules: [],
@@ -35,7 +29,7 @@ class EditTruck extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDel = this.handleDel.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
-
+        this.displayRoutes = this.displayRoutes.bind(this);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         this.state.truckName = urlParams.get("truck");
@@ -54,21 +48,17 @@ class EditTruck extends Component{
         response = await getRoutes(this.state.truckName).catch(error=>{console.log(error.message)});
         console.log("routes: ", response);
         for (let i = 0; i < response.length; i++){
-            let newRoute=
-            <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
-                <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled = {this.state.viewOnly} value = {response[i].address}/>
-                <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly} value = {response[i].city}/>
-                <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} value = {response[i].state}
-                maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
-                <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled = {this.state.viewOnly} value = {response[i].schedule}/>
-                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel}>X</button>
-            </div>;
+            let newRoute= {
+                'address': response[i].address,
+                'city': response[i].city,
+                'state': response[i].state,
+                'schedule': response[i].schedule,
+                'key': this.state.keyCount,
+            }
             let tempRoutes = this.state.routes;
             tempRoutes.push(newRoute);
             this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1});
-
         }
-
     }
 
     async handleSubmit(event){
@@ -115,7 +105,7 @@ class EditTruck extends Component{
                 <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
                 maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
                 <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled = {this.state.viewOnly}/>
-                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleRemove}>X</button>
+                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleRemove} disabled = {this.state.viewOnly}>X</button>
             </div>;
             let tempRoutes = this.state.routes;
             let tempPendingRoutes = this.state.pendingRoutes;
@@ -123,6 +113,23 @@ class EditTruck extends Component{
             tempPendingRoutes.push(newRoute);
             this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1, pendingRoutes: tempPendingRoutes});
         }
+    }
+    //this function is necessary rather than creating the html directly into the array is because we want to preserve the state variables
+    displayRoutes(){
+        let arr = []
+        for (let i = 0; i < this.state.routes.length; i++){
+            let x =  
+            <div className = {styles.newRouteDiv} key = {this.state.routes[i].key}>
+                <input type = "text" id = {"address"+String(this.state.routes[i].key)} className = {styles.routeAddress} required disabled = {this.state.viewOnly} value = {this.state.routes[i].address}/>
+                <input type = "text" id = {"city"+String(this.state.routes[i].key)} className = {styles.routeCity} required disabled = {this.state.viewOnly} value = {this.state.routes[i].city}/>
+                <input type = "text" id = {"state"+String(this.state.routes[i].key)} className = {styles.routeState} value = {this.state.routes[i].state}
+                    maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
+                <input type = "text" id = {"schedule"+String(this.state.routes[i].key)} className = {styles.routeSchedule} required disabled = {this.state.viewOnly} value = {this.state.routes[i].schedule}/>
+                <button id = {"delBtn"+String(this.state.routes[i].key)} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel} disabled = {this.state.viewOnly}>X</button>
+            </div>;
+            arr.push(x);
+        }
+        return (arr)
     }
 
     handleRemove(event){
@@ -149,15 +156,14 @@ class EditTruck extends Component{
         let tempRoutes = this.state.routes;
         // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
         let address = '', city = '', state ='', schedule = '';
-        
+        console.log(tempRoutes, ndx)
+
         for (let i = 0; i < tempRoutes.length; i++){
-            if (ndx === tempRoutes[i].key){
-                console.log(tempRoutes[i].props)
-                address = (tempRoutes[i].props.children[0].props.value);
-                city = (tempRoutes[i].props.children[1].props.value);
-                state = (tempRoutes[i].props.children[2].props.value);
+            if (ndx == tempRoutes[i].key){
+                address = (tempRoutes[i].address);
+                city = (tempRoutes[i].city);
+                state = (tempRoutes[i].state);
                 // schedule = (tempRoutes[i].props.children[3].props.value);
-                console.log("sched = ", schedule);
                 tempRoutes.splice(i, 1);                
                 break;
             }
@@ -235,26 +241,6 @@ class EditTruck extends Component{
                     <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/>
                 }
                 <br/>
-                {/* <div className={styles.scheduleDiv}>
-                    <p className = {styles.scheduleTitle}><b>Truck Schedule</b></p>
-                    <div className = {styles.customBorder}></div>
-                    <div className={styles.weekDiv}>
-                        <p>MON</p>
-                        <p>TUES</p>
-                        <p>WED</p>
-                        <p>THURS</p>
-                        <p>FRI</p>
-                        <p>SAT</p>
-                        <p>SUN</p>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "monday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "tuesday"  disabled = {this.state.viewOnly}required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "wednesday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "thursday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "friday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "saturday" disabled = {this.state.viewOnly}required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "sunday" disabled = {this.state.viewOnly}required/>
-                    </div>
-                </div> */}
                 <div className = {styles.routeDiv}>
                     <p className = {styles.routeTitle}><b>Truck Route</b></p>
                     <div className = {styles.customBorder}></div>
@@ -265,15 +251,21 @@ class EditTruck extends Component{
                         <p>SCHEDULE</p>
                     </div>
                     <div className = {styles.routeContent}>
-                        {this.state.routes}
+                        {this.displayRoutes()}
                     </div>
                     <button id = "addRouteBtn" onClick = {this.handleSubmit} type = "button" className = {styles.addRouteBtn} disabled = {this.state.viewOnly}>ADD ROUTE</button>
                 </div>
+                <div className = {styles.subscribedUsers}>
+                    <p className = {styles.subTitle}><b>Subscribed Users:</b> {this.state.subbedUsers.length}</p>
+                    <div className ={styles.subContent}>
+                        {this.state.subbedUsers}
+                    </div>
+                </div>
                 <button id = "editBtn" className = {styles.editBtn} type= "submit" value={this.state.submitText}>{this.state.submitText}</button>
             </form>
+
             <button id = "delTruck" type = "button" className = {styles.delTruck} onClick = {this.handleSubmit}>DELETE TRUCK</button>
             <button id = "backBtn"  type = "button" className = {styles.backBtn} onClick={this.handleSubmit}>BACK</button>
-            {/* <a href="https://ibb.co/qptvrQ9"><img src="https://i.ibb.co/FzSFDTJ/test-menu.jpg" alt="test-menu" border="0"/></a> */}
         </div>
         );
     }

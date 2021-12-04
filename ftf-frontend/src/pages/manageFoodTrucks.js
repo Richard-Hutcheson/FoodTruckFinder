@@ -44,7 +44,7 @@ class ManageFoodTrucks extends Component{
                 btn.setAttribute('type', 'submit');
                 btn.setAttribute('class', styles.truckBtn);
                 btn.setAttribute('id', response[i].truckName);
-                btn.innerText = "EDIT";
+                btn.innerText = "VIEW and EDIT";
                 recItem.innerHTML = `
                     <div class=${styles.truckName}>${response[i].truckName}</div>
                     <div class=${styles.truckPrice}>$${response[i].minRange}-$${response[i].maxRange}</div>

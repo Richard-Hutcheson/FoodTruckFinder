@@ -378,7 +378,6 @@ class SearchResult extends Component{
         else if (this.state.queryType === "truck_name"){
             return(
                 <div>
-
                     {this.state.searchQuery !== '' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
                     {this.state.searchQuery === '' && <h1 className = {styles.header}>TRUCK DETAILS</h1>}
 

@@ -19,7 +19,6 @@ public class SubscriptionController {
     @Autowired
     SubscriptionService subServ;
 
-
     //subscribe to truck
     @PostMapping("/subscribe/{ftName}/{username}")
     public Subscription subscribe(@PathVariable String username, @PathVariable String ftName) {
@@ -38,7 +37,7 @@ public class SubscriptionController {
         return subServ.getSubscriptionsFromUser(username);
     }
 
-    @GetMapping("/{foodTruck}")
+    @GetMapping("getSubsByTruck/{foodTruck}")
     public List<Subscription> getSubscriptionsByTruck(@PathVariable String foodTruck){
         return subServ.findSubscriptionsByTruck(foodTruck);
     }

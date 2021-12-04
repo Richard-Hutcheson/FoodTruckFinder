@@ -108,3 +108,7 @@ export async function searchNearby(cityPref){
     let url = `searchTruck/nearby/${cityPref}`;
     return await makeRequest('GET', url, '');
 }
+export async function getSubscriptionsByTruck(truckName){
+    let url = `getSubsByTruck/${truckName}`;
+    return await makeRequest('GET', url, '');
+}

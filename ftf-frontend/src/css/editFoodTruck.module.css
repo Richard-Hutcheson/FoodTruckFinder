@@ -12,14 +12,11 @@ h1{
 .formClass input{
     width: 40%;
 }
-
 #descID{
     width: 40%;
     height: 100px;
 }
-
-
-.scheduleDiv, .routeDiv{
+.subscribedUsers, .routeDiv{
     position: relative;
     background-color: white;
     height: auto;
@@ -28,8 +25,12 @@ h1{
     transform: translateX(-50%);
     margin-top: 2rem;
 }
-.routeTitle{
+
+.subTitle, .routeTitle{
     margin: 0;
+}
+.subContent{
+    background-color: ;
 }
 .customBorder{
     background-color: black;
@@ -37,41 +38,30 @@ h1{
     height: 1px;
     margin: 0;
 }
-.weekDiv, .addressDiv{
+.addressDiv{
     width: 100%;
     overflow: auto;
     display: grid;
 }
-.weekDiv{
-    grid-template-columns: minmax(140px, auto) minmax(140px, auto) 
-        minmax(140px, auto) minmax(140px, auto) minmax(140px, auto)
-        minmax(140px, auto) minmax(140px, auto);
-    grid-template-rows: 30px 30px;
-}
-.weekDiv input{
-    width: 97%;
-    border-width: 1px;
-    text-align: center;
-}
 
-.weekDiv p, .addressDiv p{
+.addressDiv{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.addressDiv p{
     margin: 0;
     margin-top: 5px;
 }
-.routeContent{
+.subscribedUsers, .routeContent{
     min-height: 50px;
     height: auto;    
 }
-
 .addressDiv, .newRouteDiv{
     display: grid;
     grid-template-columns: minmax(140px, auto) minmax(140px, auto) minmax(140px, auto)  minmax(140px, auto) minmax(40px, 40px);
     grid-template-rows: 30px;
 }
-.addressDiv{
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-}
+
 .newRouteDiv{
     margin-bottom: .5rem;
 }
@@ -82,20 +72,17 @@ h1{
     position: relative;
     height: 30px;
     width: 150px;
-    /* left: 50%;
-    transform: translateX(-50%); */
     bottom: 0;
     text-align: center;
 }
-
 .editBtn{
     margin-top: 2rem;
     width: 150px;
     height: 30px;
 }
-
 .backBtn, .delTruck{
     display: block;
+    margin-top: 2px;
     position: relative;
     width: 150px;
     height: 30px;
