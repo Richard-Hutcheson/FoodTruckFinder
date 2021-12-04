@@ -1,0 +1,4 @@
+build:
+    docker:
+        web: /ftf-frontend/Dockerfile
+        worker: /food-truck-api/Dockerfile

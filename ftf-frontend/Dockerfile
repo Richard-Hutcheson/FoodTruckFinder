@@ -4,15 +4,17 @@ WORKDIR /ftf-frontend
 
 COPY . .
 
-RUN yarn install
+RUN npm install
 
-RUN yarn run build
+RUN npm run build
 
 #WORKDIR /ftf-frontend/node_modules/.bin
 
 #RUN yarn add env-cmd
 
 #WORKDIR /ftf-frontend
+
+EXPOSE 3000
 
 RUN chmod +x ./frontend-entrypoint.sh
 
