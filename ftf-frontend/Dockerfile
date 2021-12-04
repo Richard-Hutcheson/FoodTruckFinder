@@ -8,11 +8,11 @@ RUN yarn install
 
 RUN yarn run build
 
-WORKDIR /ftf-frontend/node_modules/.bin
+#WORKDIR /ftf-frontend/node_modules/.bin
 
-RUN yarn add env-cmd
+#RUN yarn add env-cmd
 
-WORKDIR /ftf-frontend
+#WORKDIR /ftf-frontend
 
 RUN chmod +x ./frontend-entrypoint.sh
 
