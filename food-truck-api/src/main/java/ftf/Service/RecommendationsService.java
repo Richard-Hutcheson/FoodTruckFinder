@@ -248,21 +248,18 @@ public class RecommendationsService {
         if(!Objects.equals(userPreferences.get().getFoodTypePref(), null)){
             foodTypeTrucks = getRecommendedFoodType(userPreferences.get());
             m.put(foodTypeTrucks,new Boolean(true));
-            System.out.println("TRUE FOR FOOD TYPE");
             foodTruckLists.add(foodTypeTrucks);
         }else{
             //m.put(foodTypeTrucks,new Boolean(false));
-            System.out.println("FALSE FOR FOOD TYPE");
         }
 
         if(!Objects.equals(userPreferences.get().getCityPref(), null)){
             foodLocationTrucks = getRecommendedByLocation(userPreferences.get());
             m.put(foodLocationTrucks,new Boolean(true));
-            System.out.println("TRUE FOR CITY TYPE");
             foodTruckLists.add(foodLocationTrucks);
         }else{
             //m.put(foodLocationTrucks,new Boolean(false));
-            System.out.println("FALSE FOR CITY TYPE");
+
         }
 
         if(!Objects.equals(userPreferences.get().getMaxPricePref(), null) &&
@@ -273,11 +270,9 @@ public class RecommendationsService {
                 e.printStackTrace();
             }
             m.put(foodTrucksPrice,new Boolean(true));
-            System.out.println("TRUE FOR PRICE RANGE TYPE");
             foodTruckLists.add(foodTrucks);
         }else{
             //m.put(foodTrucksPrice,new Boolean(false));
-            System.out.println("FALSE FOR PRICE RANGE TYPE");
         }
 
         if(!Objects.equals(userPreferences.get().getRatingPref(), null)){
@@ -287,15 +282,12 @@ public class RecommendationsService {
                 e.printStackTrace();
             }
             m.put(foodRatingTrucks,new Boolean(true));
-            System.out.println("TRUE FOR RATING TYPE");
             foodTruckLists.add(foodRatingTrucks);
         }else{
             //m.put(foodRatingTrucks,new Boolean(false));
-            System.out.println("FALSE FOR RATING TYPE");
         }
 
 
-        System.out.println("Size of the map: " + m.size());
 
         //This is the list that will contain the final trucks that will be
         //provided to the user, it will be used to convert it into a list
@@ -307,7 +299,6 @@ public class RecommendationsService {
             //if it is true (i.e. a recommendation that fits the criteria
             //the user had
 
-            System.out.println("BOOLEAN CONDITION: " + listEntry.getValue());
             if(listEntry.getValue() == true){
                 //Iterate through the entire list for that key
 
@@ -326,12 +317,11 @@ public class RecommendationsService {
         }
 
         //This is for testing and debugging:
-        System.out.println("NUMBER OF PREFERENCES: " + countPrefs);
 
-        for(Map.Entry<FoodTruck,Integer> listEntry: finalTrucks.entrySet()){
-            System.out.println("Truck: "+ listEntry.getKey().getTruckName() + "Count: "
-                    + listEntry.getValue() );
-        }
+//        for(Map.Entry<FoodTruck,Integer> listEntry: finalTrucks.entrySet()){
+//            System.out.println("Truck: "+ listEntry.getKey().getTruckName() + "Count: "
+//                    + listEntry.getValue() );
+//        }
 
         //Converts the Map to a List, and stores the food trucks in the order from
         //the greatest occurrences (i.e. more relevant) to least relevant.

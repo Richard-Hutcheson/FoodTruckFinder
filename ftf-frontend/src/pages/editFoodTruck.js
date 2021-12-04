@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
-import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute} from "../API/apiCalls.js"
+import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute, getSubscriptionsByTruck} from "../API/apiCalls.js"
 
 class EditTruck extends Component{
     constructor(props){
@@ -59,6 +59,16 @@ class EditTruck extends Component{
             tempRoutes.push(newRoute);
             this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1});
         }
+        //GET SUBSCRIBED USERS
+        response = await getSubscriptionsByTruck(this.state.truckName).catch(error=>console.log(error.message));
+        let arr = this.state.subbedUsers;
+        let key = this.state.keyCount;
+        for (let i = 0; i < response.length; i++){
+            let newSub = <div className = {styles.userRow} key = {key}>{response[i].user.username}</div>
+            arr.push(newSub);
+            key++;
+        }
+        this.setState({subbedUsers: arr, keyCount: key});
     }
 
     async handleSubmit(event){
@@ -243,7 +253,7 @@ class EditTruck extends Component{
                 <br/>
                 <div className = {styles.routeDiv}>
                     <p className = {styles.routeTitle}><b>Truck Route</b></p>
-                    <div className = {styles.customBorder}></div>
+                    {/* <div className = {styles.customBorder}></div> */}
                     <div className={styles.addressDiv}>
                         <p>ADDRESS</p>
                         <p>CITY</p>

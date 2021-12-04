@@ -39,6 +39,7 @@ public class SubscriptionController {
 
     @GetMapping("getSubsByTruck/{foodTruck}")
     public List<Subscription> getSubscriptionsByTruck(@PathVariable String foodTruck){
+        System.out.println(foodTruck);
         return subServ.findSubscriptionsByTruck(foodTruck);
     }
 

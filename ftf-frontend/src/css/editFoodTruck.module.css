@@ -28,9 +28,14 @@ h1{
 
 .subTitle, .routeTitle{
     margin: 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
 }
-.subContent{
-    background-color: ;
+
+.userRow{
+    background-color: rgb(241, 241, 241);
+    color: rgb(18, 60, 105);
+    margin: .2em 0 .2em 0;
 }
 .customBorder{
     background-color: black;
