@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getRecommendedTrucks, getSubscriptions, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
+import {getAllRoutes, getAllTrucks, getRecommendedTrucks, getSubscriptions, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
@@ -117,9 +117,10 @@ class UserDashboard extends Component{
                 this.setState({subscribedTrucksList: arr});
             }
         }
+        //GET ALL ROUTES
+        let allRoutes = await getAllRoutes().catch(e=>{console.log(e.message)});
         //GOOGLE MAPS API
-        
-        initMap(this.state.address);
+        initMap(this.state.address, allRoutes);
 
 
     }

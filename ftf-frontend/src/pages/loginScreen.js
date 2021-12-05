@@ -44,7 +44,6 @@ class LoginScreen extends Component{
                     window.confirm("Not a valid login. Please try again.");
                 }
                 else{
-                    console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({
                         pathname: '/UserDashboard',
                         state: {username: this.state.username, guest: false} // your data array of objects

@@ -43,7 +43,7 @@ public class RouteController {
         routeService.deleteRoute(truckName,address,city,state);
     }
 
-    @GetMapping("/api/routes")
+    @GetMapping("/routes/getAllRoutes")
     public List<Route> getRoutes(){
         return routeService.getRoutes();
     }

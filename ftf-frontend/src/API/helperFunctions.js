@@ -41,7 +41,6 @@ export function centerMap(address, geocoder, map){
         // console.log(parse.results[0].geometry.location.lat);
         // console.log(parse.results[0].geometry.location.lng);
 
-
         // console.log(text.results[0].geometry.location.lat, text.results[0].geometry.location.lng );
         let loc = {"lat": parse.results[0].geometry.location.lat, "lng": parse.results[0].geometry.location.lng};
         return "HELLO";
@@ -50,20 +49,19 @@ export function centerMap(address, geocoder, map){
         alert("Geocode was not successful for the following reason: " + e);
     });
 }
-export function setTruckMarkers(address, geocoder, map){
+export function setTruckMarkers(address, geocoder, map, truckName){
     geocoder
     .geocode(address)
     .then((result) => {
         const { results } = result;
         let text = JSON.stringify(result, null, 2);
         let parse = JSON.parse(text);
-        let userMarker = new window.google.maps.Marker({map: map,label:{text: "YOU", fontWeight: "bold"}});
+        let userMarker = new window.google.maps.Marker({map: map,label:{text: truckName, fontWeight: "bold"}});
         userMarker.setPosition(results[0].geometry.location);
         // userMarker.setMap(map);
 
         // console.log(text.results[0].geometry.location.lat, text.results[0].geometry.location.lng );
         let loc = {"lat": parse.results[0].geometry.location.lat, "lng": parse.results[0].geometry.location.lng};
-        return "HELLO";
     })
     .catch((e) => {
         alert("Geocode was not successful for the following reason: " + e);

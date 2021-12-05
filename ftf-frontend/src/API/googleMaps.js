@@ -1,11 +1,11 @@
-import {clear, centerMap, geocodeSearch} from '../API/helperFunctions'
+import {clear, centerMap, geocodeSearch, setTruckMarkers} from '../API/helperFunctions'
 
 
 
 
 
 
-export function initMap(address) {
+export function initMap(address, allRoutes) {
     address = address.street + ", " + address.city + ", " + address.state;
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&callback=mapCallBack&v=weekly&channel=2`;
@@ -64,6 +64,21 @@ export function initMap(address) {
         // map.addListener("click", (e) => {
         // geocodeSearch({ location: e.latLng },  geocoder, map, marker, response, responseDiv);
         // });
+        let truckMap = new Map();
+        let idVal = 0;
+        for (let i =0; i <  allRoutes.length; i++){
+            //TRUCK ALREADY IN MAP
+            if (!truckMap.has(allRoutes[i].truck.truckName)){
+                truckMap.set(allRoutes[i].truck.truckName, idVal);
+                idVal++;
+            }
+            let routeAddr = allRoutes[i].address + ", " + allRoutes[i].city + ", " + allRoutes[i].state;
+            let truckName = allRoutes[i].truck.truckName;
+            setTruckMarkers({address: routeAddr}, geocoder, map, truckName);
+        }
+        
+        
+        
         submitButton.addEventListener("click", () =>
         geocodeSearch({ address: inputText.value },  geocoder, map, marker, response, responseDiv)
         );
