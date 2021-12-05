@@ -25,10 +25,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringJUnitConfig
 public class UserTest
 {
-
     @MockBean
     UserService userService;
-
 
     @Test
     public void testCreateUser() {
@@ -39,5 +37,12 @@ public class UserTest
         assertEquals(user, userService.saveUser(user));
     }
 
+    @Test
+    public void testEditUser() {
+        User user = new User();
+        user.setUsername("JUnit");
 
+        when(userService.saveUser(user)).thenReturn(user);
+        assertEquals(user, userService.saveUser(user));
+    }
 }

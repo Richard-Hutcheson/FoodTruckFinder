@@ -73,4 +73,8 @@ public class RouteService {
 
 
     }
+
+    public List<Route> getRoutes() {
+        return routeRepository.findAll();
+    }
 }

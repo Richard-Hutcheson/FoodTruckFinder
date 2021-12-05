@@ -4,6 +4,7 @@ import ftf.Service.FoodTruckService;
 import ftf.Service.RouteService;
 import ftf.classes.FoodTruck;
 import ftf.classes.Route;
+import ftf.classes.User;
 import ftf.exceptions.FoodTruckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,11 @@ public class RouteController {
                              @PathVariable String city,
                              @PathVariable String state) {
         routeService.deleteRoute(truckName,address,city,state);
+    }
+
+    @GetMapping("/api/routes")
+    public List<Route> getRoutes(){
+        return routeService.getRoutes();
     }
 
 
