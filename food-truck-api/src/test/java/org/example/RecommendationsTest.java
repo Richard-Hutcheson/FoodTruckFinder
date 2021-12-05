@@ -29,4 +29,5 @@ class RecommendationsTest {
     @MockBean
     RecommendationsRepository recommendationsRepository;
 
+
 }
