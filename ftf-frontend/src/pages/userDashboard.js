@@ -3,7 +3,8 @@ import {getAllTrucks, getRecommendedTrucks, getSubscriptions, getUser, insertUse
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
-let map;
+import {initMap} from "../API/googleMaps.js"
+// let map;
 
 class UserDashboard extends Component{
 
@@ -13,6 +14,7 @@ class UserDashboard extends Component{
             username: '<unknown>',
             userID: 'fetching...',
             searchQuery: '',
+            address: {},
             name: '<unknown>',
             guest: true,
             showMap: 'false',
@@ -40,12 +42,12 @@ class UserDashboard extends Component{
         }else{
             this.setState({guest: false});
         }
-        this.setState({userID: response.id});
-        this.setState({username: response.username});
-        this.setState({role: response.role});
+        this.setState({userID: response.id, username: response.username, role: response.role, 
+            address: {"street": response.address, "city": response.city, "state": response.state}});
+ 
         if (this.state.showMap === 'true'){
             try{
-                callMaps(map);
+                // callMaps(map);
             }catch(error){
                 console.log("error in calling gMaps = ", error);
             }
@@ -115,6 +117,11 @@ class UserDashboard extends Component{
                 this.setState({subscribedTrucksList: arr});
             }
         }
+        //GOOGLE MAPS API
+        
+        initMap(this.state.address);
+
+
     }
     handleChange(event){
         const target = event.target;
@@ -152,7 +159,7 @@ class UserDashboard extends Component{
         }
     }
     special(event){
-        callMaps(map);
+        // callMaps(map);
         this.setState({showMap: 'true'});
     }
     render(){ 
@@ -235,21 +242,20 @@ class UserDashboard extends Component{
                 </div>
 
                 <div className = {styles.mapWrapper}>
-                    { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
+                    {/* { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>} */}
                     <div className={styles.map} id="map">
                         <p>Map goes here. Status: disabled</p>
                     </div>
                 </div>
-                {/* <div className={styles.dynamic}>
+                <div className={styles.dynamic}>
                     <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
-                </div> */}
+                </div>
                 {/* .default is required because of a bug in react scripts v4.0 solution found on https://www.youtube.com/watch?v=ay6id01369s */}
                 <div className = {styles.footerImageDiv}>
                     <img src={require('../assets/justTruck.png').default} className={styles.truckImg} alt="TRUCK IMAGE"/>
                     {/* <p className = {styles.footerTextHead}>EARN</p> */}
                     {/* <p className = {styles.footerText}>A FOOD TRUCK FINDING APP</p> */}
                     <p className = {styles.footerTextFooter}>Richard Hutcheson, Noah Lambaria, Austin Blanchard, Ethan Robinson</p>
-
                 </div>
 
             </div>
