@@ -228,29 +228,30 @@ class EditTruck extends Component{
         return (
 
         <div className={styles.bodyContainer}>
-            <h1>Edit Truck</h1>
+            <h1 className = {styles.title}>Edit Truck</h1>
             <form onSubmit={this.handleSubmit} id = "formID" className = {styles.formClass}>
-                
-                <label htmlFor="truckNameField">Truck Name:</label><br/>
-                <input type="text" id="truckNameField" name = "truckName" className="field field2" placeholder={this.state.truckName} disabled = {this.state.viewOnly}/><br/>
-                <label htmlFor="foodTypeField">Food Type:</label><br/>
-                <input type="text" id="foodTypeField" name = "foodType" className="field field2" placeholder={this.state.foodType} disabled = {this.state.viewOnly}/><br/>
-                <label htmlFor="descID">Truck Description:</label><br/>
-                <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field field2" disabled = {this.state.viewOnly} id = {styles.descID}></textarea><br/>
-                
-                <label htmlFor="minPriceField">Min Price: </label><br/>
-                <input min="0" type="number" id="minPriceField" name = "minPrice" className="field field2" placeholder={this.state.minPrice} disabled = {this.state.viewOnly}/><br/>
-                <label htmlFor="maxPriceField">Max Price: </label><br/>
-                <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
+                <div className={styles.editableCont}>
+                    <label htmlFor="truckNameField">Truck Name:</label><br/>
+                    <input type="text" id="truckNameField" name = "truckName" className="field field2" placeholder={this.state.truckName} disabled = {this.state.viewOnly}/><br/>
+                    <label htmlFor="foodTypeField">Food Type:</label><br/>
+                    <input type="text" id="foodTypeField" name = "foodType" className="field field2" placeholder={this.state.foodType} disabled = {this.state.viewOnly}/><br/>
+                    <label htmlFor="descID">Truck Description:</label><br/>
+                    <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field field2" disabled = {this.state.viewOnly} id = {styles.descID}></textarea><br/>
+                    
+                    <label htmlFor="minPriceField">Min Price: </label><br/>
+                    <input min="0" type="number" id="minPriceField" name = "minPrice" className="field field2" placeholder={this.state.minPrice} disabled = {this.state.viewOnly}/><br/>
+                    <label htmlFor="maxPriceField">Max Price: </label><br/>
+                    <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
 
-                <label htmlFor="menuField">Menu URL</label><br/>
-                {this.state.menuURL == null && 
-                    <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder="url here" disabled = {this.state.viewOnly}/>
-                }
-                {this.state.menuURL != null && 
-                    <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/>
-                }
-                <br/>
+                    <label htmlFor="menuField">Menu URL</label><br/>
+                    {this.state.menuURL == null && 
+                        <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder="url here" disabled = {this.state.viewOnly}/>
+                    }
+                    {this.state.menuURL != null && 
+                        <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/>
+                    }
+                    <br/>
+                </div>
                 <div className = {styles.routeDiv}>
                     <p className = {styles.routeTitle}><b>Truck Route</b></p>
                     {/* <div className = {styles.customBorder}></div> */}

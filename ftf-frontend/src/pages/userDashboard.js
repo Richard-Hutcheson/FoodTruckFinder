@@ -165,7 +165,7 @@ class UserDashboard extends Component{
     }
     render(){ 
         return (
-            <div>
+            <div className={styles.container}>
                 <div className = {styles.navbar}>
                     {this.state.guest === false && <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.username}</button>
@@ -248,9 +248,9 @@ class UserDashboard extends Component{
                         <p>Map goes here. Status: disabled</p>
                     </div>
                 </div>
-                <div className={styles.dynamic}>
+                {/* <div className={styles.dynamic}>
                     <button className = {styles.s} type="submit" onClick={this.special}>SHOW MAP</button>
-                </div>
+                </div> */}
                 {/* .default is required because of a bug in react scripts v4.0 solution found on https://www.youtube.com/watch?v=ay6id01369s */}
                 <div className = {styles.footerImageDiv}>
                     <img src={require('../assets/justTruck.png').default} className={styles.truckImg} alt="TRUCK IMAGE"/>

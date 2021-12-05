@@ -2,37 +2,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Magra:wght@400;700&family=Skranji&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@500&display=swap');
 
+
 .loginBody{
     /*background: linear-gradient(180deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%);*/
-    background-color: rgb(0, 0, 0);
-    background-image: url("../assets/background.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-image: url("../assets/loginImg.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size:cover;
+    /* background-attachment: fixed; */
     /* font-family: 'Noto Sans Mono', monospace; */
     font-family: 'Magra', sans-serif;
     margin: 0;
     min-height: 100vh;
-    position: absolute;
+    /* position: absolute;
     top: 0;
-    left: 0;
+    left: 0; */
     width: 100%;
     color: black;
+    min-width: 583px;
 }
-
+/* .shade{
+    background-color: rgba(0, 0, 0, 0.288);
+    min-height: 100vh;
+} */
 .ftfHeader{
     color: white;
     text-align: center;
-    margin: 0;
-    font-size: 3em;
+    margin-top: 0;
+    padding-top: .5em;
+    margin-bottom: 0;
+    font-size: 6em;
+    font-weight: bolder;
     /* font-family: 'Magra', sans-serif; */
     font-family: inherit;
     /* text-decoration: underline; */
     letter-spacing: .2em;
-
+    text-shadow: rgb(71, 71, 71) 0px 0px 10px;
     /* -webkit-text-stroke-color: rgba(255, 255, 255, 0.487);
     -webkit-text-stroke-width: 1px; */
 }
+.truckImg{
+	position: relative;
+	left: 50%;
+	/* -100% because of scale 50% and -50% Y because scale*/
+	/* transform: scale(50%) translateX(-100%) translateY(-50%); */
+	transform: translateX(-50%);
+	width: 150px;
+	height: auto;
+	margin-top: .8em;
+
+}
+.centerContent{
+    position: relative;
+    margin-top: 6%;
+
+}
+
 input, button{
     font-family: inherit;
 
@@ -42,14 +67,14 @@ input, button{
     text-align: center;
     margin: 0 auto .3em auto;
     font-style: italic;
-    font-size: .9em;
+    font-size: 1.2em;
 
 }
 .loginWrapper{
     text-align: center;
     font-weight: bolder;
     margin:auto;
-    margin-top: 5em;
+    /* margin-top: 5em; */
     margin-bottom: 1em;
     position: relative;
     height: 150px;
@@ -62,6 +87,7 @@ input, button{
     transform: translateX(-50%);
     display:grid;
     grid-template-columns: 20em;
+    height: 30px;
 }
 
 .username, .password{
@@ -73,21 +99,23 @@ input, button{
     top: 55%;
 }
 .usernameLabel, .passwordLabel{
-    background-color: rgb(237, 199, 183);
+    background-color: rgb(238, 226, 220);
     width: 100%;
-    height: 20px;
+    height: 30px;
     padding-top: 1px;
     padding-bottom: 1px;
     border-radius: .5em;
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    color: black;
+    font-size: 1.4em;
 
 }
 
 .loginBtnClass{
     width: 150px;
-    height: 30px;
+    height: 35px;
     margin: 0 auto;
     text-align: center;
 
@@ -106,7 +134,7 @@ input, button{
     display: block;
     width: 150px;
     text-decoration: none;
-    height: 25px;
+    height: 35px;
     font-weight: bolder;
 
 }
@@ -140,9 +168,9 @@ input, button{
     display: block;
     width: 150px;
     text-decoration: none;
-    height: 25px;
+    height: 35px;
     font-weight: bolder;
-    margin: .5em 0 .9em 0;
+    margin: .5em 0 .6em 0;
 
 }
 .createAcntId:hover{
@@ -167,7 +195,7 @@ input, button{
     display: block;
     width: 150px;
     text-decoration: none;
-    height: 25px;
+    height: 35px;
     font-weight: bolder;
 
 }

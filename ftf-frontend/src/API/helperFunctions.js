@@ -56,7 +56,13 @@ export function setTruckMarkers(address, geocoder, map, truckName){
         const { results } = result;
         let text = JSON.stringify(result, null, 2);
         let parse = JSON.parse(text);
-        let userMarker = new window.google.maps.Marker({map: map,label:{text: truckName, fontWeight: "bold"}});
+
+        let icon = {
+            url: "https://i.ibb.co/XyDz8YC/just-Truck.png", 
+            scaledSize: new window.google.maps.Size(50, 30), 
+            labelOrigin: new window.google.maps.Point(20,-10),
+        }
+        let userMarker = new window.google.maps.Marker({map: map,label:{text: truckName, color: 'green'}, icon: icon});
         userMarker.setPosition(results[0].geometry.location);
         // userMarker.setMap(map);
 

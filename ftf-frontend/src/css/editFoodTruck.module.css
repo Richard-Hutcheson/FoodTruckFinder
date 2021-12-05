@@ -1,19 +1,38 @@
 .bodyContainer{
-    height: 100%;
+    height: 100vh;
+    overflow: auto;
+    background-image: url("../assets/stew.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
-h1{
+.title{
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.664);
 }
+
 .formClass{
     position: relative;
     display: block;
     text-align: center;
 }
 .formClass input{
-    width: 40%;
+    width: 80%;
+}
+.editableCont{
+    background-color: rgb(255, 255, 255);
+    position: relative;
+	display: block;
+	left: 50%;
+    width: 800px;
+	transform: translateX(-50%);
+    color:black;
+    border-radius: 1em;
+    height: 350px;
+    padding-top: 1em;
 }
 #descID{
-    width: 40%;
+    width: 80%;
     height: 100px;
 }
 .subscribedUsers, .routeDiv{
@@ -24,6 +43,14 @@ h1{
     left: 50%;
     transform: translateX(-50%);
     margin-top: 2rem;
+}
+.routeDiv{
+    overflow-x: auto;
+}
+.subscribedUsers{
+    min-height: 90px;
+    overflow-y: auto;
+    max-height: 200px;
 }
 
 .subTitle, .routeTitle{
@@ -57,7 +84,7 @@ h1{
     margin: 0;
     margin-top: 5px;
 }
-.subscribedUsers, .routeContent{
+.routeContent{
     min-height: 50px;
     height: auto;    
 }

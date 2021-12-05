@@ -60,27 +60,6 @@ class SearchResult extends Component{
         let response = '...unknown...';
         //WHEN SEARCHING FOR USER, GET THAT USER's INFO
         if (this.state.queryType === 'user\'s username'){
-            // console.log(this.state.searchQuery)
-            // response = await getUser(this.state.searchQuery).catch(error =>{
-            //     console.log(error.message);
-            //     return;
-            // });
-            // if (response === '...unknown...'){
-            //     window.confirm("NO RESULTS FOUND");
-            // }
-            // else if(response != null && response !== '...unknown...'){
-            //     this.setState({
-            //         username: response.username,
-            //         userID: response.id,
-            //         password: response.password,
-            //         email: response.email,
-            //         address: response.address,
-            //         state: response.state,
-            //         city: response.city,
-            //         role: response.role,            
-            //         name: response.name,
-            //     })
-            // }
         }
         else if (this.state.queryType === 'nearby'){
             response = await getUser(this.state.username).catch(error =>{
@@ -377,29 +356,27 @@ class SearchResult extends Component{
         //TRUCK NAME
         else if (this.state.queryType === "truck_name"){
             return(
-                <div>
+                <div className={styles.container}>
                     {this.state.searchQuery !== '' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
                     {this.state.searchQuery === '' && <h1 className = {styles.header}>TRUCK DETAILS</h1>}
-
-                    <div className = {styles.truckInfo}>
-                        <div className= {styles.truckNameDiv}>
-                            Food Truck: <span>{this.state.truckName}</span>
+                    <div className = {styles.detailsCont}>
+                        <div className = {styles.truckInfo}>
+                            <div className= {styles.truckNameDiv}>
+                                Food Truck: <span>{this.state.truckName}</span>
+                            </div>
+                            <div>
+                                Food Type: <span>{this.state.foodType}</span>
+                            </div>
+                            <div>
+                                Price Range: <span>${this.state.minPrice}...${this.state.maxPrice}</span>
+                            </div>
                         </div>
-                        <div>
-                            Food Type: <span>{this.state.foodType}</span>
+                        <div className={styles.owner}>
+                            <p>Truck Owner Username: <span>{this.state.truckOwner}</span></p>
                         </div>
-                        <div>
-                            Price Range: <span>${this.state.minPrice}...${this.state.maxPrice}</span>
+                        <div className={styles.truckDesc}>
+                            <p>Description: "<span>{this.state.truckDesc}</span>"</p>
                         </div>
-                    </div>
-                    <div className={styles.owner}>
-                        <p>Truck Owner Username: <span>{this.state.truckOwner}</span></p>
-                    </div>
-                    <div className={styles.truckDesc}>
-                        <p>Description: "<span>{this.state.truckDesc}</span>"</p>
-                    </div>
-                    <div className= {styles.truckSchedule}>
-                        <p className = {styles.truckSchedTitle}>Truck Schedule</p>
                     </div>
                     <div className= {styles.truckRoute}>
                         <p className = {styles.truckRouteTitle}>Truck Route</p>

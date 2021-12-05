@@ -72,7 +72,7 @@ class ManageFoodTrucks extends Component{
    
     render(){ 
         return (
-            <div>
+            <div className={styles.manageContainer}>
                 <div className = {styles.navbar}>
                     <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.username}</button>
@@ -84,9 +84,9 @@ class ManageFoodTrucks extends Component{
                     <a href="/" className = {styles.logout}>logout</a>
                 </div>
                 
-                <div className={styles.truckRecsContainer} id = "recTrucksID">
+                <div className={styles.truckManageContainer} id = "recTrucksID">
                     <div className={styles.truckRecTitle}>
-                        <p>Your Food Trucks</p>
+                        <p><b>YOUR FOOD TRUCKS</b></p>
                     </div>
                     <div className={styles.textBar}>
                         <div className={styles.textBarText}>TRUCK NAME</div>
