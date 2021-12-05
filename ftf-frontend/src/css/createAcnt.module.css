@@ -11,8 +11,8 @@
 	background-repeat: no-repeat;
 	background-size:cover;
     /* background: linear-gradient(0deg, rgba(19,120,154,1) 0%, rgba(4,173,208,1) 100%);  */
-    font-family: 'Noto Sans Mono', monospace;
-    
+    font-family: 'Noto Sans Mono', monospace !important;
+    font-size: 1.1em;
     color: white;
 }
 .innerContainer{
@@ -26,13 +26,14 @@
     margin-top: 2em;
     text-align: center;
     font-size: 2.5em;
+    font-weight: bold;
 }
 .formClass{
 }
 .groupClass{
     position:relative;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-55%);
     width: 500px;
     margin-bottom: 20px;
 }
@@ -50,12 +51,13 @@
     position:relative;
     left:50%;
     transform: translateX(-50%);
+    height: 25px;
 }
 
 .addressClass{
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-45%);
     width: 800px;
 }
 
@@ -75,8 +77,8 @@
 #createBtn{
     margin: 30px;
     margin-bottom: 15px;
-    height: 30px;
-    width: 100px;
+    width: 120px;
+    height: 35px;
     position: relative;
     left: 50%;
     border-color: white;
@@ -97,8 +99,8 @@
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 30px;
+    width: 120px;
+    height: 35px;
     text-decoration: none;
     border-style: solid;
     border-radius: .5em;
