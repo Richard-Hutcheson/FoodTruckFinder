@@ -6,7 +6,12 @@ import {clear, centerMap, geocodeSearch, setTruckMarkers} from '../API/helperFun
 
 
 export function initMap(address, allRoutes) {
-    address = address.street + ", " + address.city + ", " + address.state;
+    if (address === ''){
+        address = "1420 S 5th St, Waco, TX"
+    }else{
+        address = address.street + ", " + address.city + ", " + address.state;
+    }
+
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&callback=mapCallBack&v=weekly&channel=2`;
     script.async = true;

@@ -119,8 +119,12 @@ class UserDashboard extends Component{
         }
         //GET ALL ROUTES
         let allRoutes = await getAllRoutes().catch(e=>{console.log(e.message)});
+        if (this.state.guest == true){
+            initMap('', allRoutes);
+        }else{
+            initMap(this.state.address, allRoutes);
+        }
         //GOOGLE MAPS API
-        initMap(this.state.address, allRoutes);
 
 
     }
