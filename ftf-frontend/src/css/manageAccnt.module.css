@@ -1,5 +1,10 @@
 .container{
-
+    overflow-y:hidden;
+    background-image: url("../assets/food.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+    height: 100vh;
 }
 .formContainer{
     display: block;
@@ -7,8 +12,9 @@
     width: 700px;
     left: 50%;
     transform: translate(-50%);
-    margin-top: 3em;
+    margin-top: 0;
 }
+
 .userForm{
     display: grid;
     position: relative;
@@ -38,6 +44,12 @@
     transform: translate(-50%);
     text-align: center;
     text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.658);
+    border-radius: 1em;
+}
+.header{
+    margin-top: 2em;
+    margin-bottom: .5em;
 }
 .prefFormClass{
     display: block;
@@ -58,9 +70,6 @@
 
 }
 
-/* .distRangeClass, .foodTypeDiv{
-    text-align: center;
-} */
 .formSaveBtn{
     display: block;
     position: relative;

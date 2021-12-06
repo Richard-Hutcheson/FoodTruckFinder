@@ -44,7 +44,6 @@ class LoginScreen extends Component{
                     window.confirm("Not a valid login. Please try again.");
                 }
                 else{
-                    console.log("Neither a guest nor food truck owner was found.");
                     this.props.history.push({
                         pathname: '/UserDashboard',
                         state: {username: this.state.username, guest: false} // your data array of objects
@@ -59,36 +58,42 @@ class LoginScreen extends Component{
     render(){
         return (
             <div className = {styles.loginBody}>
+                <div className = {styles.shade}>
 
-                <div className = {styles.loginHeader}>
-                    <h1 className = {styles.ftfHeader}>EARN</h1>
-                    <h3 className = {styles.ftfSubHeader}>A FOOD TRUCK FINDING APP</h3>
+                    <div className = {styles.loginHeader}>
+                        <p className = {styles.ftfHeader}>EARN</p>
+                        {/* <h3 className = {styles.ftfSubHeader}>A FOOD TRUCK FINDING APP</h3> */}
 
+                    </div>
+                    <div className = {styles.footerImageDiv}>
+                        <img src={require('../assets/justTruckWhite.png').default} className={styles.truckImg} alt="TRUCK IMAGE"/>
+                    </div>
+                    <div className = {styles.centerContent}>
+                        <form className = {styles.loginForm} onSubmit={this.handleSubmit}>
+                            <div className={styles.loginWrapper}>
+                                <div className = {styles.usernameField}>
+                                    <label htmlFor="username" className = {styles.usernameLabel}>username</label>
+                                    <input type="text" className={styles.username} name="username"  value = {this.state.username}
+                                        onChange={this.handleChange} required autoComplete = "off" maxLength = "254"></input>
+                                </div>
+                                <div className = {styles.passwordField}>
+                                    <label htmlFor="pass" className = {styles.passwordLabel}>password</label>
+                                    <input type="password" className={styles.password} name="password" value = {this.state.password} 
+                                        onChange={this.handleChange} required autoComplete = "off" maxLength = "254"></input>
+                                </div>
+                            </div>
+                            <div className = {styles.loginBtnClass}>
+                                <input type = "submit" value = "LOGIN" className= {styles.loginBtnId}></input>
+                            </div>
+                        </form>
+                        <a href="/createAccount" className = {styles.createAcntATagId}>
+                            <button className = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
+                        </a>
+                        <button className = {styles.enterAsGuestBtn} id = "enterGuest" type = "button" onClick = {this.handleSubmit}> ENTER AS GUEST </button>
+                    </div>
                 </div>
-
-                <form className = {styles.loginForm} onSubmit={this.handleSubmit}>
-                    <div className={styles.loginWrapper}>
-                        <div className = {styles.usernameField}>
-                            <label htmlFor="username" className = {styles.usernameLabel}>username</label>
-                            <input type="text" className={styles.username} name="username"  value = {this.state.username}
-                                onChange={this.handleChange} required autoComplete = "off" maxLength = "254"></input>
-                        </div>
-                        <div className = {styles.passwordField}>
-                            <label htmlFor="pass" className = {styles.passwordLabel}>password</label>
-                            <input type="password" className={styles.password} name="password" value = {this.state.password} 
-                                onChange={this.handleChange} required autoComplete = "off" maxLength = "254"></input>
-                        </div>
-                    </div>
-                    <div className = {styles.loginBtnClass}>
-                        <input type = "submit" value = "LOGIN" className= {styles.loginBtnId}></input>
-                    </div>
-                </form>
-                <a href="/createAccount" className = {styles.createAcntATagId}>
-                    <button className = {styles.createAcntId} type = "button" action="/createAccount"> CREATE ACCOUNT </button>
-                </a>
-                <button className = {styles.enterAsGuestBtn} id = "enterGuest" type = "button" onClick = {this.handleSubmit}> ENTER AS GUEST </button>
-                {/* <img src="https://i.ibb.co/PZsGz3K/test-menu.jpg" /> */}
                 
+
                 <footer className={styles.footerClass}>
                     <p>Ethan Robinson, Austin Blanchard, Richard Hutcheson, Noah Lambaria</p>
                 </footer> 

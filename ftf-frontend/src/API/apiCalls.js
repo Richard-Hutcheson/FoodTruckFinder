@@ -86,19 +86,32 @@ export async function unsubscribeToTruck(truckName, username){
     return await makeRequest('DELETE', url, '');
 }
 
-export async function addRoute(truckName, address, city, state){
-    let url = `routes/${truckName}/${address}/${city}/${state}`
+export async function addRoute(truckName, address, city, state, schedule){
+    let url = `routes/${truckName}/${address}/${city}/${state}/${schedule}`
     return await makeRequest('POST', url, '');
 }
 export async function getRoutes(truckName){
     let url = `routes/${truckName}`
     return await makeRequest('GET', url, '');
 }
+export async function getAllRoutes(){
+    let url = `routes/getAllRoutes/`;
+    return await makeRequest('GET', url, '');
+}
+export async function deleteRoute(truckName, address, city, state){
+    let url = `delete/route/${truckName}/${address}/${city}/${state}/`;
+    return await makeRequest('DELETE', url, '')
+}
+
 export async function enhancedSearch(query){
     let url =  `searchTruck/${query}`;
     return await makeRequest('GET', url, '');
 }
 export async function searchNearby(cityPref){
     let url = `searchTruck/nearby/${cityPref}`;
+    return await makeRequest('GET', url, '');
+}
+export async function getSubscriptionsByTruck(truckName){
+    let url = `getSubsByTruck/${truckName}`;
     return await makeRequest('GET', url, '');
 }

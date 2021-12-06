@@ -1,10 +1,31 @@
+.container{
+    background-image: url("../assets/bread.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+    overflow-y: hidden;
+}
 .header{
     text-align: center;
     color: rgb(18, 60, 105);
     text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.664);
 }
 span{
     color: rgb(172, 59, 97);
+}
+.detailsCont{
+    background-color: white;
+    width: 800px;
+    height: 150px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    
+}
+.truckInfo{
+    /* margin-top: 5em; */
+    padding-top: 1em;
 }
 .userInfo, .truckInfo{
     width: 800px;
@@ -29,14 +50,34 @@ span{
     position:relative;
     background-color: white;
     width: 800px;
-    height: 200px;
+    height: auto;
     text-align: center;
     left: 50%;
     transform: translateX(-50%);
     color: rgb(18, 60, 105);
 }
+.truckRouteTitle, .truckSchedTitle, .truckMenuTitle{
+    font-weight: bold;
+}
 .truckSchedule, .truckRoute{
-    height: 80px;
+    min-height: 100px;
+}
+
+.addressDiv, .newRouteDiv{
+    display: grid;
+    grid-template-columns: minmax(140px, auto) minmax(140px, auto) minmax(140px, auto)  minmax(140px, auto);
+    grid-template-rows: 30px;
+    margin-bottom: 0;
+
+}
+.addressDiv{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    line-height: 5px;
+}
+.routeAddress, .routeCity, .routeState, .routeSchedule{
+    background-color: white;
+    border-style: solid;
 }
 .truckDesc{
     text-align: center;
@@ -105,7 +146,7 @@ span{
 .truckMenu{
     overflow:auto;
     height: auto;
-    width: 80%;
+    width: 800px;
     max-width: 800px;
     max-height: 500px;
 }

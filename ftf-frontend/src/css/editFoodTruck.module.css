@@ -1,25 +1,41 @@
 .bodyContainer{
-    height: 100%;
+    height: 100vh;
+    overflow: auto;
+    background-image: url("../assets/stew.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
-h1{
+.title{
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.664);
 }
+
 .formClass{
     position: relative;
     display: block;
     text-align: center;
 }
 .formClass input{
-    width: 40%;
+    width: 80%;
 }
-
+.editableCont{
+    background-color: rgb(255, 255, 255);
+    position: relative;
+	display: block;
+	left: 50%;
+    width: 800px;
+	transform: translateX(-50%);
+    color:black;
+    border-radius: 1em;
+    height: 350px;
+    padding-top: 1em;
+}
 #descID{
-    width: 40%;
+    width: 80%;
     height: 100px;
 }
-
-
-.scheduleDiv, .routeDiv{
+.subscribedUsers, .routeDiv{
     position: relative;
     background-color: white;
     height: auto;
@@ -28,8 +44,25 @@ h1{
     transform: translateX(-50%);
     margin-top: 2rem;
 }
-.routeTitle{
+.routeDiv{
+    overflow-x: auto;
+}
+.subscribedUsers{
+    min-height: 90px;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.subTitle, .routeTitle{
     margin: 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.userRow{
+    background-color: rgb(241, 241, 241);
+    color: rgb(18, 60, 105);
+    margin: .2em 0 .2em 0;
 }
 .customBorder{
     background-color: black;
@@ -37,24 +70,17 @@ h1{
     height: 1px;
     margin: 0;
 }
-.weekDiv, .addressDiv{
+.addressDiv{
     width: 100%;
     overflow: auto;
     display: grid;
 }
-.weekDiv{
-    grid-template-columns: minmax(140px, auto) minmax(140px, auto) 
-        minmax(140px, auto) minmax(140px, auto) minmax(140px, auto)
-        minmax(140px, auto) minmax(140px, auto);
-    grid-template-rows: 30px 30px;
-}
-.weekDiv input{
-    width: 97%;
-    border-width: 1px;
-    text-align: center;
-}
 
-.weekDiv p, .addressDiv p{
+.addressDiv{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.addressDiv p{
     margin: 0;
     margin-top: 5px;
 }
@@ -62,16 +88,12 @@ h1{
     min-height: 50px;
     height: auto;    
 }
-
 .addressDiv, .newRouteDiv{
     display: grid;
-    grid-template-columns: minmax(140px, auto) minmax(140px, auto) minmax(140px, auto) minmax(40px, 40px);
+    grid-template-columns: minmax(140px, auto) minmax(140px, auto) minmax(140px, auto)  minmax(140px, auto) minmax(40px, 40px);
     grid-template-rows: 30px;
 }
-.addressDiv{
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-}
+
 .newRouteDiv{
     margin-bottom: .5rem;
 }
@@ -82,20 +104,17 @@ h1{
     position: relative;
     height: 30px;
     width: 150px;
-    /* left: 50%;
-    transform: translateX(-50%); */
     bottom: 0;
     text-align: center;
 }
-
 .editBtn{
     margin-top: 2rem;
     width: 150px;
     height: 30px;
 }
-
 .backBtn, .delTruck{
     display: block;
+    margin-top: 2px;
     position: relative;
     width: 150px;
     height: 30px;

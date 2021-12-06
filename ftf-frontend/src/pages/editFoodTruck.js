@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
-import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes} from "../API/apiCalls.js"
+import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute, getSubscriptionsByTruck} from "../API/apiCalls.js"
 
 class EditTruck extends Component{
     constructor(props){
@@ -19,20 +19,17 @@ class EditTruck extends Component{
             viewOnly: true,
             submitText: "EDIT",
             truckOwnerDetails: {},
-            monday: '',
-            sunday: '',
-            saturday: '',
-            tuesday: '',
-            wednesday: '',
-            thursday: '',
-            friday: '',
+            subbedUsers: [],
             routes: [],
+            pendingRoutes: [],
             schedules: [],
             keyCount: 0,
             stopCount: 0,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleDel = this.handleDel.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
+        this.displayRoutes = this.displayRoutes.bind(this);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         this.state.truckName = urlParams.get("truck");
@@ -48,6 +45,30 @@ class EditTruck extends Component{
             foodType: response.foodType, username: response.owner.username, truckOwner: response.owner.username, truckOwnerDetails: response.owner, menuURL: response.menuURL});
         //get routes from truck
         //make sure to append routes to routes and to increment keyCount
+        response = await getRoutes(this.state.truckName).catch(error=>{console.log(error.message)});
+        console.log("routes: ", response);
+        for (let i = 0; i < response.length; i++){
+            let newRoute= {
+                'address': response[i].address,
+                'city': response[i].city,
+                'state': response[i].state,
+                'schedule': response[i].schedule,
+                'key': this.state.keyCount,
+            }
+            let tempRoutes = this.state.routes;
+            tempRoutes.push(newRoute);
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1});
+        }
+        //GET SUBSCRIBED USERS
+        response = await getSubscriptionsByTruck(this.state.truckName).catch(error=>console.log(error.message));
+        let arr = this.state.subbedUsers;
+        let key = this.state.keyCount;
+        for (let i = 0; i < response.length; i++){
+            let newSub = <div className = {styles.userRow} key = {key}>{response[i].user.username}</div>
+            arr.push(newSub);
+            key++;
+        }
+        this.setState({subbedUsers: arr, keyCount: key});
     }
 
     async handleSubmit(event){
@@ -93,27 +114,73 @@ class EditTruck extends Component{
                 <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled = {this.state.viewOnly}/>
                 <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState}
                 maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
-                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel}>X</button>
+                <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled = {this.state.viewOnly}/>
+                <button id = {"delBtn"+this.state.keyCount} type = "button" className = {styles.routeDelBtn} onClick={this.handleRemove} disabled = {this.state.viewOnly}>X</button>
             </div>;
             let tempRoutes = this.state.routes;
+            let tempPendingRoutes = this.state.pendingRoutes;
             tempRoutes.push(newRoute);
-            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+=1});
+            tempPendingRoutes.push(newRoute);
+            this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1, pendingRoutes: tempPendingRoutes});
         }
     }
+    //this function is necessary rather than creating the html directly into the array is because we want to preserve the state variables
+    displayRoutes(){
+        let arr = []
+        for (let i = 0; i < this.state.routes.length; i++){
+            let x =  
+            <div className = {styles.newRouteDiv} key = {this.state.routes[i].key}>
+                <input type = "text" id = {"address"+String(this.state.routes[i].key)} className = {styles.routeAddress} required disabled = {this.state.viewOnly} value = {this.state.routes[i].address}/>
+                <input type = "text" id = {"city"+String(this.state.routes[i].key)} className = {styles.routeCity} required disabled = {this.state.viewOnly} value = {this.state.routes[i].city}/>
+                <input type = "text" id = {"state"+String(this.state.routes[i].key)} className = {styles.routeState} value = {this.state.routes[i].state}
+                    maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled = {this.state.viewOnly}/>
+                <input type = "text" id = {"schedule"+String(this.state.routes[i].key)} className = {styles.routeSchedule} required disabled = {this.state.viewOnly} value = {this.state.routes[i].schedule}/>
+                <button id = {"delBtn"+String(this.state.routes[i].key)} type = "button" className = {styles.routeDelBtn} onClick={this.handleDel} disabled = {this.state.viewOnly}>X</button>
+            </div>;
+            arr.push(x);
+        }
+        return (arr)
+    }
 
-    handleDel(event){
-        console.log("event id = ", event.target.id);
+    handleRemove(event){
         let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
         let tempRoutes = this.state.routes;
-        tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
+        let tempPendRoutes = this.state.pendingRoutes;
+        // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
         for (let i = 0; i < tempRoutes.length; i++){
             if (ndx === tempRoutes[i].key){
                 tempRoutes.splice(i, 1);
                 break;
             }
         }
+        for (let i = 0; i < tempPendRoutes.length; i++){
+            if (ndx === tempPendRoutes[i].key){
+                tempPendRoutes.splice(i, 1);
+                break;
+            }
+        }
+        this.setState({routes: tempRoutes, pendingRoutes: tempPendRoutes});
+    }
+    async handleDel(event){
+        let ndx = event.target.id.substring(6); //cut out "delBtn to reveal the keyCount which is also the ndx in the routes array it is in"
+        let tempRoutes = this.state.routes;
+        // tempRoutes.forEach(function(x, i){if (ndx === x.key){tempRoutes.splice(i, 1);}})
+        let address = '', city = '', state ='', schedule = '';
+        console.log(tempRoutes, ndx)
+
+        for (let i = 0; i < tempRoutes.length; i++){
+            if (ndx == tempRoutes[i].key){
+                address = (tempRoutes[i].address);
+                city = (tempRoutes[i].city);
+                state = (tempRoutes[i].state);
+                // schedule = (tempRoutes[i].props.children[3].props.value);
+                tempRoutes.splice(i, 1);                
+                break;
+            }
+        }
+        let response = await deleteRoute(this.state.truckName, address, city, state);
         this.setState({routes: tempRoutes});
-        //CALL DELETE ROUTE END POINT HERE
+
     }
 
     async saveTruck(){
@@ -128,17 +195,26 @@ class EditTruck extends Component{
             minRange: this.state.minPrice,
             maxRange: this.state.maxPrice,
         }
-            // monday: this.state.monday,
-            // tuesday: this.state.tuesday,
-            // wednesday: this.state.wednesday,
-            // thursday: this.state.thursday,
-            // friday: this.state.friday,
-            // saturday: this.state.saturday,
-            // sunday: this.state.sunday,
-        console.log("truck data = ", truckData );
-        let x = await editTruck(truckData).catch(error=>{console.log(error.message);});
-        console.log(x);
-        
+        console.log("pending routes = ", this.state.pendingRoutes);
+        for (let i = 0; i < this.state.pendingRoutes.length; i++){
+            //address
+            let tempAddress = document.getElementById(this.state.pendingRoutes[i].props.children[0].props.id).value
+            //city
+            let tempCity = document.getElementById(this.state.pendingRoutes[i].props.children[1].props.id).value;
+            //state
+            let tempState = document.getElementById(this.state.pendingRoutes[i].props.children[2].props.id).value;
+            //schedule
+            let tempSchedule = document.getElementById(this.state.pendingRoutes[i].props.children[3].props.id).value;
+            //add route
+            let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState, tempSchedule).catch(error=>{
+                console.log(error.message);
+            });
+            // console.log(response);
+        }
+        //clear pendingRoutes
+        this.setState({pendingRoutes: []});
+        await editTruck(truckData).catch(error=>{console.log(error.message);});
+        window.location.reload(false);
     }
     resetFields(){
         this.setState({submitText: 'EDIT'});
@@ -152,67 +228,55 @@ class EditTruck extends Component{
         return (
 
         <div className={styles.bodyContainer}>
-            <h1>Edit Truck</h1>
+            <h1 className = {styles.title}>Edit Truck</h1>
             <form onSubmit={this.handleSubmit} id = "formID" className = {styles.formClass}>
-                
-                <label htmlFor="truckNameField">Truck Name:</label><br/>
-                <input type="text" id="truckNameField" name = "truckName" className="field field2" placeholder={this.state.truckName} disabled = {this.state.viewOnly}/><br/>
-                <label htmlFor="foodTypeField">Food Type:</label><br/>
-                <input type="text" id="foodTypeField" name = "foodType" className="field field2" placeholder={this.state.foodType} disabled = {this.state.viewOnly}/><br/>
-                <label htmlFor="descID">Truck Description:</label><br/>
-                <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field field2" disabled = {this.state.viewOnly} id = {styles.descID}></textarea><br/>
-                
-                <label htmlFor="minPriceField">Min Price: </label><br/>
-                <input min="0" type="number" id="minPriceField" name = "minPrice" className="field field2" placeholder={this.state.minPrice} disabled = {this.state.viewOnly}/><br/>
-                <label htmlFor="maxPriceField">Max Price: </label><br/>
-                <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
+                <div className={styles.editableCont}>
+                    <label htmlFor="truckNameField">Truck Name:</label><br/>
+                    <input type="text" id="truckNameField" name = "truckName" className="field field2" placeholder={this.state.truckName} disabled = {this.state.viewOnly}/><br/>
+                    <label htmlFor="foodTypeField">Food Type:</label><br/>
+                    <input type="text" id="foodTypeField" name = "foodType" className="field field2" placeholder={this.state.foodType} disabled = {this.state.viewOnly}/><br/>
+                    <label htmlFor="descID">Truck Description:</label><br/>
+                    <textarea placeholder={this.state.truckDesc} name = "truckDesc" className="field field2" disabled = {this.state.viewOnly} id = {styles.descID}></textarea><br/>
+                    
+                    <label htmlFor="minPriceField">Min Price: </label><br/>
+                    <input min="0" type="number" id="minPriceField" name = "minPrice" className="field field2" placeholder={this.state.minPrice} disabled = {this.state.viewOnly}/><br/>
+                    <label htmlFor="maxPriceField">Max Price: </label><br/>
+                    <input type="number" id="maxPriceField" name = "maxPrice" className="field field2" placeholder={this.state.maxPrice} disabled = {this.state.viewOnly}/><br/>
 
-                <label htmlFor="menuField">Menu URL</label><br/>
-                {this.state.menuURL == null && 
-                    <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder="url here" disabled = {this.state.viewOnly}/>
-                }
-                {this.state.menuURL != null && 
-                    <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/>
-                }
-                <br/>
-                {/* <div className={styles.scheduleDiv}>
-                    <p className = {styles.scheduleTitle}><b>Truck Schedule</b></p>
-                    <div className = {styles.customBorder}></div>
-                    <div className={styles.weekDiv}>
-                        <p>MON</p>
-                        <p>TUES</p>
-                        <p>WED</p>
-                        <p>THURS</p>
-                        <p>FRI</p>
-                        <p>SAT</p>
-                        <p>SUN</p>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "monday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "tuesday"  disabled = {this.state.viewOnly}required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "wednesday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "thursday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "friday" disabled = {this.state.viewOnly} required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "saturday" disabled = {this.state.viewOnly}required/>
-                        <input type = "text" placeholder = "xx:xxAM-xx:xxAM" id = "sunday" disabled = {this.state.viewOnly}required/>
-                    </div>
-                </div> */}
+                    <label htmlFor="menuField">Menu URL</label><br/>
+                    {this.state.menuURL == null && 
+                        <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder="url here" disabled = {this.state.viewOnly}/>
+                    }
+                    {this.state.menuURL != null && 
+                        <input type="text" id="menuField" name = "menuURL" className="field field2" placeholder={this.state.menuURL} disabled = {this.state.viewOnly}/>
+                    }
+                    <br/>
+                </div>
                 <div className = {styles.routeDiv}>
                     <p className = {styles.routeTitle}><b>Truck Route</b></p>
-                    <div className = {styles.customBorder}></div>
+                    {/* <div className = {styles.customBorder}></div> */}
                     <div className={styles.addressDiv}>
                         <p>ADDRESS</p>
                         <p>CITY</p>
                         <p>STATE</p>
+                        <p>SCHEDULE</p>
                     </div>
                     <div className = {styles.routeContent}>
-                        {this.state.routes}
+                        {this.displayRoutes()}
                     </div>
                     <button id = "addRouteBtn" onClick = {this.handleSubmit} type = "button" className = {styles.addRouteBtn} disabled = {this.state.viewOnly}>ADD ROUTE</button>
                 </div>
+                <div className = {styles.subscribedUsers}>
+                    <p className = {styles.subTitle}><b>Subscribed Users:</b> {this.state.subbedUsers.length}</p>
+                    <div className ={styles.subContent}>
+                        {this.state.subbedUsers}
+                    </div>
+                </div>
                 <button id = "editBtn" className = {styles.editBtn} type= "submit" value={this.state.submitText}>{this.state.submitText}</button>
             </form>
+
             <button id = "delTruck" type = "button" className = {styles.delTruck} onClick = {this.handleSubmit}>DELETE TRUCK</button>
             <button id = "backBtn"  type = "button" className = {styles.backBtn} onClick={this.handleSubmit}>BACK</button>
-            {/* <a href="https://ibb.co/qptvrQ9"><img src="https://i.ibb.co/FzSFDTJ/test-menu.jpg" alt="test-menu" border="0"/></a> */}
         </div>
         );
     }

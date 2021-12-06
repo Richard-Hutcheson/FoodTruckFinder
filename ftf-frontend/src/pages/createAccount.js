@@ -93,14 +93,12 @@ class CreateAccount extends Component{
                             <label htmlFor="name" id = {styles.name}>Name:</label>
                             <input type="text" className={styles.inputClass} id={styles.nameInput} name="name" onChange={this.handleChange} required maxLength = "254"></input>
                         </div>
-                        
                         <div className={styles.groupClass}>
                             <label htmlFor="email" id = {styles.email}>Email:</label>
                             <input type="text" className={styles.inputClass} id={styles.emailInput} name="email"  onChange={this.handleChange} required maxLength = "254"></input>
                         </div>
-                        
                         <div className={styles.addressClass}>
-                            <label htmlFor="address" id = {styles.address}>Address:</label>
+                            <label htmlFor="address" id = {styles.address}>Street:</label>
                             <input type="text" className={styles.inputClass} id={styles.addressInput} name="address" onChange={this.handleChange} required maxLength = "254"></input>
                 
                             <label htmlFor="city" id = {styles.city}>   City:</label>

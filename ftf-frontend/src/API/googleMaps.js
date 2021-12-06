@@ -1,19 +1,117 @@
-export function callMaps(map){
-    // const additionalOptions = {};
+import {clear, centerMap, geocodeSearch, setTruckMarkers} from '../API/helperFunctions'
 
-    // const loader = new Loader({
-    //     apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    //     version: "weekly",
-    //     ...additionalOptions,
-    // });
-      
-    // loader.load().then(() => {
-    //     map = new window.google.maps.Map(document.getElementById("map"), {
-    //         center: { lat: 31.54626, lng: -97.118},
-    //         zoom: 18,
-    //         mapTypeId: "roadmap",
-    //     });
-    // });
+
+
+
+
+
+export function initMap(address, allRoutes) {
+    if (address === ''){
+        address = "1420 S 5th St, Waco, TX"
+    }else{
+        address = address.street + ", " + address.city + ", " + address.state;
+    }
+
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&callback=mapCallBack&v=weekly&channel=2`;
+    script.async = true;
+    document.head.appendChild(script);
+    window.mapCallBack = async function(){
+        let map;
+        let marker;
+        let geocoder;
+        let responseDiv;
+        let response;
+
+        map = new window.google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: { lat: 31.545872, lng: -97.117883 },
+        mapTypeControl: false,
+        });
+        geocoder = new window.google.maps.Geocoder();
+        centerMap({address: address}, geocoder, map);
+        const inputText = document.createElement("input");
+    
+        inputText.type = "text";
+        inputText.placeholder = "Enter a location";
+    
+        const submitButton = document.createElement("input");
+    
+        submitButton.type = "button";
+        submitButton.value = "Search";
+        submitButton.classList.add("button", "button-primary");
+    
+        const clearButton = document.createElement("input");
+    
+        clearButton.type = "button";
+        clearButton.value = "Clear";
+        clearButton.classList.add("button", "button-secondary");
+        response = document.createElement("pre");
+        response.id = "response";
+        response.innerText = "";
+        responseDiv = document.createElement("div");
+        responseDiv.id = "response-container";
+        responseDiv.appendChild(response);
+    
+        const instructionsElement = document.createElement("p");
+    
+        instructionsElement.id = "instructions";
+        // instructionsElement.innerHTML =
+        // "<strong>Instructions</strong>: Enter an address in the textbox to geocode or click on the map to reverse geocode.";
+        map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(inputText);
+        map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(submitButton);
+        map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(clearButton);
+        map.controls[window.google.maps.ControlPosition.LEFT_TOP].push(instructionsElement);
+        map.controls[window.google.maps.ControlPosition.LEFT_TOP].push(responseDiv);
+        marker = new window.google.maps.Marker({
+        map,
+        });
+        // map.addListener("click", (e) => {
+        // geocodeSearch({ location: e.latLng },  geocoder, map, marker, response, responseDiv);
+        // });
+        let truckMap = new Map();
+        let idVal = 0;
+        for (let i =0; i <  allRoutes.length; i++){
+            //TRUCK ALREADY IN MAP
+            if (!truckMap.has(allRoutes[i].truck.truckName)){
+                truckMap.set(allRoutes[i].truck.truckName, idVal);
+                idVal++;
+            }
+            let routeAddr = allRoutes[i].address + ", " + allRoutes[i].city + ", " + allRoutes[i].state;
+            let truckName = allRoutes[i].truck.truckName;
+            setTruckMarkers({address: routeAddr}, geocoder, map, truckName);
+        }
+        
+        
+        
+        submitButton.addEventListener("click", () =>
+        geocodeSearch({ address: inputText.value },  geocoder, map, marker, response, responseDiv)
+        );
+        clearButton.addEventListener("click", () => {
+        clear(marker, responseDiv);
+        });
+        clear(marker, responseDiv);
+    }
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function callMaps(map){
     var script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&callback=initMap&libraries=places`;
     script.async = true;

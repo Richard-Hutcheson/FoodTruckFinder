@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch, searchNearby} from '../API/apiCalls';
+import {getUser, getTruckByName, getAllTrucks, postReview, getSubscriptions, subscribeToTruck, getReviews, unsubscribeToTruck, enhancedSearch, searchNearby, getRoutes} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/searchResult.module.css';
 
@@ -30,6 +30,8 @@ class SearchResult extends Component{
             noResults: 'false',
             userCity: '',
             subscribed: false,
+            routes: [],
+            keyCount: 0,
             writeReview: false,
             reviewList: [<div key = "-1"></div>],
         }
@@ -58,27 +60,6 @@ class SearchResult extends Component{
         let response = '...unknown...';
         //WHEN SEARCHING FOR USER, GET THAT USER's INFO
         if (this.state.queryType === 'user\'s username'){
-            console.log(this.state.searchQuery)
-            response = await getUser(this.state.searchQuery).catch(error =>{
-                console.log(error.message);
-                return;
-            });
-            if (response === '...unknown...'){
-                window.confirm("NO RESULTS FOUND");
-            }
-            else if(response != null && response !== '...unknown...'){
-                this.setState({
-                    username: response.username,
-                    userID: response.id,
-                    password: response.password,
-                    email: response.email,
-                    address: response.address,
-                    state: response.state,
-                    city: response.city,
-                    role: response.role,            
-                    name: response.name,
-                })
-            }
         }
         else if (this.state.queryType === 'nearby'){
             response = await getUser(this.state.username).catch(error =>{
@@ -188,7 +169,6 @@ class SearchResult extends Component{
             response = await getReviews(this.state.truckName).catch(e=>{
                 console.log(e.message);
             })
-            console.log("reviews ", response);
             if (response != null && response.length != 0){
                 let newList = this.state.reviewList;
                 for (let i = 0; i < response.length; i++){
@@ -196,7 +176,7 @@ class SearchResult extends Component{
                     <div key = {i} className = {styles.review}>
                         <div className = {styles.txtRatingDiv}>
                             <div>
-                                <p className = {styles.reviewUser}>{response[i].username.username}</p>
+                                <p className = {styles.reviewUser}>{response[i].user.username}</p>
                                 <p className = {styles.userRating}>rating: {response[i].rating}/10</p>
                             </div>
                         </div>                                
@@ -205,6 +185,22 @@ class SearchResult extends Component{
                     newList.push(fragment);
                 }
                 this.setState({reviewList: newList});
+            }
+            //GET TRUCK ROUTE IF ANY EXISTS
+            response = await getRoutes(this.state.truckName).catch(e=>{console.log(e.message);});
+            for (let i = 0; i < response.length; i++){
+                let newRoute=
+                <div className = {styles.newRouteDiv} key = {this.state.keyCount}>
+                    <input type = "text" id = {"address"+this.state.keyCount} className = {styles.routeAddress} required disabled value = {response[i].address}/>
+                    <input type = "text" id = {"city"+this.state.keyCount} className = {styles.routeCity} required disabled value = {response[i].city}/>
+                    <input type = "text" id = {"state"+this.state.keyCount} className = {styles.routeState} value = {response[i].state}
+                        maxLength = "2" minLength = "2" placeholder="(ex: 'TX')" pattern = "[A-Za-z][A-Za-z]" required disabled/>
+                    <input type = "text" id = {"schedule"+this.state.keyCount} className = {styles.routeSchedule} required disabled value = {response[i].schedule}/>
+                </div>;
+                let tempRoutes = this.state.routes;
+                tempRoutes.push(newRoute);
+                this.setState({routes: tempRoutes, keyCount: this.state.keyCount+=1});
+
             }
         }
         //SEARCHING FOR TRUCKS BY FOOD TYPE
@@ -360,36 +356,42 @@ class SearchResult extends Component{
         //TRUCK NAME
         else if (this.state.queryType === "truck_name"){
             return(
-                <div>
-
+                <div className={styles.container}>
                     {this.state.searchQuery !== '' && <h1 className = {styles.header}>SEARCHING FOR "{this.state.searchQuery}"</h1>}
                     {this.state.searchQuery === '' && <h1 className = {styles.header}>TRUCK DETAILS</h1>}
-
-                    <div className = {styles.truckInfo}>
-                        <div className= {styles.truckNameDiv}>
-                            Food Truck: <span>{this.state.truckName}</span>
+                    <div className = {styles.detailsCont}>
+                        <div className = {styles.truckInfo}>
+                            <div className= {styles.truckNameDiv}>
+                                Food Truck: <span>{this.state.truckName}</span>
+                            </div>
+                            <div>
+                                Food Type: <span>{this.state.foodType}</span>
+                            </div>
+                            <div>
+                                Price Range: <span>${this.state.minPrice}...${this.state.maxPrice}</span>
+                            </div>
                         </div>
-                        <div>
-                            Food Type: <span>{this.state.foodType}</span>
+                        <div className={styles.owner}>
+                            <p>Truck Owner Username: <span>{this.state.truckOwner}</span></p>
                         </div>
-                        <div>
-                            Price Range: <span>${this.state.minPrice}...${this.state.maxPrice}</span>
+                        <div className={styles.truckDesc}>
+                            <p>Description: "<span>{this.state.truckDesc}</span>"</p>
                         </div>
-                    </div>
-                    <div className={styles.owner}>
-                        <p>Truck Owner Username: <span>{this.state.truckOwner}</span></p>
-                    </div>
-                    <div className={styles.truckDesc}>
-                        <p>Description: "<span>{this.state.truckDesc}</span>"</p>
-                    </div>
-                    <div className= {styles.truckSchedule}>
-                        <p>Truck Schedule</p>
                     </div>
                     <div className= {styles.truckRoute}>
-                        <p>Truck Route</p>
+                        <p className = {styles.truckRouteTitle}>Truck Route</p>
+                        <div className={styles.addressDiv}>
+                            <p>ADDRESS</p>
+                            <p>CITY</p>
+                            <p>STATE</p>
+                            <p>SCHEDULE</p>
+                        </div>
+                        <div className = {styles.routeContent}>
+                            {this.state.routes}
+                        </div>
                     </div>
                     <div className= {styles.truckMenu}>
-                        <p>Truck Menu</p>
+                        <p className = {styles.truckMenuTitle}>Truck Menu</p>
                         {this.state.menuURL !== '' && <img src={this.state.menuURL} alt="menu" border="0"/>}
                     </div>
                     <div className= {styles.truckRevRat}>

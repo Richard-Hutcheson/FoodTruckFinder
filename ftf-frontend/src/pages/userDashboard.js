@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {getAllTrucks, getRecommendedTrucks, getSubscriptions, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
+import {getAllRoutes, getAllTrucks, getRecommendedTrucks, getSubscriptions, getUser, insertUserFoodRec, updateFoodTypeRec} from '../API/apiCalls';
 import {Link} from "react-router-dom";
 import styles from '../css/userDashboard.module.css';
 import {callMaps} from "../API/googleMaps.js"
-let map;
+import {initMap} from "../API/googleMaps.js"
+// let map;
 
 class UserDashboard extends Component{
 
@@ -13,6 +14,7 @@ class UserDashboard extends Component{
             username: '<unknown>',
             userID: 'fetching...',
             searchQuery: '',
+            address: {},
             name: '<unknown>',
             guest: true,
             showMap: 'false',
@@ -40,12 +42,12 @@ class UserDashboard extends Component{
         }else{
             this.setState({guest: false});
         }
-        this.setState({userID: response.id});
-        this.setState({username: response.username});
-        this.setState({role: response.role});
+        this.setState({userID: response.id, username: response.username, role: response.role, 
+            address: {"street": response.address, "city": response.city, "state": response.state}});
+ 
         if (this.state.showMap === 'true'){
             try{
-                callMaps(map);
+                // callMaps(map);
             }catch(error){
                 console.log("error in calling gMaps = ", error);
             }
@@ -115,6 +117,16 @@ class UserDashboard extends Component{
                 this.setState({subscribedTrucksList: arr});
             }
         }
+        //GET ALL ROUTES
+        let allRoutes = await getAllRoutes().catch(e=>{console.log(e.message)});
+        if (this.state.guest == true){
+            initMap('', allRoutes);
+        }else{
+            initMap(this.state.address, allRoutes);
+        }
+        //GOOGLE MAPS API
+
+
     }
     handleChange(event){
         const target = event.target;
@@ -152,12 +164,12 @@ class UserDashboard extends Component{
         }
     }
     special(event){
-        callMaps(map);
+        // callMaps(map);
         this.setState({showMap: 'true'});
     }
     render(){ 
         return (
-            <div>
+            <div className={styles.container}>
                 <div className = {styles.navbar}>
                     {this.state.guest === false && <div className={styles.dropdownDiv}>
                         <button className={styles.dropbtn}>{this.state.username}</button>
@@ -224,7 +236,8 @@ class UserDashboard extends Component{
                 <div className = {styles.subscribedTrucksDiv}>
                     <div className={styles.truckRecTitle}>
                             <p><b>Food Truck Subscriptions</b></p>
-                    </div>                    <div className={styles.textBar}>
+                    </div>                    
+                    <div className={styles.textBar}>
                         <div className={styles.textBarText}>TRUCK NAME</div>
                         <div className={styles.textBarText}>PRICE</div>
                         <div className={styles.textBarText}>FOOD TYPE</div>
@@ -234,7 +247,7 @@ class UserDashboard extends Component{
                 </div>
 
                 <div className = {styles.mapWrapper}>
-                    { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>}
+                    {/* { this.state.showMap === 'true' && <input id="pac-input" className={styles.controls, styles.mapInputBar} type="text" placeholder="Search..."/>} */}
                     <div className={styles.map} id="map">
                         <p>Map goes here. Status: disabled</p>
                     </div>
@@ -245,10 +258,9 @@ class UserDashboard extends Component{
                 {/* .default is required because of a bug in react scripts v4.0 solution found on https://www.youtube.com/watch?v=ay6id01369s */}
                 <div className = {styles.footerImageDiv}>
                     <img src={require('../assets/justTruck.png').default} className={styles.truckImg} alt="TRUCK IMAGE"/>
-                    <p className = {styles.footerTextHead}>EARN</p>
-                    <p className = {styles.footerText}>A FOOD TRUCK FINDING APP</p>
+                    {/* <p className = {styles.footerTextHead}>EARN</p> */}
+                    {/* <p className = {styles.footerText}>A FOOD TRUCK FINDING APP</p> */}
                     <p className = {styles.footerTextFooter}>Richard Hutcheson, Noah Lambaria, Austin Blanchard, Ethan Robinson</p>
-
                 </div>
 
             </div>

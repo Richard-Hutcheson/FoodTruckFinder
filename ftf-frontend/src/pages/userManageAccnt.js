@@ -246,7 +246,7 @@ class UserManageAccount extends Component{
                         <input className={styles.passwordField, "field"} type="text" name="password" onChange={this.handleChange} placeholder={this.state.password} disabled= {this.state.viewOnly}/>
                         <label htmlFor="email" className = {styles.emailLabel, styles.label}>email:</label>
                         <input className={styles.emailField, "field"} type="text" name="email" onChange={this.handleChange} placeholder={this.state.email} disabled = {this.state.viewOnly}/>
-                        <label htmlFor="address" className = {styles.addressLabel, styles.label}>address:</label>
+                        <label htmlFor="address" className = {styles.addressLabel, styles.label}>street:</label>
                         <input className={styles.addressField, "field"} type="text" name="address" onChange={this.handleChange} placeholder={this.state.address} disabled = {this.state.viewOnly}/>
                         <label htmlFor="state" className = {styles.stateLabel, styles.label}>state:</label>
                         <input className={styles.stateField, "field"} type="text" name="state" onChange={this.handleChange} placeholder={this.state.state} disabled = {this.state.viewOnly}/>
