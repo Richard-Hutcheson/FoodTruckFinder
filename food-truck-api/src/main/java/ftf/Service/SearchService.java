@@ -21,7 +21,7 @@ public class SearchService {
     @Autowired
     RouteRepository routeRepository;
 
-    private final String[] fillerWords = {"Food", "Truck", "foodtruck"};
+    private final String[] fillerWords = {"Food", "Truck", "foodtruck", "truck", "food"};
 
     public List<FoodTruck> searchTrucks(String searchTrucks) {
 

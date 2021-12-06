@@ -9,6 +9,7 @@ import ftf.classes.FoodTruck;
 import ftf.classes.Review;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.when;
 /**
  * Unit test for simple App.
  */
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest(classes = {ReviewService.class, App.class})
 @WebAppConfiguration
 @AutoConfigureMockMvc
@@ -33,7 +34,7 @@ import static org.mockito.Mockito.when;
 public class ReviewTest
 {
 
-    @Autowired
+    @Mock
     ReviewService reviewService;
 
     @MockBean
@@ -46,6 +47,6 @@ public class ReviewTest
         r.setDescription("HI");
 
         when(reviewService.saveReview("hi", "TRUCK_NAME", 3.4, "HI")).thenReturn(Optional.of(r));
-        assertEquals(reviewService.saveReview("hi", "TRUCK_NAME", 3.4, "HI").get(), Optional.of(r));
+        assertEquals(reviewService.saveReview("hi", "TRUCK_NAME", 3.4, "HI").get(), r);
     }
 }

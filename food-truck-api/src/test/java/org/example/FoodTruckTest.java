@@ -6,6 +6,7 @@ import ftf.Service.FoodTruckService;
 import ftf.classes.FoodTruck;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 /**
  * Unit test for simple App.
  */
-@RunWith(SpringRunner.class)
+//@RunWith(App.class)
 @SpringBootTest(classes = {FoodTruckService.class, App.class})
 @WebAppConfiguration
 @AutoConfigureMockMvc
@@ -32,7 +33,7 @@ import static org.mockito.Mockito.when;
 public class FoodTruckTest
 {
 
-    @Autowired
+    @Mock
     private FoodTruckService foodTruckService;
 
     @MockBean
@@ -49,19 +50,19 @@ public class FoodTruckTest
         assertEquals(foodTruckService.createNewTruck(saveFT), test);
     }
 
-//    @Test
-//    public void testEditTruckByName() {
-//        Optional<FoodTruck> ftOpt = foodTruckRepository.findFoodTruckByTruckName("JUNIT_TRUCK");
-//        FoodTruck ft = ftOpt.get();
-//
-//        ft.setTruckName("BLAH");
-//
-//        FoodTruck retVal = new FoodTruck();
-//        retVal.setTruckName("TEST_RET");
-//
-//        when(foodTruckService.editTruckDetails(ft)).thenReturn(retVal);
-//        assertEquals(foodTruckService.editTruckDetails(ft), retVal);
-//    }
+    @Test
+    public void testEditTruckByName() {
+        FoodTruck ft = new FoodTruck();
+        ft.setTruckName("TEST_TRUCK");
+        ft.setTruckID(1L);
+        foodTruckRepository.save(ft);
+
+        FoodTruck retVal = new FoodTruck();
+        retVal.setTruckName("TEST_RET");
+
+        when(foodTruckService.editTruckDetails(ft)).thenReturn(retVal);
+        assertEquals(foodTruckService.editTruckDetails(ft), retVal);
+    }
 
 //    @Test
 //    public void testDeleteTruckByName() {
@@ -70,7 +71,7 @@ public class FoodTruckTest
 //        saveFT.setTruckName("JUNIT_TRUCK");
 //        test.setTruckName("TEST_RET");
 //
-//        foodTruckService.deleteTruck(saveFT.getTruckName());
+//        when(foodTruckService.deleteTruck(saveFT.getTruckName());
 //
 //
 //
