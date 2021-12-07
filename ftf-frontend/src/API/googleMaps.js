@@ -75,9 +75,9 @@ export function initMap(address, allRoutes) {
         }
         for (let i =0; i < allRoutes.length; i++){
             //TRUCK ALREADY IN MAP
+            let truckName = allRoutes[i].truck.truckName;
             let userMarker = new window.google.maps.Marker({map: map,label:{text: truckName, color: 'green'}, icon: icon});
             userMarker.setPosition({lat: allRoutes[i].latitude, lng: allRoutes[i].longitude});
-            let truckName = allRoutes[i].truck.truckName;
         }
         submitButton.addEventListener("click", () =>
         geocodeSearch({ address: inputText.value },  geocoder, map, marker, response, responseDiv)
