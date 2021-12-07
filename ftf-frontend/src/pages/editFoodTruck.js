@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
-import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute, getSubscriptionsByTruck} from "../API/apiCalls.js"
+import {getTruckByName,getUser, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute, getSubscriptionsByTruck} from "../API/apiCalls.js"
 import { geocodeSearch, printVar } from '../API/helperFunctions';
 import Geocode from "react-geocode";
+
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 class EditTruck extends Component{
@@ -78,7 +79,11 @@ class EditTruck extends Component{
     async handleSubmit(event){
         event.preventDefault();
         if (event.target.id === "backBtn"){
-            this.props.history.goBack();
+            let user = await getUser(this.state.username);
+            this.props.history.push({
+                pathname: '/ManageFoodTrucks',
+                state: {username: this.state.username, userID: user.id, role: user.role}} // your data array of objects
+            );    
         }
         
         else if (event.target.id === "formID"){

@@ -142,6 +142,7 @@ class SearchResult extends Component{
                 window.confirm("NO RESULTS FOUND");
                 this.props.history.goBack();
             }else{
+                console.log("RESPONSE = ", response);
                 this.setState({
                     truckName: response.truckName,
                     truckDesc: response.description,
@@ -273,6 +274,8 @@ class SearchResult extends Component{
             if (this.state.writeReview === true){
                 this.setState({writeReview: false});
             }
+            //refresh page
+            window.location.reload(false);
         }
         //SUBSCRIBE TO TRUCK
         else if (event.target.id === "subscribeBtnID"){

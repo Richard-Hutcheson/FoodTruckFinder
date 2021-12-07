@@ -75,7 +75,13 @@ class AddTruck extends Component{
             if (response.status === 'CONFLICT'){
                 alert("Truck Name Already Exists");
             }
-            this.props.history.goBack();            
+            //return to manage food trucks
+            // this.props.history.goBack(); 
+            console.log(user);       
+            this.props.history.push({
+                pathname: '/ManageFoodTrucks',
+                state: {username: this.state.username, userID: user.id, role: user.role}} // your data array of objects
+            );    
         }
     }
     resetFields(){

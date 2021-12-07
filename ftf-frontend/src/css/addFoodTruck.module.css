@@ -1,5 +1,12 @@
 .bodyContainer{
     height: 100%;
+    background-image: url("../assets/addTruck.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+    min-height: 100vh;
+    overflow-y: auto;
+
 }
 h1{
     text-align: center;
