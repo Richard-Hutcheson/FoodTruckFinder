@@ -43,4 +43,12 @@ public class Route {
     @Lob
     @Column(name = "schedule", columnDefinition="VARCHAR(1000)")
     String schedule;
+
+    @Column(name = "longitude")
+    String longitude;
+
+    @Column(name = "latitude")
+    String latitude;
+
+
 }

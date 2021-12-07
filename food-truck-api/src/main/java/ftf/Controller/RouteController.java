@@ -25,14 +25,16 @@ public class RouteController {
         return routeService.getRoutesByTruckName(truckName);
     }
 
-    @PostMapping("/routes/{truckName}/{address}/{city}/{state}/{schedule}")
+    @PostMapping("/routes/{truckName}/{address}/{city}/{state}/{schedule}/{latitude}/{longitude}")
     public Optional<Route> setRouteByTruckName(@PathVariable String truckName,
                                            @PathVariable String address,
                                            @PathVariable String city,
                                            @PathVariable String state,
-                                               @PathVariable String schedule) {
+                                           @PathVariable String schedule,
+                                           @PathVariable String latitude,
+                                           @PathVariable String longitude) {
 
-        return routeService.setRouteByTruckName(truckName, address, city, state,schedule);
+        return routeService.setRouteByTruckName(truckName, address, city, state,schedule,latitude,longitude);
     }
 
     @DeleteMapping("/delete/route/{truckName}/{address}/{city}/{state}")
