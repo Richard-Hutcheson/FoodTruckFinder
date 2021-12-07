@@ -45,10 +45,10 @@ public class Route {
     String schedule;
 
     @Column(name = "longitude")
-    String longitude;
+    double longitude;
 
     @Column(name = "latitude")
-    String latitude;
+    double latitude;
 
 
 }

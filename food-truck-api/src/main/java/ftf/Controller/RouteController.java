@@ -31,8 +31,8 @@ public class RouteController {
                                            @PathVariable String city,
                                            @PathVariable String state,
                                            @PathVariable String schedule,
-                                           @PathVariable String latitude,
-                                           @PathVariable String longitude) {
+                                           @PathVariable double latitude,
+                                           @PathVariable double longitude) {
 
         return routeService.setRouteByTruckName(truckName, address, city, state,schedule,latitude,longitude);
     }
