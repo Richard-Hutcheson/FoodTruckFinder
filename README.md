@@ -15,5 +15,7 @@ To get Google Maps API working,
 3.  place .env inside the ftf-frontend folder at the root+
 
 Database Port: 8080
+
 Database username = "root"
+
 Database password = "mypassword"
