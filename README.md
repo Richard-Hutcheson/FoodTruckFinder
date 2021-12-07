@@ -13,3 +13,7 @@ To get Google Maps API working,
 1.  create a file named ".env"
 2.  write  "REACT_APP_GOOGLE_MAPS_API_KEY=" on line one followed by the key, so it should be "REACT_APP_GOOGLE_MAPS_API_KEY={put key here}"
 3.  place .env inside the ftf-frontend folder at the root+
+
+Database Port: 8080
+Database username = "root"
+Database password = "mypassword"
