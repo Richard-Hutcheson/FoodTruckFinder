@@ -34,7 +34,7 @@ public class RouteService {
     public Optional<Route> setRouteByTruckName(String truckName,
                                                String address,
                                                String city,
-                                               String state, String schedule) {
+                                               String state, String schedule, String latitude, String longitude) {
 
         Optional<FoodTruck> findTruck = ftService.getTruckDetailsByName(truckName);
 
@@ -48,6 +48,8 @@ public class RouteService {
         route.setCity(city);
         route.setState(state);
         route.setSchedule(schedule);
+        route.setLatitude(latitude);
+        route.setLongitude(longitude);
 
         return Optional.of(routeRepository.save(route));
     }
