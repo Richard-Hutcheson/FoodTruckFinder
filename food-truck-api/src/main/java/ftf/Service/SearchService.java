@@ -50,7 +50,18 @@ public class SearchService {
 
         Set<FoodTruck> finalList = new LinkedHashSet<>();
 
+
+
         finalList.addAll(notFiller);
+
+        List<FoodTruck> foodTypes = new ArrayList<>();
+
+        for (FoodTruck i : notFiller) {
+            finalList.addAll(foodTruckRepository.findFoodTrucksByFoodType(i.getFoodType()));
+            finalList.addAll(foodTruckRepository.findFoodTrucksByFoodTypeContains(i.getFoodType()));
+            finalList.addAll(foodTruckRepository.findFoodTrucksByFoodTypeLike(i.getFoodType()));
+        }
+
         finalList.addAll(foodTrucks);
 
         if (finalList.isEmpty())
