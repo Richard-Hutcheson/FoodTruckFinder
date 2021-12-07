@@ -21,8 +21,6 @@ public class RecommendationsController {
     }
 
 
-
-
     // gets the highest occuring food type of foodtrucks searched by user
 //    @GetMapping("/recommendUser/{username}")
 //    public List<FoodTruck> getRecommendUserByFoodType(@PathVariable String username) {

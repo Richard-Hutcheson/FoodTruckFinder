@@ -7,6 +7,7 @@ import ftf.Service.FoodTruckService;
 import ftf.Service.ReviewService;
 import ftf.classes.FoodTruck;
 import ftf.classes.Review;
+import ftf.classes.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -18,6 +19,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +43,9 @@ public class ReviewTest
     @MockBean
     ReviewRepository reviewRepository;
 
+    @MockBean
+    FoodTruckRepository foodTruckRepository;
+
     @Test
     public void testSaveReview() {
         Review r = new Review();
@@ -48,5 +54,45 @@ public class ReviewTest
 
         when(reviewService.saveReview("hi", "TRUCK_NAME", 3.4, "HI")).thenReturn(Optional.of(r));
         assertEquals(reviewService.saveReview("hi", "TRUCK_NAME", 3.4, "HI").get(), r);
+    }
+
+    @Test
+    public void testGetAvgTruckRating() {
+        FoodTruck ft = new FoodTruck();
+        ft.setTruckName("JUNIT_TRUCK");
+
+        Review r = new Review();
+        r.setTruck(ft);
+        r.setReviewID(1L);
+        r.setRating(3.4);
+
+        Review r2 = new Review();
+        r2.setTruck(ft);
+        r2.setReviewID(2L);
+        r2.setRating(4.7);
+
+        double avg = (r.getRating() + r2.getRating()) / 2.0;
+
+        when(reviewService.getAvgFoodTruckRating(ft)).thenReturn((r.getRating() + r2.getRating()) / 2.0);
+        assertEquals(reviewService.getAvgFoodTruckRating(ft), avg);
+    }
+
+    @Test
+    public void testFindReviewsByTruck() {
+        FoodTruck ft = new FoodTruck();
+        ft.setTruckID(1L);
+        ft.setTruckName("JUNIT_TRUCK");
+
+        Review r = new Review();
+        r.setTruck(ft);
+        r.setRating(3.5);
+        r.setDescription("description");
+
+        List<Review> retList = new ArrayList<>();
+        retList.add(r);
+
+        when(reviewService.findByTruck(ft)).thenReturn(retList);
+        assertEquals(reviewService.findByTruck(ft), retList);
+
     }
 }
