@@ -11,7 +11,7 @@ public class Subscription {
     public static final String TABLE_NAME = "Subscription";
 
     @Id
-    @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @SequenceGenerator(
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"

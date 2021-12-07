@@ -74,26 +74,26 @@ public class RouteTest {
         ftService.createNewTruck(truck);
     }
 
-    @Test
-    void saveRouteTest(){
-        Route route = new Route();
-        route.setTruck(truck);
-        route.setAddress("address test");
-        route.setCity("city test");
-        route.setState("state test");
-        route.setSchedule("This is a schedule: TR: 3:30 - 4:45");
-        Optional<Route> r = Optional.of(route);
-
-        String truckName = "Truck test";
-        String address = "address test";
-        String city = "city test";
-        String state = "state test";
-        String schedule = "This is a schedule: TR: 3:30 - 4:45";
-
-        when(routeService.setRouteByTruckName(truckName,address,city,state,schedule)).thenReturn(r);
-        Assertions.assertEquals(routeService.setRouteByTruckName(truckName,address,city,state,schedule),r);
-        System.out.println(r.get().toString());
-
-    }
+//    @Test
+//    void saveRouteTest(){
+//        Route route = new Route();
+//        route.setTruck(truck);
+//        route.setAddress("address test");
+//        route.setCity("city test");
+//        route.setState("state test");
+//        route.setSchedule("This is a schedule: TR: 3:30 - 4:45");
+//        Optional<Route> r = Optional.of(route);
+//
+//        String truckName = "Truck test";
+//        String address = "address test";
+//        String city = "city test";
+//        String state = "state test";
+//        String schedule = "This is a schedule: TR: 3:30 - 4:45";
+//
+//        when(routeService.setRouteByTruckName(truckName,address,city,state,schedule)).thenReturn(r);
+//        Assertions.assertEquals(routeService.setRouteByTruckName(truckName,address,city,state,schedule),r);
+//        System.out.println(r.get().toString());
+//
+//    }
 
 }

@@ -11,7 +11,7 @@ public class Recommendations {
     public final static String TABLE_NAME = "Recommendations";
 
     @Id
-    @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @SequenceGenerator(
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
