@@ -62,6 +62,7 @@ export function setTruckMarkers(address, geocoder, map, truckName){
             scaledSize: new window.google.maps.Size(50, 30), 
             labelOrigin: new window.google.maps.Point(20,-10),
         }
+        
         let userMarker = new window.google.maps.Marker({map: map,label:{text: truckName, color: 'green'}, icon: icon});
         userMarker.setPosition(results[0].geometry.location);
         // userMarker.setMap(map);
@@ -72,4 +73,8 @@ export function setTruckMarkers(address, geocoder, map, truckName){
     .catch((e) => {
         alert("Geocode was not successful for the following reason: " + e);
     });
+}
+export function printVar(v){
+
+    return v;
 }

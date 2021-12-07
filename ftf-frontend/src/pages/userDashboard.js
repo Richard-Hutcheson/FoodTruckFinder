@@ -23,9 +23,11 @@ class UserDashboard extends Component{
             subscribedTrucksList: [<div key = "-1"></div>]
         }
         if (this.props.location.state != null){
+            console.log("HERE", this.props.location.state.username)
             this.state.username = this.props.location.state.username;
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;
+            this.state.role = this.props.location.state.role;
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,6 +36,7 @@ class UserDashboard extends Component{
 
     async componentDidMount(props){
         //GET username
+        console.log("USER = ", this.state.username);
         let response = await getUser(this.state.username).catch(error=>{
             console.log(error.message);
         });

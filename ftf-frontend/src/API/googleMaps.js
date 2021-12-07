@@ -71,19 +71,17 @@ export function initMap(address, allRoutes) {
         // });
         let truckMap = new Map();
         let idVal = 0;
-        for (let i =0; i <  allRoutes.length; i++){
-            //TRUCK ALREADY IN MAP
-            if (!truckMap.has(allRoutes[i].truck.truckName)){
-                truckMap.set(allRoutes[i].truck.truckName, idVal);
-                idVal++;
-            }
-            let routeAddr = allRoutes[i].address + ", " + allRoutes[i].city + ", " + allRoutes[i].state;
-            let truckName = allRoutes[i].truck.truckName;
-            setTruckMarkers({address: routeAddr}, geocoder, map, truckName);
-        }
-        
-        
-        
+
+        // for (let i =0; i < allRoutes.length; i++){
+        //     //TRUCK ALREADY IN MAP
+        //     if (!truckMap.has(allRoutes[i].truck.truckName)){
+        //         truckMap.set(allRoutes[i].truck.truckName, idVal);
+        //         idVal++;
+        //     }
+        //     let routeAddr = allRoutes[i].address + ", " + allRoutes[i].city + ", " + allRoutes[i].state;
+        //     let truckName = allRoutes[i].truck.truckName;
+        //     setTruckMarkers({address: routeAddr}, geocoder, map, truckName);
+        // }
         submitButton.addEventListener("click", () =>
         geocodeSearch({ address: inputText.value },  geocoder, map, marker, response, responseDiv)
         );
@@ -92,8 +90,15 @@ export function initMap(address, allRoutes) {
         });
         clear(marker, responseDiv);
     }
-    
   }
+
+
+
+  /*
+1. every time a route is added, geocode the address and store lat 
+    lng in database along with whole address
+2. every route query from queries list needs to have lat and lng attributes
+  */
 
 
 

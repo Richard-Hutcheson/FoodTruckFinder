@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
 import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute, getSubscriptionsByTruck} from "../API/apiCalls.js"
+import { printVar } from '../API/helperFunctions';
 
 class EditTruck extends Component{
     constructor(props){
@@ -69,6 +70,7 @@ class EditTruck extends Component{
             key++;
         }
         this.setState({subbedUsers: arr, keyCount: key});
+
     }
 
     async handleSubmit(event){
@@ -123,6 +125,7 @@ class EditTruck extends Component{
             tempPendingRoutes.push(newRoute);
             this.setState({routes: tempRoutes, keyCount: this.state.keyCount+1, pendingRoutes: tempPendingRoutes});
         }
+
     }
     //this function is necessary rather than creating the html directly into the array is because we want to preserve the state variables
     displayRoutes(){
@@ -196,7 +199,9 @@ class EditTruck extends Component{
             maxRange: this.state.maxPrice,
         }
         console.log("pending routes = ", this.state.pendingRoutes);
-        for (let i = 0; i < this.state.pendingRoutes.length; i++){
+        let len = this.state.pendingRoutes.length < 10? this.state.pendingRoutes.length : 9;
+
+        for (let i = 0; i < len; i++){
             //address
             let tempAddress = document.getElementById(this.state.pendingRoutes[i].props.children[0].props.id).value
             //city
@@ -205,7 +210,10 @@ class EditTruck extends Component{
             let tempState = document.getElementById(this.state.pendingRoutes[i].props.children[2].props.id).value;
             //schedule
             let tempSchedule = document.getElementById(this.state.pendingRoutes[i].props.children[3].props.id).value;
+            let fullS = tempAddress + ", " + tempCity + ", " + tempState;
+            // let latLng = await this.geocode(fullS);
             //add route
+            let lsdf = printVar(fullS);
             let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState, tempSchedule).catch(error=>{
                 console.log(error.message);
             });
@@ -216,6 +224,7 @@ class EditTruck extends Component{
         await editTruck(truckData).catch(error=>{console.log(error.message);});
         window.location.reload(false);
     }
+
     resetFields(){
         this.setState({submitText: 'EDIT'});
         this.setState({viewOnly: true});

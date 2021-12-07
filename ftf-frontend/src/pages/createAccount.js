@@ -27,6 +27,8 @@ class CreateAccount extends Component{
         }
 
         if(event.target.id === "checkboxID") {
+            console.log("VAL = ", value);
+
             if(value == true) {
                 this.setState({role: 'o'});
             } else {
@@ -60,10 +62,9 @@ class CreateAccount extends Component{
         }
         else if (response != null){
             console.log("response in create account = ", response);
-            
             this.props.history.push({
                 pathname: '/UserDashboard',
-                state: {user: this.state.username, name: this.state.name}
+                state: {username: this.state.username, name: this.state.name, role: this.state.role, guest: false}
             })
         }else{
             console.log("response is undefined");
