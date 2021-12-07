@@ -23,7 +23,6 @@ class UserDashboard extends Component{
             subscribedTrucksList: [<div key = "-1"></div>]
         }
         if (this.props.location.state != null){
-            console.log("HERE", this.props.location.state.username)
             this.state.username = this.props.location.state.username;
             this.state.guest = this.props.location.state.guest;
             this.state.name = this.props.location.state.name;

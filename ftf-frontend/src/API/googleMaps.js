@@ -1,10 +1,6 @@
 import {clear, centerMap, geocodeSearch, setTruckMarkers} from '../API/helperFunctions'
 
 
-
-
-
-
 export function initMap(address, allRoutes) {
     if (address === ''){
         address = "1420 S 5th St, Waco, TX"
@@ -72,16 +68,17 @@ export function initMap(address, allRoutes) {
         let truckMap = new Map();
         let idVal = 0;
 
-        // for (let i =0; i < allRoutes.length; i++){
-        //     //TRUCK ALREADY IN MAP
-        //     if (!truckMap.has(allRoutes[i].truck.truckName)){
-        //         truckMap.set(allRoutes[i].truck.truckName, idVal);
-        //         idVal++;
-        //     }
-        //     let routeAddr = allRoutes[i].address + ", " + allRoutes[i].city + ", " + allRoutes[i].state;
-        //     let truckName = allRoutes[i].truck.truckName;
-        //     setTruckMarkers({address: routeAddr}, geocoder, map, truckName);
-        // }
+        let icon = {
+            url: "https://i.ibb.co/XyDz8YC/just-Truck.png", 
+            scaledSize: new window.google.maps.Size(50, 30), 
+            labelOrigin: new window.google.maps.Point(20,-10),
+        }
+        for (let i =0; i < allRoutes.length; i++){
+            //TRUCK ALREADY IN MAP
+            let userMarker = new window.google.maps.Marker({map: map,label:{text: truckName, color: 'green'}, icon: icon});
+            userMarker.setPosition({lat: allRoutes[i].latitude, lng: allRoutes[i].longitude});
+            let truckName = allRoutes[i].truck.truckName;
+        }
         submitButton.addEventListener("click", () =>
         geocodeSearch({ address: inputText.value },  geocoder, map, marker, response, responseDiv)
         );

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styles from "../css/editFoodTruck.module.css"
 import {getTruckByName, editTruck, deleteTruck, addRoute, getRoutes, deleteRoute, getSubscriptionsByTruck} from "../API/apiCalls.js"
-import { printVar } from '../API/helperFunctions';
+import { geocodeSearch, printVar } from '../API/helperFunctions';
+import Geocode from "react-geocode";
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 class EditTruck extends Component{
     constructor(props){
@@ -213,18 +215,27 @@ class EditTruck extends Component{
             let fullS = tempAddress + ", " + tempCity + ", " + tempState;
             // let latLng = await this.geocode(fullS);
             //add route
-            let lsdf = printVar(fullS);
-            let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState, tempSchedule).catch(error=>{
+            let coords = await this.callFunc("Eiffel Tower");
+            console.log(coords.lat.toString(), ", ", coords.lng.toString());
+            let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState, tempSchedule, coords.lat.toString(), coords.lng.toString()).catch(error=>{
                 console.log(error.message);
             });
-            // console.log(response);
+
+
         }
         //clear pendingRoutes
         this.setState({pendingRoutes: []});
         await editTruck(truckData).catch(error=>{console.log(error.message);});
         window.location.reload(false);
     }
-
+    callFunc = async (val) => Geocode.fromAddress(val).then((response)=>{
+        const { lat, lng } = response.results[0].geometry.location;
+        return {lat: lat, lng: lng};
+      },
+      (error) => {
+        console.error(error.message);
+      }
+    );
     resetFields(){
         this.setState({submitText: 'EDIT'});
         this.setState({viewOnly: true});
