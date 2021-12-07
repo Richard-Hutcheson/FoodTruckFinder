@@ -34,7 +34,7 @@ public class RouteService {
     public Optional<Route> setRouteByTruckName(String truckName,
                                                String address,
                                                String city,
-                                               String state, String schedule, String latitude, String longitude) {
+                                               String state, String schedule, double latitude, double longitude) {
 
         Optional<FoodTruck> findTruck = ftService.getTruckDetailsByName(truckName);
 

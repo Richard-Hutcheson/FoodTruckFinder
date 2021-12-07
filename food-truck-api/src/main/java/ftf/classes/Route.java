@@ -13,7 +13,7 @@ import java.util.List;
 public class Route {
     public static final String TABLE_NAME = "Route";
     @Id
-    @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @SequenceGenerator(
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
@@ -45,10 +45,10 @@ public class Route {
     String schedule;
 
     @Column(name = "longitude")
-    String longitude;
+    double longitude;
 
     @Column(name = "latitude")
-    String latitude;
+    double latitude;
 
 
 }
