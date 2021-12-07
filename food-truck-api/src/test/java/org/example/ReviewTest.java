@@ -26,10 +26,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-/**
- * Unit test for simple App.
- */
-//@RunWith(SpringRunner.class)
+
 @SpringBootTest(classes = {ReviewService.class, App.class})
 @WebAppConfiguration
 @AutoConfigureMockMvc

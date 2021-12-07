@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 
-//@RunWith(App.class)
 @SpringBootTest(classes = {FoodTruckService.class, App.class})
 @WebAppConfiguration
 @AutoConfigureMockMvc
