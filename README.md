@@ -16,6 +16,8 @@ To get Google Maps API working,
 
 Database Port: 8080
 
+Database name = "food_truck_finder"
+
 Database username = "root"
 
 Database password = "mypassword"
