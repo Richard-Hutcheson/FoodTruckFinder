@@ -50,8 +50,6 @@ public class SearchService {
 
         Set<FoodTruck> finalList = new LinkedHashSet<>();
 
-
-
         finalList.addAll(notFiller);
 
         List<FoodTruck> foodTypes = new ArrayList<>();
