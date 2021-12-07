@@ -31,7 +31,7 @@ public class SubscriptionService {
     FoodTruckRepository foodTruckService;
 
 
-    public Subscription subscribe(@PathVariable String username,@PathVariable String ftName) {
+    public Subscription subscribe(String username,String ftName) {
         Optional<User> user = userService.findByUsername(username);
         Optional<FoodTruck> foodTruck = foodTruckService.findFoodTruckByTruckName(ftName);
         if(!user.isPresent()){

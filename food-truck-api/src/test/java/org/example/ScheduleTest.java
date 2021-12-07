@@ -1,2 +1,4 @@
-package org.example;public class ScheduleTest {
+package org.example;
+
+public class ScheduleTest {
 }

@@ -1,2 +1,4 @@
-package org.example;public class SubscriptionTest {
+public class SubscriptionTest {
+
+
 }
