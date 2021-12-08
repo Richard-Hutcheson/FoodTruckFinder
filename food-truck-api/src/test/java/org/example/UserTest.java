@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import ftf.Repository.FoodTruckRepository;
 import ftf.Service.FoodTruckService;
 import ftf.Service.UserService;
+import ftf.classes.FoodTruck;
 import ftf.classes.User;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -37,12 +38,18 @@ public class UserTest
         assertEquals(user, userService.saveUser(user));
     }
 
+
     @Test
     public void testEditUser() {
         User user = new User();
         user.setUsername("JUnit");
+        user.setId(1L);
+        userService.saveUser(user);
+        User editedUser = new User();
+        editedUser.setUsername("Updated username");
 
-        when(userService.saveUser(user)).thenReturn(user);
-        assertEquals(user, userService.saveUser(user));
+        when(userService.updateUser(user)).thenReturn(editedUser);
+        assertNotNull(user);
+        assertEquals(editedUser, userService.updateUser(user));
     }
 }
