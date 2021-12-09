@@ -58,11 +58,3 @@ Database password = "mypassword"
 4. install react-geocode with "npm install react-geocode"
 4. type "npm start"
 5. navigate to "http://localhost:3000/"
-	
-# Populate Database (optional)
-### (warning: populating the database this way could result in errors if run improperly):
-1. with the application fully setup and running, navigate to the FoodTruckFinder root directory and locate "populateDB.txt"
-2. from the running MySQL Docker container, click the CLI icon to open the bash terminal. 
-3. Type "mysql -u root -p" and provide password
-3. copy the queries in populateDB.txt and paste them into the MySQL terminal. 
-4. Press enter to submit the final query which does not auto run
