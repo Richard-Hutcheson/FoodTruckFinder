@@ -24,12 +24,12 @@ Database password = "mypassword"
 
 # Install Database:
 
-## Preconditions and tips:
+### Preconditions and tips:
 * first step assumes you have a mysql docker image you can create one using "$ docker pull mysql"
 * The first steps port number "52000" and password "mypassword" can be changed if you also change them in the
   application.properties file in the food-truck-api Intellij project and when creating DB in Intellij. 
 
-## Steps:
+### Steps:
 1. run "$ docker run --name=<custom_container_name> -p 52000:3306 -e MYSQL_ROOT_PASSWORD=mypassword -d mysql"
 2. run "$ docker ps" to find the containerID running your mysql image
 3. run "$ docker exec -it <containerID> bash"
@@ -51,3 +51,18 @@ Database password = "mypassword"
 14. Expand the food_truck_finder folder in the Intellij DB tab and ensure the tables are created!
 15. Database created!
 
+# Front End Instructions:
+1. install node.js
+2. navigate to the ftf-frontend folder
+3. assuming package.json exists, type "npm install" to create node_modules directory
+4. install react-geocode with "npm install react-geocode"
+4. type "npm start"
+5. navigate to "http://localhost:3000/"
+	
+# Populate Database (optional)
+### (warning: populating the database this way could result in errors if run improperly):
+1. with the application fully setup and running, navigate to the FoodTruckFinder root directory and locate "populateDB.txt"
+2. from the running MySQL Docker container, click the CLI icon to open the bash terminal. 
+3. Type "mysql -u root -p" and provide password
+3. copy the queries in populateDB.txt and paste them into the MySQL terminal. 
+4. Press enter to submit the final query which does not auto run
