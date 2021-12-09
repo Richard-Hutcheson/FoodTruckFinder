@@ -22,7 +22,7 @@ Database username = "root"
 
 Database password = "mypassword"
 
-# Install Database:
+## Install Database:
 
 ### Preconditions and tips:
 * first step assumes you have a mysql docker image you can create one using "$ docker pull mysql"
@@ -51,7 +51,7 @@ Database password = "mypassword"
 14. Expand the food_truck_finder folder in the Intellij DB tab and ensure the tables are created!
 15. Database created!
 
-# Front End Instructions:
+## Front End Instructions:
 1. install node.js
 2. navigate to the ftf-frontend folder
 3. assuming package.json exists, type "npm install" to create node_modules directory
