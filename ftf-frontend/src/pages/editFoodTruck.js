@@ -220,7 +220,7 @@ class EditTruck extends Component{
             let fullS = tempAddress + ", " + tempCity + ", " + tempState;
             // let latLng = await this.geocode(fullS);
             //add route
-            let coords = await this.callFunc("Eiffel Tower");
+            let coords = await this.callFunc(fullS);
             console.log(coords.lat.toString(), ", ", coords.lng.toString());
             let response = await addRoute(this.state.truckName, tempAddress, tempCity, tempState, tempSchedule, coords.lat.toString(), coords.lng.toString()).catch(error=>{
                 console.log(error.message);
