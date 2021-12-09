@@ -24,12 +24,12 @@ Database password = "mypassword"
 
 # Install Database:
 
-# Preconditions and tips:
+## Preconditions and tips:
 * first step assumes you have a mysql docker image you can create one using "$ docker pull mysql"
 * The first steps port number "52000" and password "mypassword" can be changed if you also change them in the
   application.properties file in the food-truck-api Intellij project and when creating DB in Intellij. 
 
-# Steps:
+## Steps:
 1. run "$ docker run --name=<custom_container_name> -p 52000:3306 -e MYSQL_ROOT_PASSWORD=mypassword -d mysql"
 2. run "$ docker ps" to find the containerID running your mysql image
 3. run "$ docker exec -it <containerID> bash"
