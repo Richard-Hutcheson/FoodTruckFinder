@@ -58,3 +58,9 @@ Database password = "mypassword"
 4. install react-geocode with "npm install react-geocode"
 4. type "npm start"
 5. navigate to "http://localhost:3000/"
+	
+
+## Back End Instructions:
+1. Inspect the pom.xml file within the "food-truck-api" folder and ensure that the dependencies listed match the ones here.
+2. In order for JPA and Hibernate to work, please inspect the "application.properties" in the resources folder and update
+   the username, password, datasource url, and server port with your information accordingly. If the steps above were properly followed, then you would only need to change the username and password data.
