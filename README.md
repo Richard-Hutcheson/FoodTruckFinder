@@ -64,5 +64,5 @@ Database password = "mypassword"
 1. Inspect the pom.xml file within the "food-truck-api" folder and ensure that the dependencies listed match the ones here.
 2. In order for JPA and Hibernate to work, please inspect the "application.properties" in the resources folder and update
    the username, password, datasource url, and server port with your information accordingly. If the steps above were properly followed, then you would only need to change the username and password data.
-	3. Once the information is updated, edit the configurations of the IDE of your choice. The main class to run the Spring Application is "App" within the ftf package
-	4. After running the backend, you can now run the front end to interact with the application.
+3. Once the information is updated, edit the configurations of the IDE of your choice. The main class to run the Spring Application is "App" within the ftf package.
+4. After running the backend, you can now run the front end to interact with the application.
